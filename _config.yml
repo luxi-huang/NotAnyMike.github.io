@@ -16,7 +16,7 @@
 title: "Hello. I'm Jami Gibbs."
 email: 'jami0821@gmail.com'
 description: "I'm a software developer and designer from Chicago creating useful things for the web."
-baseurl: "/phantom" # the subpath of your site, e.g. /blog
+baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://notanymike.github.io/phantom" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: 'jamigibbs'
 github_username: 'jamigibbs'
@@ -40,3 +40,4 @@ enable_nav: true
 nav_item:
   - { url: '/', text: 'Home' }
   - { url: '/about', text: 'About' }
+  - { url: '/blog', text: 'Blog' }
