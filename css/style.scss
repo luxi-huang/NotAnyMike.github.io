@@ -108,7 +108,9 @@ button.btn, input.btn {
 	2.0 Home Hero
 --------------------------------------------------------------*/
 .hero-container {
-  margin: 10em 0 9em 0;
+  margin: 1em 0 1em 0;
+  height: 505px;
+  position: relative;
   background-image: url(/site/img/mikew@2x.png);
   background-position: center center;
   background-repeat: no-repeat;
@@ -121,9 +123,11 @@ button.btn, input.btn {
 }
 
 .hero-content {
-  width: 60%;
+  width: 100%;
   margin: 0 auto;
   display: table;
+  position: absolute;
+  bottom: 0px;
   @include bp-medium {
     width: 100%;
   }
@@ -205,7 +209,7 @@ button.btn, input.btn {
 	3.0 Posts
 --------------------------------------------------------------*/
 #portfolio .container {
-  margin-top: 2em;
+  margin-top: 4em;
   @include bp-xsmall {
     margin-top: 2em;
   }
@@ -220,7 +224,7 @@ button.btn, input.btn {
 .section-title {
   position: relative;
   margin: 0 auto;
-  margin-bottom: 1em;
+  margin-bottom: 0.5em;
   &:after {
     content: '';
     position: absolute;

@@ -18,14 +18,14 @@
 
             {% for post in paginator.posts %}
 	      <a href="{{ post.url }}">
-              <div class="wow fadeIn">
-              {% if post.position == "left" %}
-                {% include content-left.html %}
-              {% endif %}
-
-              {% if post.position == "right" %}
-                {% include content-right.html %}
-              {% endif %}
+                <div class="wow fadeIn">
+                {% if post.position == "left" %}
+                  {% include content-left.html %}
+                {% endif %}
+  
+                {% if post.position == "right" %}
+                  {% include content-right.html %}
+                {% endif %}
               </div>
 	      </a>
             {% endfor %}
