@@ -1,3 +1,7 @@
+# Personal Site
+
+run it with `jekyll serve`
+
 ## Phantom for Jekyll
 
 A minimalist, responsive portfolio theme for [Jekyll](http://jekyllrb.com/) with Bootstrap.
