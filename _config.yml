@@ -18,12 +18,14 @@ email: 'MikeWoodcockC@gmail.com'
 description: "" #"I'm a software developer from Chicago creating useful things for the web."
 baseurl: "/site" # the subpath of your site, e.g. /blog
 url: "https://notanymike.github.io/site" # the base hostname & protocol for your site, e.g. http://example.com
-twitter_username: 'jamigibbs'
-github_username: 'jamigibbs'
-medium_username: 'blog.jamigibbs.com'
+twitter_username: 'NotAnyMike'
+github_username: 'NotAnyMike'
+medium_username: '' #'blog.jamigibbs.com'
 cv_url: 'https://drive.google.com/file/d/1QZWhXaDQVXVAy36f7ov2EnawCoKF_y-B/view'
 section_title: 'Latest Work'
 section_subtitle: "Here is a list of some of my lastest works or projects, enjoy."
+unrelated_title: 'Unrelated projects'
+unrelated_subtitle: "Some projects resulting of having free time or different hobbies, enjoy."
 
 # Build settings
 markdown: kramdown
@@ -42,5 +44,5 @@ enable_contact: false
 enable_nav: true
 nav_item:
   - { url: '/', text: 'Home' }
-  - { url: '/blog', text: 'Unrelated projects' }
+  - { url: '/unrelated', text: 'Unrelated projects' }
   - { url: '/about', text: 'About me' }
