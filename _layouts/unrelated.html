@@ -16,7 +16,8 @@
 
             <div class="break"></div>
 
-            {% for post in paginator.posts %}
+	    <!-- { for post in paginator.posts } -->
+	    {% for post in site.posts %}
 	      <a href="{{ post.url }}">
                 <div class="wow fadeIn">
                 {% if post.position == "left" %}
