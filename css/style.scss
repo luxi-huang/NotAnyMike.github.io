@@ -11,6 +11,8 @@
 3.0 Posts
 4.0 Footer
 
+8.0 Markdown styles
+7.0 Content Styles (list of posts)
 --------------------------------------------------------------*/
 
 @import '../_sass/bootstrap';
@@ -449,3 +451,24 @@ pre {
     .highlight .vg { color: #000000 } /* Name.Variable.Global */
     .highlight .vi { color: #000000 } /* Name.Variable.Instance */
     .highlight .il { color: #0000cf; font-weight: bold } /* Literal.Number.Integer.Long */
+    
+
+/*--------------------------------------------------------------
+	7.0 Content Styles (list of posts)
+--------------------------------------------------------------*/
+
+.content button.btn, .content input.btn {
+  width: auto;
+}
+
+/*--------------------------------------------------------------
+	8.0 Markdown styles
+--------------------------------------------------------------*/
+
+.post h1 {
+  padding: 20px 0;
+}
+
+.post hr {
+    margin: 40px;
+}

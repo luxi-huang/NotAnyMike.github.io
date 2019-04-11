@@ -39,6 +39,7 @@ footer_text: ' Powered by Jekyll with Phantom template by Jami Gibbs © Copyrigh
 admin_name: 'Mike.W'
 google_analytics: "UA-9999999-99" # Update with your own tracking ID
 enable_contact: false
+permalink: /:title/
 
 #### Phantom Navigation menu
 enable_nav: true

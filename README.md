@@ -1,6 +1,6 @@
 # Personal Site
 
-run it with `jekyll serve`
+install it with `sudo gem install bundler --version '1.16'` and run it with `jekyll serve`
 
 ## Phantom for Jekyll
 
