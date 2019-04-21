@@ -34,7 +34,7 @@ plugins:
   - jekyll-paginate
 
 ### Phantom settings
-paginate: 10
+paginate: 100
 footer_text: ' Powered by Jekyll with Phantom template by Jami Gibbs © Copyright Mike Woodcock.'
 admin_name: 'Mike.W'
 google_analytics: "UA-9999999-99" # Update with your own tracking ID
