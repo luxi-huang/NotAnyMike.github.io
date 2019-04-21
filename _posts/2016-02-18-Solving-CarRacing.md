@@ -21,13 +21,13 @@ I write this because I notice a significant lack of information regarding CarRac
 
 ## Why PPO
 
-The main reason behind using PPO is that it is a very robust algorithm. The other algorithm I tried in order to solve this environment was DDPG and sadly, it is not a very stable algorithm, fine tunning of the hyper-parameters plays a key role in the performance of DDPG, such intricate quality is not very appealling to me. Another positive point for PPO is that it can be addapted to be Asyncronous, that gives us the possiblity of multiple parallel environments to improve convergence by reducing the correlation between samples which is a problem of DRL. (Have in mind that PPO is not the only algorithm adaptable to Asyncronous Learning).
+The main reason behind using PPO is that it is a very robust algorithm. The other algorithm I tried in order to solve this environment was DDPG and sadly, it is not a very stable algorithm, fine-tuning of the hyper-parameters plays a key role in the performance of DDPG, such intricate quality is not very appealing to me. Another positive point for PPO is that it can be adapted to be Asynchronous, that gives us the possibility of multiple parallel environments to improve convergence by reducing the correlation between samples which is a problem of DRL. (Have in mind that PPO is not the only algorithm adaptable to Asynchronous Learning).
 
 ## Environment
 
 ### Action-space
 
-Although [CarRacing-v0](<https://gym.openai.com/envs/CarRacing-v0/>){:target="_blank"} is developed to have a continuous action-space, the search and in general optimization is much faster and simplier in a with discreate actions. That is the main reason why I discretize the actions, limiting them to 5 actions (Accelerate, Brake, Left, Right, Do-Nothing). It is important to have an empty action to allow the car keep driving in a straight line at constant speed.
+Although [CarRacing-v0](<https://gym.openai.com/envs/CarRacing-v0/>){:target="_blank"} is developed to have a continuous action-space, the search and in general optimization is much faster and simpler in a with discrete actions. That is the main reason why I discretize the actions, limiting them to 5 actions (Accelerate, Brake, Left, Right, Do-Nothing). It is important to have an empty action to allow the car to keep driving in a straight line at a constant speed.
 
 There are different ways to make the actions space discrete, the easiest one is to map directly discreate actions to continous actions. An action in this env looks like `[s,t,b]` where, `s` stands for steering angle ($$s\in[-1,1]$$), `t` for throttle and `b`for brake ($$t,b \in [0,1]$$), the maping I used is as follows:
 
@@ -39,9 +39,9 @@ There are different ways to make the actions space discrete, the easiest one is 
 |    `Accelerate` | $$\rightarrow$$ | `[  0.0, 1.0, 0.8 ]` |
 |    `Do-Nothing` | $$\rightarrow$$ | `[  0.0, 0.0, 0.0 ]` |
 
-I call this *hard* discretisation because it only alows one continues action per discrete one and the actions are at their continuous maximum. This brings some problems because know when you want to turn left the only option is to steer all the way to the left (which in practice is not a big issue thanks to the `Do-Nothing`). Another problem is that either the model is steering or accelerating but not both at the same time, which means that in curves you cannot brake at the same time you steer to the left, which I found does make the train model have some issues dealing with turns at low speed.
+I call this *hard* discretisation because it only allows one continues action per discrete one and the actions are at their continuous maximum. This brings some problems because know when you want to turn left the only option, is to steer all the way to the left (which in practice is not a big issue thanks to the `Do-Nothing`). Another problem is that either the model is steering or accelerating but not both at the same time, which means that in curves you cannot brake at the same time you steer to the left, which I found does make the trained model have some issues dealing with turns at low speed.
 
-An easy solution is `soft`discretisation where the discretise points around the continuous space is not only close to the corners. We can thing about soft discretisation as a convex combination or an affine transformation of a the `soft`discretised space. For instance 
+An easy solution is `soft` discretisation where the discretise points around the continuous space is not only close to the corners. We can think about soft discretisation as a convex combination or an affine transformation of the `soft` discretised space. For instance 
 
 |                    Discrete action |                 | Continous action     |
 | ---------------------------------: | :-------------: | -------------------- |
@@ -52,11 +52,11 @@ An easy solution is `soft`discretisation where the discretise points around the 
 
 
 
-so on. Even if the discretised action-space is high (e.g. 16 actions), search still is efficient enought to work good with these algorithms. One can actually add behaviour as going backwards (reverse) by making $$a\in[-1,+1]$$, to modify this it is necessary deal with the code in the environment (or use [CarRacing-v1](/site/CarRacing-v1]){:target="_blank"}). The final action space I used had only Accelerate, Brake, Left, Right, Do-Nothing actions which works very good in general.
+Even if the discretised action-space is high (e.g. 16 actions), search still is efficient enough to work well with these algorithms. One can actually add behaviour as going backwards (reverse) by making $$a\in[-1,+1]$$, to modify this it is necessary deal with the code in the environment (or use [CarRacing-v1](/site/CarRacing-v1]){:target="_blank"}). The final action space I used had only Accelerate, Brake, Left, Right, Do-Nothing actions which work very good in general.
 
 ### Observation space
 
-The default observation space is a RGB 96x96 pixels frame of the game, which includes all the control bar on the bottom of the screen. That bar includes information of the torque, steering and lateral forces applied in the car as well as the score. This image is so small that most of the information is not very readable and some is not used at all (such as the score of the game) (see image below). 
+The default observation space is a RGB 96x96 pixels frame of the game, which includes all the control bar on the bottom of the screen. That bar includes information of the torque, steering and lateral forces applied in the car as well as the score. This image is so small that most of the information is not very readable and some are not used at all (such as the score of the game) (see image below). 
 
 I did small changes. 
 
@@ -64,41 +64,41 @@ I did small changes.
 * Second, I used a grayscale frame,
 * And finally, I stacked 4 consecutive frames together
 
-This is automatically taken care in [CarRacing-v1](/site/CarRacing-v1){:target="_blank"}. So in the image bellow you can see the original observations (left) and the new one I am using to the right.
+This is automatically taken care in [CarRacing-v1](/site/CarRacing-v1){:target="_blank"}. So in the image below you can see the original observations (left) and the new one I am using to the right.
 
 ![ob-space](/site/img/posts/SolvingCarRacing/obs-space.png)
 
 ### Other modifications
 
-Those two changes (action-space and observation-space) are the most important changes but not the only ones. I can mention a few more. One is **cliping the reward** to maximum of 1 per step in order to avoid given to many incentives to get into high speeds which at the end translates into losing control over tight curves, this is easily achieved by
+Those two changes (action-space and observation-space) are the most important changes but not the only ones. I can mention a few more. One is **clipping the reward** to a maximum of 1 per step in order to avoid given to many incentives to get into high speeds which at the end translates into losing control over tight curves, this is easily achieved by
 
 ```python
 np.clip(step_reward, a_max=1.0)
 ```
 
-Implementing a **Timeout** is also a good idea. In a few words, timeout refers to the situation when the car goes out of the track and stays outside longer than $$T_{max}$$. This avoid wasting computing time in scenarios where the car is already in a not desired position, $$T_{max}$$ should be big enough to allow the car recoverying when it goes out, but longer than that does not add value.
+Implementing a **Timeout** is also a good idea. In a few words, timeout refers to the situation when the car goes out of the track and stays outside longer than $$T_{max}$$. This avoids wasting computing time in scenarios where the car is already in a not desired position, $$T_{max}$$ should be big enough to allow the car recovering when it goes out, but longer than that does not add value.
 
-Usually it is a good idea in general to **clip the gradient** as well, given that gradient is high dimension, it is easier to clip its norm. This aims to avoid the exploting gradient problem as well as taking to big steps which can result in non-optimal step-sizes. Usually this is part of the configuration of the algorithm.
+Usually, it is a good idea in general to **clip the gradient** as well, given that gradient is high dimension, it is easier to clip its norm. This aims to avoid the exploiting gradient problem as well as taking to big steps which can result in non-optimal step-sizes. Usually, this is part of the configuration of the algorithm.
 
-Finally it is important to have in mind that changing the observation space changes the underlying works of the convolutional layers, usually images come as tensors of  `NxHxWxC` where `N`is the number of frames in the batch, `H`and `W` is the height and weight and `C`is the channels, in the default environment $$C=3$$ because of the three RGB channels. We have to modify it to $$C=4$$ and in my case the dimenssions changes to `NxCxWxH`.
+Finally it is important to have in mind that changing the observation space changes the underlying works of the convolutional layers, usually images come as tensors of  `NxHxWxC` where `N`is the number of frames in the batch, `H`and `W` is the height and weight and `C`is the channels, in the default environment $$C=3$$ because of the three RGB channels. We have to modify it to $$C=4$$ and in my case the dimensions changes to `NxCxWxH`.
 
 
 
 ## Implementation
 
-All this different implementations are taken care of in the modified version of CarRacing, you can have a look at it and read the code, I tried to be much more exact and detailed with comments about what it is going on and what certain parts of the code are doing. You can see the repo here [https://github.com/NotAnyMike/gym](https://github.com/NotAnyMike/gym){:target="_blank"}
+All these different implementations are taken care of in the modified version of CarRacing, you can have a look at it and read the code, I tried to be much more exact and detailed with comments about what it is going on and what certain parts of the code are doing. You can see the repo here [https://github.com/NotAnyMike/gym](https://github.com/NotAnyMike/gym){:target="_blank"}
 
 
 
 ## Training 
 
-The training usually takes several hours, but after 30 minutes of training we can see signigicant results. I trained the model for around 3 million steps in 4 parallel environements, which depending on the hardward specifications can take around 6 hours (have in mind that the environment I used also comes with extra features which make it slower than the default one), in general I used a i7 8-th generation and a RTX-2080 graphics card.
+The training usually takes several hours, but after 30 minutes of training, we can see significant results. I trained the model for around 3 million steps in 4 parallel environments, which depending on the hardware specifications can take around 6 hours (have in mind that the environment I used also comes with extra features which make it slower than the default one), in general I used an i7 8-th generation and a RTX-2080 graphics card.
 
 You can download the weights from [here](https://drive.google.com/file/d/1r3Z6xEbrNvstSzHbMbJoPSAxVIsOF8vH/view?usp=sharing){:target="_blank"}, the model uses the default configuration for the Value and Q functions in PPO2 from stable-baseline which is only a 2 conv layers (if you are going to use it don't forget the `NHWC` configuration). 
 
 ## Installation and running
 
-**Warning: Due to some internal error on the stable version of tensorflow for cpu this code only works for GPU implementations: I am working in a solution**
+**Warning: Due to some internal error on the stable version of tensorflow for CPU this code only works for GPU implementations: I am working in a solution**
 
 We will use the default implementation of stable-baselines, and the CarRacing-v1 environment. In order to have them installed run:
 
@@ -113,17 +113,17 @@ We will use the default implementation of stable-baselines, and the CarRacing-v1
      2. run `pip install stable-baselines`
    * If you find an **error** in the installation of the code does not run (or if you are **using windows**) follow the more detailed installation instructions from stable-baselines from [here](https://stable-baselines.readthedocs.io/en/master/guide/install.html){:target="_blank"}.
 4. and install all the dependencies with
-   1. and `pip install tensorflow` or if you have a gpu with cuda `pip install tensorboard-gpu`
-   2. `pip install pillow opencv-python`
+   1. and `pip install tensorflow` or if you have a GPU with Cuda `pip install tensorflow-gpu`
+   2. `pip install pillow OpenCV-python`
    3. if you get an error about matplotlib use `conda install matplotlib`to install it
-5. Download the CarRacing-v1 (my version of the environement, with all the features implemented)
-   * download the environement by running `git clone https://github.com/NotAnyMike/gym`
+5. Download the CarRacing-v1 (my version of the environment, with all the features implemented)
+   * download the environment by running `git clone https://github.com/NotAnyMike/gym`
    * `cd gym` 
    * followed by  `pip install '.[Box2D]'` to install the repo
 6. Download the weights from [here](https://drive.google.com/file/d/1r3Z6xEbrNvstSzHbMbJoPSAxVIsOF8vH/view?usp=sharing){:target="_blank"} and add unzip them in a new folder.
 7. Run the model by running `python run.py` from that folder (file included with the weights).
 
-A fairly simple code as follows should load and run the trained model succesfully.
+A fairly simple code as follows should load and run the trained model successfully.
 
 ```python
 import gym
