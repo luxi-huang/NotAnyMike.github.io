@@ -28,6 +28,15 @@
   <link rel="stylesheet" href="{{ "/css/animate.min.css" | prepend: site.baseurl }}">
   <link rel="stylesheet" href="{{ "/css/style.css" | prepend: site.baseurl }}">
 
+  <link rel="apple-touch-icon" sizes="180x180" href="/site/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/site/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/site/favicon-16x16.png">
+  <link rel="manifest" href="/site/site.webmanifest">
+
+  <script type="text/javascript" async
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+  </script>
+
 </head>
 <body class="{{ post.title | downcase | replace:' ','-' | replace:',','' | strip_html }}{% if page.category %} category-{{ page.category }}{% endif %}{% if page.layout-class %} layout-{{ page.layout-class }}{% endif %}">
 

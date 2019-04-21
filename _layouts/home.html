@@ -17,6 +17,7 @@
             <div class="break"></div>
 
             {% for post in paginator.posts %}
+	      {% if post.type == "related" %}
 	      <a href="{{ post.url | prepend: site.baseurl }}">
                 <div class="wow fadeIn">
                 {% if post.position == "left" %}
@@ -28,6 +29,7 @@
                 {% endif %}
               </div>
 	      </a>
+	      {% endif %}
             {% endfor %}
 
             {% include pagination.html %}

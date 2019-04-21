@@ -18,7 +18,8 @@
 
 	    <!-- { for post in paginator.posts } -->
 	    {% for post in site.posts %}
-	      <a href="{{ post.url }}">
+	      {% if post.type == "unrelated" %}
+	      <a href="{{ post.url | prepend: site.baseurl }}">
                 <div class="wow fadeIn">
                 {% if post.position == "left" %}
                   {% include content-left.html %}
@@ -29,6 +30,7 @@
                 {% endif %}
               </div>
 	      </a>
+              {% endif %}
             {% endfor %}
 
             {% include pagination.html %}

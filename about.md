@@ -3,207 +3,26 @@ layout: inner
 title: About
 permalink: /about/
 ---
-## Markdown
+# Hello,
 
-Text can be **bold**, _italic_, ~~strikethrough~~ or `keyword`.
+<img src="/site/img/me.png" alt="me" style="display: block; margin: 0 auto; height: 200px;">
 
-[Link to another page](/index.html).
+Hello,
+I am Mike,
 
-There should be whitespace between paragraphs.
+Currently, I am a M.Sc. student on Artificial Intelligence at the University of Edinburgh, what can I tell you about me?
 
-# Header 1
+Clearly, I am very interested in Machine Learning and Autonomous Cars, up to the point that my thesis is in the area of Reinforcement Learning, more exactly Hierarchical RL and Autonomous Cars. Going deeper into my Thesis topic, I can tell you in general that the idea is to develop a system to detect failures in the behaviour of the models. The idea here is to work on the field of Explainable AI, to understand when the output of a system/model is deviating from the expected output. Part of the idea is to divide a big End-to-End model into smaller more debuggable models, that uses HRL. Regarding the autonomous car part, the XAI system will be looking into actions related to car driving, such as turn left, stop, take over, etc. and given the number of smaller sub-models in the system, the environment is a simplified car env from open ai.
 
-This is a normal paragraph following a header. GitHub is a code hosting platform for version control and collaboration. It lets you and others work together on projects from anywhere.
+That was about my thesis, regarding some old facts about me you should know I studied Mathematics, Engineering and Economics Majors in my undergrad. I loved exploring all those different paths but sadly I didn’t graduate from all of them. Thanks to the interdisciplinary work I ended up creating different groups and finally participating as a ‘researcher’ in some research groups at my old university. Those contacts took me to held interesting talks with industry leaders regarding self-driving technologies in the market and explore different possible and potential projects merging industry and academia.
 
-## Header 2
+One important part of me is my curiosity, you can see all my unrelated projects. Basically, I am curious and love learning and sometimes I get carried away. I have ‘built’ hacked Nintendos, learned how to play the piano, created some web pages, hacked some cars, learn several languages, etc. etc.
 
-> This is a blockquote following a header.
->
-> When something is important enough, you do it even if the odds are not in your favor.
+I don’t know what else to tell you, so, for now, I will let some links in which you can learn more about who I am:
 
-### Header 3
+[https://github.com/NotAnyMike](https://github.com/NotAnyMike)
 
-{% highlight js %}
-// Javascript code with syntax highlighting.
-var fun = function lang(l) {
-  dateformat.i18n = require('./lang/' + l)
-  return true;
-}
-{% endhighlight %}
+[https://twitter.com/NotAnyMike](https://twitter.com/NotAnyMike)
 
-{% highlight ruby %}
-# Ruby code with syntax highlighting
-GitHubPages::Dependencies.gems.each do |gem, version|
-  s.add_dependency(gem, "= #{version}")
-end
-{% endhighlight %}
+[https://www.facebook.com/MikeCrosoft](https://www.facebook.com/MikeCrosoft)
 
-#### Header 4
-
-*   This is an unordered list following a header.
-*   This is an unordered list following a header.
-*   This is an unordered list following a header.
-
-##### Header 5
-
-1.  This is an ordered list following a header.
-2.  This is an ordered list following a header.
-3.  This is an ordered list following a header.
-
-###### Header 6
-
-| head1        | head two          | three |
-|:-------------|:------------------|:------|
-| ok           | good swedish fish | nice  |
-| out of stock | good and plenty   | nice  |
-| ok           | good `oreos`      | hmm   |
-| ok           | good `zoute` drop | yumm  |
-
-### There's a horizontal rule below this.
-
----
-
-### Here is an unordered list:
-
-*   Item foo
-*   Item bar
-*   Item baz
-*   Item zip
-
-### And an ordered list:
-
-1.  Item one
-1.  Item two
-1.  Item three
-1.  Item four
-
-### And a nested list:
-
-- level 1 item
-  - level 2 item
-  - level 2 item
-    - level 3 item
-    - level 3 item
-- level 1 item
-  - level 2 item
-  - level 2 item
-  - level 2 item
-- level 1 item
-  - level 2 item
-  - level 2 item
-- level 1 item
-
-### Small image
-
-![Octocat](https://assets-cdn.github.com/images/icons/emoji/octocat.png)
-
-### Wide image
-
-![Branching](https://guides.github.com/activities/hello-world/branching.png)
-
-### Definition lists can be used with HTML syntax.
-
-<dl>
-<dt>Name</dt>
-<dd>Godzilla</dd>
-<dt>Born</dt>
-<dd>1952</dd>
-<dt>Birthplace</dt>
-<dd>Japan</dd>
-<dt>Color</dt>
-<dd>Green</dd>
-</dl>
-
-{% highlight txt %}
-Long, single-line code blocks should not wrap. They should horizontally scroll if they are too long. This line should be long enough to demonstrate this.
-{% endhighlight %}
-
-{% highlight txt %}
-The final element.
-{% endhighlight %}
-
----
-
-## Syntax highlighting
-
-Jekyll has [built in support](https://jekyllrb.com/docs/templates/#code-snippet-highlighting) for syntax highlighting of over 60 languages thanks to [Rouge](http://rouge.jneen.net/).
-
-To render a code block with syntax highlighting, surround your code as follows:
-
-{% highlight markdown %}
-{% raw %}
-{% highlight ruby %}
-def foo
-  puts 'foo'
-end
-{% endhighlight %}
-{% endraw %}
-{% endhighlight %}
-
-[Pygments](http://pygments.org/) styles are present under section 6.0 of `css/style.scss` for customization.
-
-### Examples
-
----
-
-#### Bash
-
-{% highlight bash %}
->_ ssh -i ~/.ssh/id_rsa account@host.com
-account@host:~$
-$ var="my-value"
-$ echo $var
-my-value
-$ logout
-{% endhighlight %}
-
-#### HTML
-
-{% highlight html %}
-<!DOCTYPE html>
-<html>
- <head>
-   <meta charset="UTF-8">
-   <title>title</title>
- </head>
- <body>
-
- </body>
-</html>
-{% endhighlight %}
-
-#### CSS
-
-{% highlight css %}
-/*--------------------------------------------------------------
-	1.0 Defaults
---------------------------------------------------------------*/
-
-@media (min-width: 1200px) {
-  .container {
-    width: 1200px;
-  }
-}
-
-body {
-  background-color: #e9edf0;
-  @extend %opensans;
-  -webkit-font-smoothing: antialiased;
-}
-{% endhighlight %}
-
-#### YAML
-
-{% highlight yaml %}
-### Phantom settings
-paginate: 10
-footer_text: '© 2018 Jami Gibbs'
-admin_name: 'Jami Gibbs'
-google_analytics: "UA-9999999-99" # Update with your own tracking ID
-
-#### Phantom Navigation menu
-enable_nav: true
-nav_item:
-  - { url: '/', text: 'Home' }
-  - { url: '/about', text: 'About' }
-{% endhighlight %}
