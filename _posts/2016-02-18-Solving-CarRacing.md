@@ -7,9 +7,6 @@ categories: RL
 tags: RL OpenAI CarRacing-v0 PPO
 type: related
 featured_image: '/site/img/posts/SolvingCarRacing/1.gif'
-project_link: 'https://github.com/jamigibbs'
-button_icon: 'flask fas'
-button_text: 'Visit Project'
 lead_text: "An easy, robust and fast solution for the CarRacing-v0 environment"
 ---
 
