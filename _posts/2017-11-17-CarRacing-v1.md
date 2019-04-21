@@ -2,7 +2,7 @@
 layout: inner
 position: left
 title: 'CarRacing-v1'
-date: 2016-02-20 15:56:00
+date: 2017-11-17 15:56:00
 type: related
 categories: development
 tags: Gym OpenAI Python 
