@@ -7,7 +7,7 @@ date: 2017-12-18 21:15:00
 categories: RL
 tags: RL OpenAI CarRacing-v0 PPO
 type: related
-featured_image: '/site/img/posts/SolvingCarRacing/1.gif'
+featured_image: '/site/img/posts/SolvingCarRacing/1-compressed.gif'
 lead_text: "An easy, robust and fast solution for the CarRacing-v0 environment"
 ---
 
