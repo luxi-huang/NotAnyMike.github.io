@@ -5,7 +5,7 @@ permalink: /about/
 ---
 # Hello,
 
-<img src="/site/img/me.png" alt="me" style="display: block; margin: 0 auto; height: 200px;">
+<img src="/img/me.png" alt="me" style="display: block; margin: 0 auto; height: 200px;">
 
 Hello,
 I am Mike,

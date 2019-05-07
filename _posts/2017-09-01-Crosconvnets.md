@@ -21,4 +21,4 @@ The model used a combination between convnets, auto-encoders and cross-convoluti
 
 The original model used images in which the movement was easy to predict, like characters in a 2D world or exercise videos. The hypothesis was that the orders book in for any stock, shared certain important characteristics which allowed this kind of model to extract useful patterns to predict the future behaviour of the stock being analysed.
 
-![diagram](/site/img/posts/crossconvnets/diagram.png)
+![diagram](/img/posts/crossconvnets/diagram.png)

@@ -21,6 +21,6 @@ This first version is an improvement over OpenAI gym Car-Racing-v0, which is foc
 
 For further details please visit [https://github.com/NotAnyMike/gym](https://github.com/NotAnyMike/gym){:target="_blank"}
 
-![two images](/site/img/posts/CarRacing-v1/2.png)
+![two images](/img/posts/CarRacing-v1/2.png)
 
-![two images](/site/img/posts/CarRacing-v1/y.png)
+![two images](/img/posts/CarRacing-v1/y.png)

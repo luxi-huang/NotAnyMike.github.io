@@ -7,13 +7,13 @@ date: 2017-12-18 21:15:00
 categories: RL
 tags: RL OpenAI CarRacing-v0 PPO
 type: related
-featured_image: '/site/img/posts/SolvingCarRacing/1-compressed.gif'
+featured_image: 'img/posts/SolvingCarRacing/1-compressed.gif'
 lead_text: "An easy, robust and fast solution for the CarRacing-v0 environment"
 ---
 
 
 # Solving Car Racing with Proximal Policy Optimisation
-<!-- featured_image: 'img/posts/04_phantom-jekyll-1130x864-2x.png' -->
+<!-- featured_image: '/img/posts/04_phantom-jekyll-1130x864-2x.png' -->
 
 I write this because I notice a significant lack of information regarding CarRacing environment. I also have expanded the environment to welcome more complex scenarios ([see more](/gym){:target="_blank"}). My intention is to publish all the information regarding how to train the model, upload the weights of my model and general tips of what to do to solve it.
 
@@ -64,7 +64,7 @@ I did small changes.
 
 This is automatically taken care in [CarRacing-v1](/site/CarRacing-v1){:target="_blank"}. So in the image below you can see the original observations (left) and the new one I am using to the right.
 
-![ob-space](/site/img/posts/SolvingCarRacing/obs-space.png)
+![ob-space](/img/posts/SolvingCarRacing/obs-space.png)
 
 ### Other modifications
 
@@ -165,7 +165,7 @@ These are some of the interesting behaviours I found in my trained model
 
 Here the agent, after recovering from slipping, returns to the track but starts going in the wrong direction.
 
-![backwards](/site/img/posts/SolvingCarRacing/1.gif)
+![backwards](/img/posts/SolvingCarRacing/1.gif)
 
 ---
 
@@ -173,7 +173,7 @@ Here the agent, after recovering from slipping, returns to the track but starts 
 
 The interesting part about this one is that the agent has to go through tow recoveries, given that the first strategy didn’t work and the agent is still outside the track.
 
-![backwards](/site/img/posts/SolvingCarRacing/2.gif)
+![backwards](/img/posts/SolvingCarRacing/2.gif)
 
 ---
 
@@ -181,7 +181,7 @@ The interesting part about this one is that the agent has to go through tow reco
 
 In this clip, the agent avoids going out again by breaking and this time taking the curve slowly.
 
-![backwards](/site/img/posts/SolvingCarRacing/3.gif)
+![backwards](/img/posts/SolvingCarRacing/3.gif)
 
 ---
 
@@ -189,7 +189,7 @@ In this clip, the agent avoids going out again by breaking and this time taking 
 
 I don’t know how to call this but it is not an easy recovery and an interesting one.
 
-![backwards](/site/img/posts/SolvingCarRacing/4.gif)
+![backwards](/img/posts/SolvingCarRacing/4.gif)
 
 ---
 
@@ -198,7 +198,7 @@ I don’t know how to call this but it is not an easy recovery and an interestin
 ### Safe behaviour
 This is clearly not the finished trained model, but nonetheless is an interesting behaviour where the agent does not go out of the track never, it is efficient if the agent only wants to cover all the track and don’t care about time or speed.
 
-![backwards](/site/img/posts/SolvingCarRacing/5.gif)
+![backwards](/img/posts/SolvingCarRacing/5.gif)
 
 ---
 
@@ -206,7 +206,7 @@ This is clearly not the finished trained model, but nonetheless is an interestin
 
 You can notice how the car decelerates approaching the curve in order to take the curve right. One of the common mistakes of the very few agents in this environment is that once the agent accelerates, it does not reduce the speed and therefore ends up outside the track.
 
-![backwards](/site/img/posts/SolvingCarRacing/6.gif)
+![backwards](/img/posts/SolvingCarRacing/6.gif)
 
 ---
 
