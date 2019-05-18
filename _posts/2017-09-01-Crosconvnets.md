@@ -7,7 +7,7 @@ categories: development
 type: related
 tags: Movement-prediction DNN
 featured_image: 'img/posts/crossconvnets/diagram.png'
-lead_text: 'Cross-Convolutional Neural Networks applied to Finance (working on ...)'
+lead_text: 'Short-term Stochastic Motion Prediction to the Stock Market'
 
 
 ---
