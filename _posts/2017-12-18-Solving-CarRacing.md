@@ -118,6 +118,7 @@ We will use the default implementation of stable-baselines, and the CarRacing-v1
    * download the environment by running `git clone https://github.com/NotAnyMike/gym`
    * `cd gym` 
    * followed by  `pip install '.[Box2D]'` to install the repo
+   * Install this exact version of pyglet `pip install pyglet==v1.3.2`.
 6. Download the weights from [here](https://github.com/NotAnyMike/gym/blob/master/car_racing_weights.pkl){:target="_blank"}.
 7. Create a file `run.py` and copy the code below.
 8. Run the model by running `python run.py` from that folder.
