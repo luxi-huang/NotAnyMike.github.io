@@ -37,7 +37,7 @@ There are different ways to make the actions space discrete, the easiest one is 
 |    `Accelerate` | $$\rightarrow$$ | `[  0.0, 1.0, 0.8 ]` |
 |    `Do-Nothing` | $$\rightarrow$$ | `[  0.0, 0.0, 0.0 ]` |
 
-I call this *hard* discretisation because it only allows one continues action per discrete one and the actions are at their continuous maximum. This brings some problems because know when you want to turn left the only option, is to steer all the way to the left (which in practice is not a big issue thanks to the `Do-Nothing`). Another problem is that either the model is steering or accelerating but not both at the same time, which means that in curves you cannot brake at the same time you steer to the left, which I found does make the trained model have some issues dealing with turns at low speed.
+I call this *hard* discretisation because it only allows one continue action per discrete one and the actions are at their continuous maximum. This brings some problems because know when you want to turn left the only option, is to steer all the way to the left (which in practice is not a big issue thanks to the `Do-Nothing`). Another problem is that either the model is steering or accelerating but not both at the same time, which means that in curves you cannot brake at the same time you steer to the left, which I found does make the trained model have some issues dealing with turns at low speed.
 
 An easy solution is `soft` discretisation where the discretise points around the continuous space is not only close to the corners. We can think about soft discretisation as a convex combination or an affine transformation of the `soft` discretised space. For instance 
 
@@ -78,7 +78,7 @@ Implementing a **Timeout** is also a good idea. In a few words, timeout refers t
 
 Usually, it is a good idea in general to **clip the gradient** as well, given that gradient is high dimension, it is easier to clip its norm. This aims to avoid the exploiting gradient problem as well as taking to big steps which can result in non-optimal step-sizes. Usually, this is part of the configuration of the algorithm.
 
-Finally it is important to have in mind that changing the observation space changes the underlying works of the convolutional layers, usually images come as tensors of  `NxHxWxC` where `N`is the number of frames in the batch, `H`and `W` is the height and weight and `C`is the channels, in the default environment $$C=3$$ because of the three RGB channels. We have to modify it to $$C=4$$ and in my case the dimensions changes to `NxCxWxH`.
+Finally it is important to have in mind that changing the observation space changes the underlying works of the convolutional layers, usually images come as tensors of  `NxHxWxC` where `N`is the number of frames in the batch, `H`and `W` is the height and weight and `C`is the channels, in the default environment $$C=3$$ because of the three RGB channels. We have to modify it to $$C=4$$.
 
 
 
@@ -90,9 +90,9 @@ All these different implementations are taken care of in the modified version of
 
 ## Training 
 
-The training usually takes several hours, but after 30 minutes of training, we can see significant results. I trained the model for around 3 million steps in 4 parallel environments, which depending on the hardware specifications can take around 6 hours (have in mind that the environment I used also comes with extra features which make it slower than the default one), in general I used an i7 8-th generation and a RTX-2080 graphics card.
+The training usually takes several hours, but after 30 minutes of training, we can see significant results. I trained the model for around 10 million steps in 6 parallel environments, which depending on the hardware specifications can take around 12 hours (have in mind that the environment I used also comes with extra features which make it slower than the default one), in general I used an i7 8-th generation and a RTX-2080 graphics card.
 
-You can download the weights from [here](https://drive.google.com/file/d/1r3Z6xEbrNvstSzHbMbJoPSAxVIsOF8vH/view?usp=sharing){:target="_blank"}, the model uses the default configuration for the Value and Q functions in PPO2 from stable-baseline which is only a 2 conv layers (if you are going to use it don't forget the `NHWC` configuration). 
+You can download the weights from [here](https://github.com/NotAnyMike/gym/blob/master/car_racing_weights.pkl){:target="_blank"}, the model uses the default configuration for the Value and Q functions in PPO2 from stable-baseline which is only a 2 conv layers. 
 
 ## Installation and running
 
@@ -118,8 +118,9 @@ We will use the default implementation of stable-baselines, and the CarRacing-v1
    * download the environment by running `git clone https://github.com/NotAnyMike/gym`
    * `cd gym` 
    * followed by  `pip install '.[Box2D]'` to install the repo
-6. Download the weights from [here](https://drive.google.com/file/d/1r3Z6xEbrNvstSzHbMbJoPSAxVIsOF8vH/view?usp=sharing){:target="_blank"} and add unzip them in a new folder.
-7. Run the model by running `python run.py` from that folder (file included with the weights).
+6. Download the weights from [here](https://github.com/NotAnyMike/gym/blob/master/car_racing_weights.pkl){:target="_blank"}.
+7. Create a file `run.py` and copy the code below.
+8. Run the model by running `python run.py` from that folder.
 
 A fairly simple code as follows should load and run the trained model successfully.
 
@@ -144,7 +145,7 @@ if __name__=='__main__':
     #env = getattr(environments, env)
     env = DummyVecEnv([env])
 
-    model = PPO2.load('weights_final')
+    model = PPO2.load('car_racing_weights.pkl')
 
     model.set_env(env)
 
@@ -159,7 +160,7 @@ if __name__=='__main__':
 
 # Results
 
-These are some of the interesting behaviours I found in my trained model
+These are some of the interesting behaviours I found in my trained model. The weights included here are much more efficient that the model from the videos below.
 
 ### Going backwards:
 
