@@ -1,13 +1,12 @@
 ---
 layout: inner
-position: right
 title: 'Solving CarRacing
  with PPO'
 date: 2017-12-18 21:15:00
 categories: RL
 tags: RL OpenAI CarRacing-v0 PPO
-type: related
-featured_image: 'img/posts/SolvingCarRacing/1-compressed.gif'
+type: project
+featured_image: '/img/posts/SolvingCarRacing/1-compressed.gif'
 lead_text: "An easy, robust and fast solution for the CarRacing-v0 environment"
 ---
 

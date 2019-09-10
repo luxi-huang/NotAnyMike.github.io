@@ -1,12 +1,11 @@
 ---
 layout: inner
-position: left
 title: 'Cross-Convolutional Neural Networks applied to Finance'
 date: 2017-09-01 14:15:00
 categories: development
-type: related
+type: project
 tags: Movement-prediction DNN
-featured_image: 'img/posts/crossconvnets/diagram.png'
+featured_image: '/img/posts/crossconvnets/diagram.png'
 lead_text: 'Cross-Convolutional Neural Networks applied to Finance (working on ...)'
 
 

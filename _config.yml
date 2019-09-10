@@ -22,9 +22,11 @@ twitter_username: 'NotAnyMike'
 github_username: 'NotAnyMike'
 medium_username: '' #'blog.jamigibbs.com'
 cv_url: 'https://drive.google.com/file/d/1QZWhXaDQVXVAy36f7ov2EnawCoKF_y-B/view'
-section_title: 'Latest Work'
-section_subtitle: "Here is a list of some of my lastest works or projects, enjoy. (Have in mind that this page is under construction)"
-unrelated_title: 'Unrelated projects'
+section_title: 'All'
+section_subtitle: "Here is a list of most of the things I have written/done/thought, enjoy."
+projects_title: 'Latest Work'
+projects_subtitle: "Here is a list of some of my lastest works or projects, enjoy."
+unrelated_title: 'General stuff'
 unrelated_subtitle: "Some projects resulting of having free time or different hobbies, enjoy."
 
 # Build settings
@@ -44,7 +46,8 @@ permalink: /:title/
 #### Phantom Navigation menu
 enable_nav: true
 nav_item:
-  - { url: '/', text: 'Home' }
-  - { url: '/unrelated', text: 'Unrelated projects' }
+  - { url: '/', text: 'All' }
+  - { url: '/projects', text: 'Projects' }
+  - { url: '/stuff', text: 'Other stuff' }
   - { url: '/about', text: 'About me' }
   - { url: '/list100', text: 'List 100' }

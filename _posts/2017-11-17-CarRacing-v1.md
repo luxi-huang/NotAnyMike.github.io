@@ -1,12 +1,11 @@
 ---
 layout: inner
-position: left
 title: 'CarRacing-v1'
 date: 2017-11-17 15:56:00
-type: related
+type: project
 categories: development
 tags: Gym OpenAI Python 
-featured_image: 'img/posts/CarRacing-v1/y.png'
+featured_image: '/img/posts/CarRacing-v1/y.png'
 project_link: 'https://github.com/NotAnyMike/gym'
 button_icon: 'github'
 button_text: 'Visit Project'

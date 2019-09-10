@@ -1,6 +1,5 @@
 ---
 layout: inner
-position: left
 title: 'What's next?'
 date: 2019-05-01 14:15:00
 categories: development

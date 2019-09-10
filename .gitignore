@@ -5,5 +5,3 @@ _site
 Gemfile.lock
 vendor/
 *.DS_Store
-
-*/2019-08-19-GAE.md

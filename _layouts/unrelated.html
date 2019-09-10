@@ -21,11 +21,12 @@
 	      {% if post.type == "unrelated" %}
 	      <a href="{{ post.url | prepend: site.baseurl }}">
                 <div class="wow fadeIn">
-                {% if post.position == "left" %}
+		{% assign mod = forloop.index | modulo:2 %}
+                {% if mod == 0 %}
                   {% include content-left.html %}
                 {% endif %}
   
-                {% if post.position == "right" %}
+                {% if mod == 1 %}
                   {% include content-right.html %}
                 {% endif %}
               </div>
