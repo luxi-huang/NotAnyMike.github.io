@@ -1,6 +1,17 @@
 # Personal Site
 
-install it with `sudo gem install bundler --version '1.16'` and run it with `jekyll serve`
+## Installation
+
+1. Install all necesary libraries with `sudo apt-get install ruby-full build-essential zlib1g-dev`
+2. `echo '# Install Ruby Gems to ~/gems' >> ~/.bashrc`
+3. `echo 'export GEM_HOME="$HOME/gems"' >> ~/.bashrc`
+4. `echo 'export PATH="$HOME/gems/bin:$PATH"' >> ~/.bashrc`
+5. `source ~/.bashrc`
+6. `sudo gem install bundler --version '1.16'` 
+7. `bundle install` (if this doesn't work try installing before this running `sudo gem install bundler`)
+8. if there is an 
+
+and run it with `bundle exec jekyll serve`
 
 ## Phantom for Jekyll
 
