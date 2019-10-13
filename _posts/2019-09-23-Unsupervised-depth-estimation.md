@@ -3,11 +3,14 @@ layout: inner
 title: 'Unsupervised Depth Estimation Explained'
 date: 2019-09-23 14:15:00
 categories: development
-type: unrelated
+type: project
 tags: Maths Deep-learning Computer-vision
 featured_image: '/img/posts/Depth/depth.jpg'
 comments: true
-lead_text: 'Explaining how does unsupervised depth estimation work'
+project_link: 'https://github.com/notanymike/HRL'
+button_icon: 'github'
+button_text: 'Visit Project'
+lead_text: 'Explaining how does unsupervised depth estimation work and a re-implementation of the original paper'
 
 
 ---
@@ -15,6 +18,18 @@ lead_text: 'Explaining how does unsupervised depth estimation work'
 # Unsupervised Depth Estimation Explained [^16]
 
 Lately, there have been several interesting papers [^1][^2][^3][^4][^5][^6][^7][^8][^9][^10][^11][^12][^13][^14][^15] for depth estimation using only images and without any supervision. Some approaches use stereo images, some others use scale consistency to improve results, there are implementations with multiple masks as well as a very simple defined mask to filter out moving objects or occluded or new visible objects.
+
+# Repository
+
+The repository is available [here](https://github.com/NotAnyMike/UnsupervisedDepthAndPose){:target="_blank"}, it is just a preliminary version of  *Zhou et al.*[^1] but is capable of producing reasonable results:
+
+| ![2011_09_26_drive_0005_sync_02](https://github.com/NotAnyMike/UnsupervisedDepthAndPose/raw/master/misc/2011_09_26_drive_0005_sync_02.gif?raw=ture) | ![s 21](https://github.com/NotAnyMike/UnsupervisedDepthAndPose/raw/master/misc/sequences_21.gif?raw=true) |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| ![s6](https://github.com/NotAnyMike/UnsupervisedDepthAndPose/raw/master/misc/sequences_06.gif?raw=true) | ![s 7](https://github.com/NotAnyMike/UnsupervisedDepthAndPose/raw/master/misc/sequences_07.gif?raw=true) |
+
+---
+
+# Explanaition
 
 If I am not mistaken, the first paper using this unsupervised approach with deep NN was *Godard et al.* [^7] using epipolar geometry to infer depth. They built on top of Garg et al. [^4] which used similar methods but the transformation matrix was given. I will mainly discuss the approach of *Zhou et al.* [^1], because it is a good foundation for the rest of the papers.
 
@@ -99,6 +114,8 @@ For this, it was necessary to estimate the depth of the target $$z_\text{camera}
 Finally, it is important to mention that the entire loss function includes terms for smoothness as well as regularization terms, which I dont cover here because the focus is in depth estimation.
 
 (if you see I have made a mistake, don't hesitate to tell me).
+
+
 
 ---
 
