@@ -10,7 +10,7 @@ comments: true
 project_link: 'https://github.com/notanymike/HRL'
 button_icon: 'github'
 button_text: 'Visit Project'
-lead_text: 'Explaining how does unsupervised depth estimation work and a re-implementation of the original paper'
+lead_text: 'Explaining how unsupervised depth estimation works and a re-implementation of the original paper'
 
 
 ---
@@ -29,7 +29,7 @@ The repository is available [here](https://github.com/NotAnyMike/UnsupervisedDep
 
 ---
 
-# Explanaition
+# Explanation
 
 If I am not mistaken, the first paper using this unsupervised approach with deep NN was *Godard et al.* [^7] using epipolar geometry to infer depth. They built on top of Garg et al. [^4] which used similar methods but the transformation matrix was given. I will mainly discuss the approach of *Zhou et al.* [^1], because it is a good foundation for the rest of the papers.
 
@@ -95,11 +95,11 @@ $$
 
 
 
-This is called inverse warp, because instead of sending the pixels from source to target, it matches the pixels from target to source and from there reconstruct the target. If I am not mistaken (if I am, correct me) in this way the projection into target pixels does not have fractional pixels (e.g. $$(3.3,2.5)$$) and the bilinear interpolation is done in the source image.
+This is called inverse warp because instead of sending the pixels from source to target, it matches the pixels from target to source and from there reconstruct the target. If I am not mistaken (if I am, correct me) in this way the projection into target pixels does not have fractional pixels (e.g. $$(3.3,2.5)$$) and the bilinear interpolation is done in the source image.
 
 This reconstruction will have several dead pixels. Not even in a perfect world, this matching operation could be a bijection between the two frames. For example pixels of the scene that were not visible in the source but were visible in the target will not have a match in the other image. Apart from these dead pixels, objects moving (dynamic objects) will have a different position in the next frame. For them, estimating depth from the target is not enough, they will also require estimating their motion. All those impossible to match pixels are also predicted and the list of pixels that are not predictable are put in a Mask $$M$$. If $$M$$ is all the non-predictable pixels (due to occlusion, dynamic objects, etc.) then $$1-M$$ is all the predictable pixels. There are different ways of predicting these un-matchable pixels, for an interesting approach see *Bian et al.* [^13]
 
-From there, basically the loss is the recontruction loss betwen the predictable pixels between the projected image and the target image. That is:
+From there, basically the loss is the reconstruction loss between the predictable pixels between the projected image and the target image. That is:
 
 
 
@@ -111,7 +111,7 @@ $$
 
 For this, it was necessary to estimate the depth of the target $$z_\text{camera}^\text{target}$$ and the movement of the camera (ego-motion) $$[R\mid\boldsymbol t]$$. That is the basic approach, there we were given the intrinsic matrix, one extra step is to estimate the intrinsic matrix $$K$$ as well, which several approaches do. It is also possible to differentiate between unpredictable pixels and dynamic objects and try to predict its movement.
 
-Finally, it is important to mention that the entire loss function includes terms for smoothness as well as regularization terms, which I dont cover here because the focus is in depth estimation.
+Finally, it is important to mention that the entire loss function includes terms for smoothness as well as regularisation terms, which I don't cover here because the focus is depth estimation.
 
 (if you see I have made a mistake, don't hesitate to tell me).
 
