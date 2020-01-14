@@ -23,23 +23,35 @@ Lately, there have been several interesting papers [^1][^2][^3][^4][^5][^6][^7][
 
 # Explanation
 
-If I am not mistaken, the first paper using this unsupervised approach with deep NN was *Godard et al.* [^7] using epipolar geometry to infer depth. They built on top of Garg et al. [^4] which used similar methods but the transformation matrix was given. I will mainly discuss the approach of *Zhou et al.* [^1], because it is a good foundation for the rest of the papers.
+### Notation
 
- All the models cited here are based on the general equation of 3D to 2D image projection equation:
+We will use Tait-Bryan Euler rotations, that is $$\alpha, \beta, \gamma$$ 
 
+## State
+
+The state $$x_t$$ is composed by $$x$$ and $$y$$ coordinates, the yaw $$\yaw$$, velocity $$v$$ and steering angle $$st$$. Have in mind thath $$x_t$$ is the state of the filter while $$x$$ is the value in the $$x$$-axis. The tracked orientation is only composed by the yaw $$\phi$$, we are only modelling a 2D world, therefore we do not care about the roll $$\theta$$ or pitch $$\psi$$. And finally we added the $$\text{steering angle}$$ which is important to predict the movement of the car.
 
 
 $$
-\begin{equation}
-z_c \begin{bmatrix}u\\v\\1\end{bmatrix} = K[R|\boldsymbol t]\begin{bmatrix}x_w\\y_w\\z_w\\1\end{bmatrix}
-\end{equation}
+x_t= \left[\begin{matrix}
+x\\y\\\text{yaw}\\v\\\text{steering angle}
+\end{matrix}\right]
 $$
 
 
+## Sensors
 
-This equation coverts a 3D homogenous world coordinate $$ [x_w,y_w,z_w,1]^T $$ into pixel homogeneous coordinate $$[u,v,1]^T$$, here $$K$$ is know as the intrinsic matrix and holds all the intrinsic parameters of the camera, such as focal length $$f$$, the principal point (which is the centre of the image in pixels) but does not include the distortion parameters. All modern cameras have a certain degree of distortion produced by its lens, it is the same distortion produced by a fisheye lens but with a varying degree. The projection equation we saw above (a.k.a. pinhole camera model) does not include any term accounting for this kind of distortions. For this equation we assume there is no lens, therefore the distortion correction has to happen before using this model, this is usually done by the camera itself.
+I want to exemplify a Kalman Filter using different kind of sensors. This is slightly more interesting problem, also Kalman Filter is the right tool to measure several different sensor information.
 
-$$[R\mid \boldsymbol t]$$ represents the transformation matrix, $$R$$ stands for Rotation and $$t$$ for translation, there are several different ways of representing rotation and translation of a body in 3D space, the easiest to use is the 6 degrees of freedom, which is used by all the papers here. We use Euler angles to represent rotations, but there are also quaternions and rotation matrices. 6 DoF has 6 variables, three for the translation in $$x,y$$ and $$z$$ axis and three for the rotation (Euler angles) in each corresponding axis (roll, pitch and yaw respectively).
+#### 1. Localisation reading
+
+This measurement contains the global measurements that avoid the system of drifting, with out this measurement, the system is also called Dead reckoning. Dead reckoning or using a Kalman Filter without a global measurement (like $$x,y$$ coordinates in this case) is prone to cumulative errors, that means that the state will slowly diverge from the true value.
+
+#### 2. Inertial Measurement Unit 
+
+#### 3. Wheel sensors
+
+
 
 To transform/rotate an object, it is necessary to convert the 6DoF into the transformation matrix, there are several interesting materials out there regarding how to do it. The result of that operation is the following matrix
 
