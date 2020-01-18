@@ -4,7 +4,7 @@ title: 'Unsupervised Depth Estimation Explained'
 date: 2019-09-23 14:15:00
 categories: development
 type: hidden
-tags: Maths Deep-learning Computer-vision
+tags: Maths Sensor-Fusion Kalman-Filter
 featured_image: '/img/posts/Depth/depth.jpg'
 comments: true
 project_link: 'https://github.com/notanymike/HRL'
@@ -15,112 +15,356 @@ lead_text: 'Explaining how unsupervised depth estimation works and a re-implemen
 
 ---
 
-# A quick review of Error State - Extended Kalman Filter
+# A "quick" review of Error State - Extended Kalman Filter
 
-Lately, there have been several interesting papers [^1][^2][^3][^4][^5][^6][^7][^8][^9][^10][^11][^12][^13][^14][^15] for depth estimation using only images and without any supervision. Some approaches use stereo images, some others use scale consistency to improve results, there are implementations with multiple masks as well as a very simple defined mask to filter out moving objects or occluded or new visible objects.
-
----
-
-# Explanation
+There is an incrediable lack of resources explaining with detail how Kaman Filter (KF) works. Imagine now the lack of resources explaining a more complex KF as the Error-state Extended Kaman Filter (ES-EKF). On the other side, there are fair ammount of blogs covering the Unscented Kalman Filter. In this post I will focus on the ES-EKF and leave UKF alone for now. One of the only blogs regarding a linear KF worth reading is [kalman filter with images](https://www.bzarg.com/p/how-a-kalman-filter-works-in-pictures/) which I totally recommended. Here I will cover with more details the whole linear kalman filter equations and how to derive them. After that I will explain how to transform it into an Extended KF (EKF) and then how to transform it into a Error-state Extended KF (ES-EKF).
 
 ### Notation
 
-We will use Tait-Bryan Euler rotations, that is $$\alpha, \beta, \gamma$$ 
+We will use Proper Euler angles to note rotations, that will be is $$\alpha, \beta, \gamma$$, we are only interested on 2D rotations therefore we will use the z-x'-z'' representation in which $$\alpha$$ represents the yaw (the representation does not matter as far as the first rotation happens in the $$z$$ axis). The steering angle will be noted by $$\delta$$.
+
+# Explanaition
+
+The Kalman Filter is used to keep track of certain variables and fuse information coming from other sensors such as Inertial Measurement Unit (IMU) or Wheels or litterally any other sensor. It is very common in robotics because it fuses the information according how certain the measurments are. Therefore we can have several sources of information, some more reliable than others and a KF takes that into account in order to keep track of the variables we are interested.
 
 ## State
 
-The state $$x_t$$ is composed by $$x$$ and $$y$$ coordinates, the yaw $$\yaw$$, velocity $$v$$ and steering angle $$st$$. Have in mind thath $$x_t$$ is the state of the filter while $$x$$ is the value in the $$x$$-axis. The tracked orientation is only composed by the yaw $$\phi$$, we are only modelling a 2D world, therefore we do not care about the roll $$\theta$$ or pitch $$\psi$$. And finally we added the $$\text{steering angle}$$ which is important to predict the movement of the car.
+The state $$x_t$$ we are interested on tracking is composed by $$x$$ and $$y$$ coordinates, the heading of the vehicle or the yaw $$\alpha$$, the current velocity $$v$$ and steering angle $$\delta$$. Have in mind that $$x_t$$ is the state of the filter while $$x$$ is the value in the $$x$$-axis. The tracked orientation is only composed by the yaw $$\alpha$$, we are only modelling a 2D world, therefore we do not care about the roll $$\beta$$ or pitch $$\gamma$$. And finally we added the steering angle $$\delta$$ which is important to predict the movement of the car. Therefore the state in timestep $$t$$ is
 
 
 $$
-x_t= \left[\begin{matrix}
-x\\y\\\text{yaw}\\v\\\text{steering angle}
+s_t= \left[\begin{matrix}
+x\\y\\\theta\\v\\\delta
+\end{matrix}\right]
+$$
+
+KF can be understood in two steps, update and predict step. In the predict step, using the tracked information we predict where will the object move in the next step. In the update step we update the belief we have about the variables using the external measurements comming from the sensors.
+
+## Sensor
+
+I want to exemplify a Kalman Filter using different kind of sensors, but that will be repeating equations, so I think is more interesting using a Kinmatic model instead of more sensors (if I have time I will expand this post). Nonetheless keep in mind that a KF can handle any number of sensors, so far we are going to use the localization measurement comming from a gps + pseduo-gyro.
+
+This measurement contains the global measurements ($$x,y$$) that avoid the system of drifting. This system (with out global variables) is also called Dead reckoning. Dead reckoning or using a Kalman Filter without a global measurement (like $$x,y$$ coordinates in this case) is prone to cumulative errors, that means that the state will slowly diverge from the true value.
+
+## Prediction Step
+
+We will track the state as a multivariable gaussian distribution with mean $$\mu$$ and covariance $$P$$. Where $$\mu_t$$ will be the expected value of our state. $$\mu_t$$  will be the expected value of the state using the information available (i.e. the mean of $$s_t$$). And state will have a covariance matrix $$P$$  which means how certain we are about our prediction. We will use $$\mu_{t-1}$$ and $$u$$ to predict $$ \mu_t$$. Here $$u$$ is a control column-vector of any extra information we can use, for example steering angle if we can have access to the streering of the car or the acceleration if we have access to it. $$u$$ can be a vector of any size.
+
+We will try to model everything using matrices but for now we will use scalars, the new value of the state in $$t$$ will be
+
+
+$$
+\begin{align}
+x_t &= x_{t-1} + v\Delta t \cos \theta\\
+y_t &= y_{t-1} + v\Delta t \sin \theta\\
+\theta &= \theta_{t-1}\\
+v_t &= v_{t-1}\\
+\delta_t &= \delta_{t-1}
+\end{align}
+$$
+
+
+Here we are making a simplifying assumptions about the world. First the velocity $$v$$ and the steering $$\delta$$  of the next step will be the same as before which is a weak assumption. The strong assumption is that the heading or yaw of the car $$\alpha$$ is also the same. We can incorporate the kinematic model here to make the prediction more robust. But that will be adding non-linearities (and so far it is a linear KF) so for now let's work with a simple environment and later on we can make things more interesting.
+
+This prediction can be re-formulated in matrix for as
+
+
+$$
+\mu_t = F\mu_{t-1} + Bu
+$$
+
+
+Where $$u$$ only zeors and $$B$$ is a linear transformation from $$u$$ into the same form of the state $$s$$. Also $$F$$ would be (F has to be linear so far, in the EKF we will expand that to include non-linearities)
+
+
+$$
+F = \left[\begin{matrix}
+1 & 0 & 0 & \Delta t\cos\theta & 0 \\
+0 & 1 & 0 & \Delta t\sin\theta & 0\\
+0 & 0 & 1 & 0 & 0\\
+0 & 0 & 0 & 1 & 0\\
+0 & 0 & 0 & 0 & 1
 \end{matrix}\right]
 $$
 
 
-## Sensors
+This will result in the same equations but using matrix notation. Rember now that we are modeling $$s$$ as a multivariable gaussian distribution and we are keeping track of the mean of the state $$s$$ and the covariance of the state $$P$$. We already updated the mean of the state, now we have to update the covariance of the state. Every time we predict we make small errors which add noise and results in a slightly less accurate prediction. The covariance $$P$$ has to reflect this reduction in certainty. The way it is done with gaussian distributions is that the distribution gets slightly more flat (i.e. the covariance "increase"). 
 
-I want to exemplify a Kalman Filter using different kind of sensors. This is slightly more interesting problem, also Kalman Filter is the right tool to measure several different sensor information.
-
-#### 1. Localisation reading
-
-This measurement contains the global measurements that avoid the system of drifting, with out this measurement, the system is also called Dead reckoning. Dead reckoning or using a Kalman Filter without a global measurement (like $$x,y$$ coordinates in this case) is prone to cumulative errors, that means that the state will slowly diverge from the true value.
-
-#### 2. Inertial Measurement Unit 
-
-#### 3. Wheel sensors
-
-
-
-To transform/rotate an object, it is necessary to convert the 6DoF into the transformation matrix, there are several interesting materials out there regarding how to do it. The result of that operation is the following matrix
-
+In a single-variable gaussian distribution $$y \sim \mathcal N (\mu',\sigma^2) $$ the variance has the property that $$\text{var}(ky) = k^2\text{var}(y)$$, where $$k$$ is a scalar. In matrix notation that is $$P_t = FP_{t-1}F^T$$, but we have to take into account that we are adding $$Bu$$, where $$u$$ is the control vector but it is also a gaussian variable with covariance $$Q$$. Good thing about gaussians is that the covariances of a sum of gaussians is the sum of the covariances. Having this into account we have.
 
 
 $$
-[R|\boldsymbol t] = \begin{bmatrix}R&\boldsymbol t\\\boldsymbol 0 &1\end{bmatrix}
+P_t = FP_{t-1}F^T+BQB^T
 $$
 
 
+And with this we have finished prediction the state and updating its covariance.
 
-Where $$R$$ is the rotation matrix (have in mind that $$R$$ is not the same as the Euler angles but comes from them) and $$\boldsymbol t$$ is the translation in the 3D world $$[t_x,t_y,t_z]^T$$.
+## Update step
 
-Finally, $$z_c$$ is the depth from the camera frame and can be considered the scaling factor. The subscript $$c$$ means it is in respect to the camera frame, where for instance $$w$$ would mean it is in the world coordinates.
+In the update step we receive a measurement $$z$$ coming from a sensor. We use the sensor information to correct/update the belief we have about the state. The measurement is a random variable with covariance $$R$$. This is where things get interesting. In this case we have two gaussians variables, the state best estimate $$ \mu_t$$ and the measurement reading $$ z$$. 
 
-Usually, the models cited, use a target and a source image. Some use two sources to improve the results, nonetheless, the concept is the same. The target is the image being predicted and the source is the image used to predict the target. The main equation of *Zhou et al.* [^1] follows the following logic. The first step is to covert the **coordinates** of the target image ($$x$$-$$y$$ pixels, a normal mesh grid) into world coordinates, by doing this
+The best way to combine two gaussians is by multiplying them together. By multiplying them together, if certain values have hight certainty in both gaussians, the result will be also a high in the product (very certain). If both values have low certainty, the product will be even lower. And if If only one is high and the other is not, then the result will lay between high and low certainty. So multiplication of gaussians merge the information of both gaussians taking into account how certain the values are (covariance).
 
+The equations derived from multiplying two multivariate gaussians are similar to the single variable case. We will derive them here and generalize that to matrix form.
 
-
-$$
-K^{-1}I_{grid} \cdot {z_{\text{w}}^\text{target}} \leftarrow \text{This is in world coordinates}
-$$
-
-
-
-$$I_\text{grid}$$ are all the coordinates of the pixels. This operation is exactly the opposite showed above, instead of projecting 3D world points into an image, this converts 2D images into a cloud point. Because going from 3D to 2D we drop information (mainly the depth), going from 2D to 3D need extra information to reconstruct the 3D point cloud, we add this lost information (depth) when multiplying by $$z_w^\text{target}$$. If you solve for the 3D world coordinates in the first equation, this is the same operation with no translation nor rotation.
-
-Next, this result is translated again, from the target location to the source location using the camera movement $$[K\mid\boldsymbol t]_{\text{target}\to\text{source}}$$. Then it is converted again into pixel coordinates by multiplying the result by the intrinsic matrix $$K$$.
-
+Let's suppose we have $$x_1 \sim \mathcal N (\mu_1,\sigma_1^2)$$ and $$x_2\sim\mathcal N(\mu_2,\sigma_2^2)$$. Have in mind that both $$x_1$$ and $$x_2$$ live in the same vector space $$x$$, therefore 
 
 
 $$
-I_\text{source_coords} \leftarrow \underbrace{K[R|\boldsymbol t]_{\text{target}\to\text{source}}}_{\texttt{proj_tgt_cam_to_src_pixel}}\underbrace{\left( K^{-1}I_{grid}* {z_{\text{camera}}^\text{target}} \right)}_{\texttt{cam_coords}}
+\begin{align}
+	p(x_1) = \frac 1 {\sqrt{2\pi\sigma_1^2}}e^{-\frac{(x-\mu_1)^2}{2\sigma_2^2}} & & p(x_2) = \frac 1 {\sqrt{2\pi\sigma_2^2}}e^{-\frac{(x-\mu_2)^2}{2\sigma_2^2}}
+\end{align}
 $$
 
 
-
-With this, we have "matched" the coordinates from the target image with coordinates from the source image. In other words, we know where each pixel in the target image should go in the source image. That means that we can reconstruct the target image from pixels from the source image. The common way of doing this is using bilinear interpolation, which could be considered as a "convex" combination of the pixels' colours where the weights are the distance between the pixels coordinates.
-
+by multiplying them together we obtain
 
 
 $$
-I_\text{projected_target} = B(I_\text{source_coords},I_\text{source})
+\frac 1 {\sqrt{2\pi\sigma_1^2}}e^{-\frac{(x-\mu_1)^2}{2\sigma_1^2}}\frac 1 {\sqrt{2\pi\sigma_2^2}}e^{-\frac{(x-\mu_2)^2}{2\sigma_2^2}}
 $$
 
 
-
-This is called inverse warp because instead of sending the pixels from source to target, it matches the pixels from target to source and from there reconstruct the target. If I am not mistaken (if I am, correct me) in this way the projection into target pixels does not have fractional pixels (e.g. $$(3.3,2.5)$$) and the bilinear interpolation is done in the source image.
-
-This reconstruction will have several dead pixels. Not even in a perfect world, this matching operation could be a bijection between the two frames. For example pixels of the scene that were not visible in the source but were visible in the target will not have a match in the other image. Apart from these dead pixels, objects moving (dynamic objects) will have a different position in the next frame. For them, estimating depth from the target is not enough, they will also require estimating their motion. All those impossible to match pixels are also predicted and the list of pixels that are not predictable are put in a Mask $$M$$. If $$M$$ is all the non-predictable pixels (due to occlusion, dynamic objects, etc.) then $$1-M$$ is all the predictable pixels. There are different ways of predicting these un-matchable pixels, for an interesting approach see *Bian et al.* [^13]
-
-From there, basically the loss is the reconstruction loss between the predictable pixels between the projected image and the target image. That is:
-
+We also now about a very useful property of gaussians, that is the product of gausians is also a gausian. Therefore, to know the result of fusing both gausians together we have to write the equation above in a gausian form.
 
 
 $$
-\mathcal L = \sum_\text{pixels}|I_\text{projected_target}-I_\text{target}|(1-M)
+\begin{align}
+&=\frac 1 {\sqrt{2\pi\sigma_1^2}}e^{-\frac{(x-\mu_1)^2}{2\sigma_1^2}}\frac 1 {\sqrt{2\pi\sigma_2^2}}e^{-\frac{(x-\mu_2)^2}{2\sigma_2^2}}\\
+
+&=\frac 1 {2\pi\sigma_1^2\sigma_2^2}e^{-\left(\frac{(x-\mu_1)^2}{2\sigma_1^2}+\frac{(x-\mu_2)^2}{2\sigma_2^2}\right)}\\
+\end{align}
 $$
 
 
-
-For this, it was necessary to estimate the depth of the target $$z_\text{camera}^\text{target}$$ and the movement of the camera (ego-motion) $$[R\mid\boldsymbol t]$$. That is the basic approach, there we were given the intrinsic matrix, one extra step is to estimate the intrinsic matrix $$K$$ as well, which several approaches do. It is also possible to differentiate between unpredictable pixels and dynamic objects and try to predict its movement.
-
-Finally, it is important to mention that the entire loss function includes terms for smoothness as well as regularisation terms, which I don't cover here because the focus is depth estimation.
-
-(if you see I have made a mistake, don't hesitate to tell me).
+Because we know the result will be a gausian distribution, we do not care about constant values (e.g. $$2\pi\sigma_1^2$$), in fact we only care about the exponent value, which I have to transform it into something similar to 
 
 
+$$
+\frac{(x-\text{something})^2}{2\text{something else}^2}
+$$
+
+
+ 
+
+Where $$\text{something}$$ will be the new mean and $$\text{something else}^2$$ will be the new covariance after multiplication. Therefore we will ignore all the other terms and focus on the exponent value.
+
+
+$$
+\begin{align}
+\frac{(x-\mu_1)^2}{2\sigma_1^2}+\frac{(x-\mu_2)^2}{2\sigma_2^2} &= \frac{\sigma_2^2(x-\mu_1)^2+\sigma_1^2(x-\mu_2)^2}{2\sigma_1^2\sigma_2^2}\\
+&= \frac{\sigma_2^2x^2-2\sigma_2^2\mu_1x+\sigma_2^2\mu_1^2   +   \sigma_1^2x^2-2\sigma_1^2\mu_2x+\sigma_1^2\mu_2^2}{2\sigma_1^2\sigma_2^2}\\
+&= \frac{x^2(\sigma_2^2+\sigma_1^2)-2x(\sigma_2^2\mu_1+\sigma_1^2\mu_2)}{2\sigma_1^2\sigma_2^2}+\frac{\sigma_2^2\mu_1^2+\sigma_1^2\mu_2^2}{2\sigma_1^2\sigma_2^2}\\
+&=  \frac{(\sigma_2^2+\sigma_1^2)}{2\sigma_1^2\sigma_2^2}\left(x^2-2x\frac{\sigma_2^2\mu_1+\sigma_1^2\mu_2}{\sigma^2+\sigma_2^2}\right)+\frac{\sigma_2^2\mu_1^2+\sigma_1^2\mu_2^2}{2\sigma_1^2\sigma_2^2}\\
+\end{align}
+$$
+
+
+The term on the right can be ignore because it is constant and goes out of the exponent. And the term in parenthesis resembles to a perfect square trinomial lacking the last squared term.
+
+
+$$
+\begin{align}
+&=  \frac{(\sigma_2^2+\sigma_1^2)}{2\sigma_1^2\sigma_2^2}\left(x^2-2x\frac{\sigma_2^2\mu_1+\sigma_1^2\mu_2}{\sigma^2+\sigma_2^2}\right)\\
+&=  \frac{(\sigma_2^2+\sigma_1^2)}{2\sigma_1^2\sigma_2^2}\left(x^2-2x\frac{\sigma_2^2\mu_1+\sigma_1^2\mu_2}{\sigma^2+\sigma_2^2} + \left(\frac{\sigma_2^2\mu_1+\sigma_1^2\mu_2}{\sigma^2+\sigma_2^2}\right)^2 - \left(\frac{\sigma_2^2\mu_1+\sigma_1^2\mu_2}{\sigma^2+\sigma_2^2}\right)^2 \right)\\
+&= \frac{(\sigma_2^2+\sigma_1^2)}{2\sigma_1^2\sigma_2^2}\left(\left(x-\frac{\sigma_2^2\mu_1+\sigma_1^2\mu_2}{\sigma^2+\sigma_2^2}\right)^2 - \left(\frac{\sigma_2^2\mu_1+\sigma_1^2\mu_2}{\sigma^2+\sigma_2^2}\right)^2 \right)\\
+\end{align}
+$$
+
+
+Ignoring the second term because it is also a constant, the final result of the exponent value is
+
+
+$$
+\frac{(\sigma_2^2+\sigma_1^2)}{2\sigma_1^2\sigma_2^2}\left(x-\frac{\sigma_2^2\mu_1+\sigma_1^2\mu_2}{\sigma_1^2+\sigma_2^2}\right)^2 = \frac{\left(x-\frac{\sigma_2^2\mu_1+\sigma_1^2\mu_2}{\sigma_1^2+\sigma_2^2}\right)^2}{\frac{2\sigma_1^2\sigma_2^2}{(\sigma_2^2+\sigma_1^2)}}
+$$
+
+
+In fact this final form does resemble a Gaussian distribution. The new mean will be what is in the parenhesis with $$x$$ and the new covariance will be the denominator divided by 2. To simplify thing further along the way, we will re write things so
+$$
+\begin{align}
+\mu_{\text{new}} &= \frac{\sigma_2^2\mu_1+\sigma_1^2\mu_2}{\sigma_1^2+\sigma_2^2}\\
+&= \mu_1 + \frac{\sigma_2^2\mu_1+\sigma_1^2\mu_2}{\sigma_1^2+\sigma_2^2} - \mu_1\\
+&= \mu_1 + \frac{\sigma_2^2\mu_1+\sigma_1^2\mu_2-\mu_1(\sigma_1^2+\sigma_2^2)}{\sigma_1^2+\sigma_2^2}\\
+&= \mu_1 + \frac{\sigma_2^2\mu_1+\sigma_1^2\mu_2-\mu_1\sigma_1^2-\sigma_2^2\mu_1}{\sigma_1^2+\sigma_2^2}\\
+&= \mu_1 + \frac{\sigma_1^2(\mu_2-\mu_1)}{\sigma_1^2+\sigma_2^2}\\
+&= \mu_1 + K(\mu_2-\mu_1)
+\end{align}
+$$
+
+
+where $$K = \sigma_1^2/(\sigma_1^2+\sigma_2^2)$$. For the variance we have
+
+
+$$
+\begin{align}
+\sigma_\text{new}&=\frac{\sigma_1^2\sigma_2^2}{(\sigma_2^2+\sigma_1^2)}\\
+&=\sigma_1^2 + \frac{\sigma_1^2\sigma_2^2}{(\sigma_2^2+\sigma_1^2)} - \sigma_1^2\\
+&=\sigma_1^2 + \frac{\sigma_1^2\sigma_2^2-\sigma_1^2(\sigma_2^2+\sigma_1^2)}{\sigma_2^2+\sigma_1^2}\\
+&=\sigma_1^2 + \frac{\sigma_1^2\sigma_2^2-\sigma_1^2\sigma_2^2+\sigma_1^4}{\sigma_2^2+\sigma_1^2}\\
+&=\sigma_1^2 + \frac{\sigma_1^4}{\sigma_2^2+\sigma_1^2}\\
+&= \sigma_1^2 + K\sigma_1^2
+\end{align}
+$$
+
+
+Now we need to transform that to matrix notation and change for the correct variables. $$\mu$$ and $$z$$ are not in the same vector space, therefore to transform $$x$$ into the same vector space as the measurement space we use the matrix $$H$$. The final result will be
+
+
+$$
+\begin{align}
+K &= HP_{t-1}H^T(HP_{t-1}H^T+R)^{-1}\\
+H\mu_t &= H\mu_{t-1}+K(z-H\mu_{t-1})\\
+HP_tH^T &= HP_{t-1}H^T+KHP_{t-1}H^T
+\end{align}
+$$
+
+
+If we take one $$H$$ out from the left of $$K$$ and we end up with
+
+
+$$
+\begin{align}
+K &= P_{t-1}H^T(HP_{t-1}H^T+R)^{-1}\\
+H\mu_t &= H\mu_{t-1}+HK(z-H\mu_{t-1})\\
+HP_tH^T &= HP_{t-1}H^T+HKHP_{t-1}H^T
+\end{align}
+$$
+
+
+We can pre-multiply the second and third equation by $$H^{-T}$$ and also post-multiply the third equation by $$H^{-1}$$, The final result turns out to be in the state vector space $$\mu$$ and not in the measurement vector space $$H\mu$$. The final result for the update step (which corresponds to the combinantion of two sources of information with different certainty levels)is
+
+
+$$
+\begin{align}
+K &= P_{t-1}H^T(HP_{t-1}H^T+R)^{-1}\\
+\mu_t &= \mu_{t-1}+K(z-H\mu_{t-1})\\
+P_t &= P_{t-1}+KHP_{t-1} = (I+KH)P_{t-1}
+\end{align}
+$$
+
+
+And that is it! The all the equations for a Linear Kalman Filter.
 
 ---
 
-[^1]: Zhou, T., Brown, M., Snavely, N., & Lowe, D. G. (2017). Unsupervised Learning of Depth and Ego-Motion from Video. *2017 IEEE Conference on Computer Vision and Pattern Recognition (CVPR)*, 6612–6619. https://doi.org/10.1109/CVPR.2017.700
+### Prediction step
+
+$$
+\begin{align}
+\mu_t &= F\mu_{t-1} + Bu\\
+P_t &= FP_{t-1}F^T+BQB^T
+\end{align}
+$$
+
+
+
+### Update step:
+
+$$
+\begin{align}
+K &= PH^T(HPH^T+R)^{-1}\\
+\mu_t &= \mu_{t-1}+K(z-H\mu_{t-1})\\
+P_t &= P_{t-1}+KHP_{t-1} = (I+KH)P_{t-1}
+\end{align}
+$$
+
+---
+
+## Extended Kalman Filter
+
+In reality, world does not behave linearly. The way KF deals with non-linearities is by using the jacobian to linearize the equation. We can expand this model to a non-linear proper KF modifying the prediction step by adding a simple kinematic model, for example a bicycle kinematic model.
+
+If we model everything from the center of gravity of the vehicle, the equations for the bycicle kinmatic model are
+
+
+$$
+\begin{align}
+\dot x &= v\cos (\theta+\beta)\\
+\dot y &= v\sin(\theta+\beta)\\
+\dot \theta &= \frac{v\cos(\beta)\tan(\delta)}{L}\\
+\beta &= \tan^{-1}\left(\frac{l_r\tan\delta}{L}\right)
+\end{align}
+$$
+
+
+Where $$\theta$$ is the heading of the vehicle (yaw), $$\beta$$ is the slip angle of the center of gravity, $$L$$ is the lenght of the vehicle, $$l_r$$ is the length of the rear most part to the center of gravity and $$\delta$$ is the steering angle. In discreate time form we will have
+
+
+$$
+\begin{align}
+x_t &= x_{t-1}+\Delta t \cdot v\cos (\theta+\beta)\\
+y_t &= y_{t-1}+\Delta t \cdot v\sin(\theta+\beta)\\
+\theta_t &= \theta_{t-1} +\Delta t\cdot \frac{v\cos(\beta)\tan(\delta)}{L}\\
+\beta_t &= \tan^{-1}\left(\frac{l_r\tan\delta_{t-1}}{L}\right)\\
+v_t &= v_{t-1}\\
+\delta_t &= \delta_{t-1}
+\end{align}
+$$
+
+
+If you define that system of equations as $$\mathbf f(x,y,\theta,v,\delta)\in\mathbb R^6$$ then we can model the whole system using $$\mathbf f$$ and $$F=\partial f_j/\partial x_i $$. We can also use the same trick with the transformation from state space $$s$$ into measurement vector space $$z$$. Before we used the matrix $$H$$ now we can use the function $$\mathbf h(\cdot)$$ and define $$H$$ as $$H=\partial h_i/\partial x_i$$. The final Extended Kalman Filter will look like
+
+### Prediction step
+
+$$
+\begin{align}
+\mu_t &= \mathbf f(\mu_{t-1}) + Bu\\
+P_t &= FP_{t-1}F^T+BQB^T\\
+\end{align}
+$$
+
+
+
+### Update step:
+
+$$
+\begin{align}K &= P_{t-1}H^T(HP_{t-1}H^T+R)^{-1}\\
+\mu_t &= \mu_{t-1}+K(z-h(\mu_{t-1}))
+\\P_t &= (I+KH)P_{t-1}
+\end{align}
+$$
+
+---
+
+## 
+
+# Error state - Extended Kalman Filter
+
+EKF is not a perfect method to estimate and predict the state, it will always make mistakes when predicting. The longer the ammount of sequantial predictions without updates, the bigger the acumulated error. One interesting common property of the errors is that they have less complex behaviour than the state itself. This can be seen easier in the image below. While the behaviour of the position is highly non-linear, the error (estimation - ground truth) behaves much closely to a linear behaviour.
+
+![error](/img/posts/KF/error.png)
+
+<span style="font-size:12px">left image taken from "Unsupervised Scale-consistent Depth and Ego-motion Learning from Monocular Video".</span>
+
+Therefore modeling the error of the state (i.e. error-state) is more likely that will be model correctly by a linar model. Therefore, we can avoid some noise coming from trying to model highly non-linear behaviour by modeling the error-state. Let's define the error-state as $$e=\mu_t-\mu_{t-1}$$. We can approximate $$f(\mu_{t-1})$$ using the taylor series expansion only using the first derivative. Therefore $$\mathbf f(\mu_{t-1}) \approx \mu_{t-1} + Fe_{t-1}$$. Replacing this and re arranging equation we end up with the final equations for the Error state - Extended Kalman Filter (ES-EKF) is
+
+### Prediction step
+
+$$
+\begin{align}
+s_t &= \mathbf f(s_{t-1},u)\\
+P_t &= FP_{t-1}F^T+BQB^T\\
+\end{align}
+$$
+
+
+
+### Update step:
+
+$$
+\begin{align}K &= PH^T(HPH^T+R)^{-1}\\
+e_t &= K(z-h(\mu_{t-1}))\\
+s_t &= s_{t-1} + e_t\\
+P_t &= (I+KH)P_{t-1}
+\end{align}
+$$
+
+---
+
+
+
+Keep in mind that now we are tracking the error state and the covariance of the error, therefore we need to predict the state $$s_t$$ and correct it by using the error-state during the update step, other wise we can estimate the state directly using $$\mathbf f$$.
+
+(if you see I have made a mistake, don't hesitate to tell me).
