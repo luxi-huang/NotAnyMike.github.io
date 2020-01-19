@@ -177,8 +177,9 @@ $$
 \frac{(\sigma_2^2+\sigma_1^2)}{2\sigma_1^2\sigma_2^2}\left(x-\frac{\sigma_2^2\mu_1+\sigma_1^2\mu_2}{\sigma_1^2+\sigma_2^2}\right)^2 = \frac{\left(x-\frac{\sigma_2^2\mu_1+\sigma_1^2\mu_2}{\sigma_1^2+\sigma_2^2}\right)^2}{\frac{2\sigma_1^2\sigma_2^2}{(\sigma_2^2+\sigma_1^2)}}
 $$
 
-
 In fact this final form does resemble a Gaussian distribution. The new mean will be what is in the parenhesis with $$x$$ and the new covariance will be the denominator divided by 2. To simplify things further along the way, we will re write it like
+
+
 $$
 \begin{align}
 \mu_{\text{new}} &= \frac{\sigma_2^2\mu_1+\sigma_1^2\mu_2}{\sigma_1^2+\sigma_2^2}\\
@@ -191,8 +192,8 @@ $$
 $$
 
 
-where $$K = \sigma_1^2/(\sigma_1^2+\sigma_2^2)$$. For the variance we have
 
+where $$K = \sigma_1^2/(\sigma_1^2+\sigma_2^2)$$. For the variance we have
 
 $$
 \begin{align}
