@@ -1,23 +1,20 @@
 ---
 layout: inner
-title: 'Unsupervised Depth Estimation Explained'
-date: 2019-09-23 14:15:00
+title: 'Error State - Extended Kalman Filter'
+date: 2020-01-18 14:15:00
 categories: development
 type: project
 tags: Maths Sensor-Fusion Kalman-Filter
-featured_image: '/img/posts/Depth/depth.jpg'
+featured_image: '/img/posts/KF/cover.png'
 comments: true
-project_link: 'https://github.com/notanymike/HRL'
-button_icon: 'github'
-button_text: 'Visit Project'
-lead_text: 'Explaining how unsupervised depth estimation works and a re-implementation of the original paper'
+lead_text: 'A "quick" review of how to derive the Error State - Extended Kalman Filter'
 
 
 ---
 
 # A "quick" review of Error State - Extended Kalman Filter
 
-Recently in my job I had to work implement a Kalman Filter. My surprise was that there is an incredible lack of resources explaining with detail how Kaman Filter (KF) works. Imagine now the lack of resources explaining a more complex KF as the Error-state Extended Kaman Filter (ES-EKF). In this post, I will focus on the ES-EKF and leave UKF alone for now. One of the only blogs regarding a linear KF worth reading is [kalman filter with images](https://www.bzarg.com/p/how-a-kalman-filter-works-in-pictures/) which I recommended. Here I will cover with more details the whole linear Kalman filter equations and how to derive them. After that, I will explain how to transform it into an Extended KF (EKF) and then how to transform it into an Error-state Extended KF (ES-EKF).
+Recently in my job I had to work on implementing a Kalman Filter. My surprise was that there is an incredible lack of resources explaining with detail how Kaman Filter (KF) works. Imagine now the lack of resources explaining a more complex KF as the Error-state Extended Kaman Filter (ES-EKF). In this post, I will focus on the ES-EKF and leave UKF alone for now. One of the only blogs regarding a linear KF worth reading is [kalman filter with images](https://www.bzarg.com/p/how-a-kalman-filter-works-in-pictures/) which I recommended. Here I will cover with more details the whole linear Kalman filter equations and how to derive them. After that, I will explain how to transform it into an Extended KF (EKF) and then how to transform it into an Error-state Extended KF (ES-EKF).
 
 ### Notation
 
@@ -29,7 +26,7 @@ The Kalman Filter is used to keep track of certain variables and fuse informatio
 
 ## State
 
-The state $$x_t$$ we are interested in tracking is composed by $$x$$ and $$y$$ coordinates, the heading of the vehicle or the yaw $$\alpha$$, the current velocity $$v$$ and steering angle $$\delta$$. Have in mind that $$x_t$$ is the state of the filter while $$x$$ is the value in the $$x$$-axis. The tracked orientation is only composed by the yaw $$\alpha$$, we are only modelling a 2D world, therefore we do not care about the roll $$\beta$$ or pitch $$\gamma$$. And finally, we added the steering angle $$\delta$$ which is important to predict the movement of the car. Therefore the state in timestep $$t$$ is
+The state $$ s_t$$ we are interested in tracking is composed by $$x$$ and $$y$$ coordinates, the heading of the vehicle or the yaw $$ \theta$$, the current velocity $$v$$ and steering angle $$\delta$$. The tracked orientation is only composed by the yaw $$ \theta$$, we are only modelling a 2D world, therefore we do not care about the roll $$\beta$$ or pitch $$\gamma$$. And finally, we added the steering angle $$\delta$$ which is important to predict the movement of the car. Therefore the state in timestep $$t$$ is
 
 
 $$
@@ -38,17 +35,17 @@ x\\y\\\theta\\v\\\delta
 \end{matrix}\right]
 $$
 
-KF can be understood in two steps, update and predict step. In the predict step, using the tracked information we predict where will the object move in the next step. In the update step, we update the belief we have about the variables using the external measurements coming from the sensors.
+KF can be divided into two steps, update and predict step. In the predict step, using the tracked information we predict where will the object move in the next step. In the update step, we update the belief we have about the variables using the external measurements coming from the sensors.
 
 ## Sensor
 
-I want to exemplify a Kalman Filter using a different kind of sensors, but that will be repeating equations, so I think is more interesting using a Kinematic model instead of more sensors (if I have time I will expand this post). Nonetheless, keep in mind that a KF can handle any number of sensors, so far we are going to use the localization measurement coming from a GPS + pseudo-gyro.
+Keep in mind that a KF can handle any number of sensors, so far we are going to use the localization measurement coming from a GPS + pseudo-gyro.
 
-This measurement contains the global measurements ($$x,y$$) that avoid the system of drifting. This system (without global variables) is also called Dead reckoning. Dead reckoning or using a Kalman Filter without a global measurement (like $$x,y$$ coordinates in this case) is prone to cumulative errors, that means that the state will slowly diverge from the true value.
+This measurement contains the global measurements ($$x,y$$) that avoid the system of drifting. This system (without global variables) is also called Dead reckoning. Dead reckoning or using a Kalman Filter without a global measurement is prone to cumulative errors, that means that the state will slowly diverge from the true value.
 
 ## Prediction Step
 
-We will track the state as a multivariable Gaussian distribution with mean $$\mu$$ and covariance $$P$$. Where $$\mu_t$$ will be the expected value of our state. $$\mu_t$$  will be the expected value of the state using the information available (i.e. the mean of $$s_t$$). And the state will have a covariance matrix $$P$$  which means how certain we are about our prediction. We will use $$\mu_{t-1}$$ and $$u$$ to predict $$ \mu_t$$. Here $$u$$ is a control column-vector of any extra information we can use, for example, steering angle if we can have access to the steering of the car or the acceleration if we have access to it. $$u$$ can be a vector of any size.
+We will track the state as a multivariable Gaussian distribution with mean $$\mu$$ and covariance $$P$$. $$\mu_t$$  will be the expected value of the state using the information available (i.e. the mean of $$s_t$$). And the state will have a covariance matrix $$P$$  which means how certain we are about our prediction. We will use $$\mu_{t-1}$$ and $$u$$ to predict $$ \mu_t$$. Here $$u$$ is a control column-vector of any extra information we can use, for example, steering angle if we can have access to the steering of the car or the acceleration if we have access to it. $$u$$ can be a vector of any size.
 
 We will try to model everything using matrices but for now, we will use scalars, the new value of the state in $$t$$ will be
 
@@ -64,7 +61,7 @@ v_t &= v_{t-1}\\
 $$
 
 
-Here we are making simplifying assumptions about the world. First, the velocity $$v$$ and the steering $$\delta$$  of the next step will be the same as before which is a weak assumption. The strong assumption is that the heading or yaw of the car $$\alpha$$ is also the same. We can incorporate the kinematic model here to make the prediction more robust. But that will be adding non-linearities (and so far it is a linear KF) so for now, let's work with a simple environment and later on we can make things more interesting.
+Here we are making simplifying assumptions about the world. First, the velocity $$v$$ and the steering $$\delta$$  of the next step will be the same as before which is a weak assumption. The strong assumption is that the heading or yaw of the car $$\theta$$ is the same. Notice we are not using the steering but we still track it, it will be useful later. We can incorporate the kinematic model here to make the prediction more robust. But that will be adding non-linearities (and so far it is a linear KF). For now, let's work with a simple environment and later on we can make things more interesting.
 
 This prediction can be re-formulated in matrix form as
 
@@ -74,7 +71,7 @@ $$
 $$
 
 
-Where $$u$$ only zeros and $$B$$ is a linear transformation from $$u$$ into the same form of the state $$s$$. Also, $$F$$ would be (F has to be linear so far, in the EKF we will expand that to include non-linearities)
+Where $$u$$ is a zero vector and $$B$$ is a linear transformation from $$u$$ into the same form of the state $$s$$. Also, $$F$$ would be ($$F$$ has to be linear so far, in the EKF we will expand that to include non-linearities)
 
 
 $$
@@ -88,9 +85,9 @@ F = \left[\begin{matrix}
 $$
 
 
-This will result in the same equations but using matrix notation. Rember now that we are modelling $$s$$ as a multivariable gaussian distribution and we are keeping track of the mean of the state $$s$$ and the covariance of the state $$P$$. We already updated the mean of the state, now we have to update the covariance of the state. Every time we predict we make small errors which add noise and results in a slightly less accurate prediction. The covariance $$P$$ has to reflect this reduction in certainty. The way it is done with Gaussian distributions is that the distribution gets slightly more flat (i.e. the covariance "increase"). 
+This will result in the same equations but using matrix notation. Rember now that we are modelling $$s$$ as a multivariable gaussian distribution and we are keeping track of the mean $$\mu$$ of the state $$s$$ and the covariance $$P$$. Using the equations above we update the mean of the state, now we have to update the covariance of the state. Every time we predict we make small errors which add noise and results in a slightly less accurate prediction. The covariance $$P$$ has to reflect this reduction in certainty. The way it is done with Gaussian distributions is that the distribution gets slightly more flat (i.e. the covariance "increase"). 
 
-In a single-variable gaussian distribution $$y \sim \mathcal N (\mu',\sigma^2) $$ the variance has the property that $$\text{var}(ky) = k^2\text{var}(y)$$, where $$k$$ is a scalar. In matrix notation that is $$P_t = FP_{t-1}F^T$$, but we have to take into account that we are adding $$Bu$$, where $$u$$ is the control vector but it is also a gaussian variable with covariance $$Q$$. The good thing about Gaussians is that the covariances of a sum of Gaussians is the sum of the covariances. Having this into account we have.
+In a single-variable gaussian distribution $$y \sim \mathcal N (\mu',\sigma^2) $$ the variance has the property that $$\text{var}(ky) = k^2\text{var}(y)$$, where $$k$$ is a scalar. In matrix notation that is $$P_t = FP_{t-1}F^T$$. Now we have to take into account that we are adding $$Bu$$, where $$u$$ is the control vector and a gaussian variable with covariance $$Q$$. The good thing about Gaussians is that the covariances of a sum of Gaussians is the sum of the covariances (if both random variables are independent). Having this into account we have.
 
 
 $$
@@ -104,11 +101,11 @@ And with this, we have finished prediction the state and updating its covariance
 
 In the update step, we receive a measurement $$z$$ coming from a sensor. We use the sensor information to correct/update the belief we have about the state. The measurement is a random variable with covariance $$R$$. This is where things get interesting. In this case, we have two Gaussians variables, the state best estimate $$ \mu_t$$ and the measurement reading $$ z$$. 
 
-The best way to combine two Gaussians is by multiplying them together. By multiplying them together, if certain values have hight certainty in both Gaussians, the result will be also a high in the product (very certain). If both values have low certainty, the product will be even lower. And if If only one is high and the other is not, then the result will lay between high and low certainty. So multiplication of Gaussians merges the information of both distributions taking into account how certain the values are (covariance).
+The best way to combine two Gaussians is by multiplying them together. By multiplying them together, if certain values have high certainty in both distributions, the result will be also a high in the product (very certain). If both values have low certainty, the product will be even lower. And if If only one is high and the other is not, then the result will lay between high and low certainty. So multiplication of Gaussians merges the information of both distributions taking into account how certain the values are (covariance).
 
 The equations derived from multiplying two multivariate Gaussians are similar to the single variable case. We will derive them here and generalize that to matrix form.
 
-Let's suppose we have $$x_1 \sim \mathcal N (\mu_1,\sigma_1^2)$$ and $$x_2\sim\mathcal N(\mu_2,\sigma_2^2)$$. Have in mind that both $$x_1$$ and $$x_2$$ live in the same vector space $$x$$, therefore 
+Let's suppose we have $$x_1 \sim \mathcal N (\mu_1,\sigma_1^2)$$ and $$x_2\sim\mathcal N(\mu_2,\sigma_2^2)$$ (and they do not have anything to do with the state or measurement for now). Have in mind that both $$x_1$$ and $$x_2$$ live in the same vector space $$x$$, therefore 
 
 
 $$
@@ -126,7 +123,7 @@ $$
 $$
 
 
-We also now about a very useful property of Gaussians, that is the product of Gaussians is also a gaussian. Therefore, to know the result of fusing both Gaussians we have to write the equation above in a gaussian form.
+We also now about a very useful property of Gaussians: the product of Gaussians is also a gaussian distribution. Therefore, to know the result of fusing both Gaussians we have to write the equation above in a gaussian form.
 
 
 $$
@@ -181,7 +178,7 @@ $$
 $$
 
 
-In fact this final form does resemble a Gaussian distribution. The new mean will be what is in the parenhesis with $$x$$ and the new covariance will be the denominator divided by 2. To simplify thing further along the way, we will re write things so
+In fact this final form does resemble a Gaussian distribution. The new mean will be what is in the parenhesis with $$x$$ and the new covariance will be the denominator divided by 2. To simplify things further along the way, we will re write it like
 $$
 \begin{align}
 \mu_{\text{new}} &= \frac{\sigma_2^2\mu_1+\sigma_1^2\mu_2}{\sigma_1^2+\sigma_2^2}\\
@@ -233,7 +230,7 @@ HP_tH^T &= HP_{t-1}H^T+HKHP_{t-1}H^T
 $$
 
 
-We can pre-multiply the second and third equation by $$H^{-T}$$ and also post-multiply the third equation by $$H^{-1}$$, The final result turns out to be in the state vector space $$\mu$$ and not in the measurement vector space $$H\mu$$. The final result for the update step (which corresponds to the combination of two sources of information with different certainty levels)is
+We can pre-multiply the second and third equation by $$H^{-T}$$ and also post-multiply the third equation by $$H^{-1}$$, The final result turns out to be in the state vector space $$\mu$$ and not in the measurement vector space $$H\mu$$. The final result for the update step (which corresponds to the combination of two sources of information with different certainty levels) is
 
 
 $$
@@ -289,7 +286,7 @@ $$
 $$
 
 
-Where $$\theta$$ is the heading of the vehicle (yaw), $$\beta$$ is the slip angle of the centre of gravity, $$L$$ is the length of the vehicle, $$l_r$$ is the length of the rearmost part to the centre of gravity and $$\delta$$ is the steering angle. In discrete-time form, we will have
+Where $$\theta$$ is the heading of the vehicle (yaw), $$\beta$$ is the slip angle of the centre of gravity, $$L$$ is the length of the vehicle, $$l_r$$ is the length between the rearmost part to the centre of gravity and $$\delta$$ is the steering angle. In discrete-time form, we will have
 
 
 $$
@@ -303,8 +300,9 @@ v_t &= v_{t-1}\\
 \end{align}
 $$
 
+If you define that system of equations as $$\mathbf f(x,y,\theta,v,\delta)\in\mathbb R^6$$ then we can model the whole system using $$\mathbf f$$ and $$F=\partial f_j/\partial x_i $$. We can also use the same trick with the transformation from state space $$s$$ into measurement vector space $$z$$. 
 
-If you define that system of equations as $$\mathbf f(x,y,\theta,v,\delta)\in\mathbb R^6$$ then we can model the whole system using $$\mathbf f$$ and $$F=\partial f_j/\partial x_i $$. We can also use the same trick with the transformation from state space $$s$$ into measurement vector space $$z$$. Before we used the matrix $$H$$ now we can use the function $$\mathbf h(\cdot)$$ and define $$H$$ as $$H=\partial h_i/\partial x_i$$. The final Extended Kalman Filter will look like
+We can also add non-linearities in the measurement. Before we used the matrix $$H$$ now we can use the function $$\mathbf h(\cdot)$$ and define $$H$$ as $$H=\partial h_i/\partial x_i$$. The final Extended Kalman Filter is
 
 ### Prediction step
 
@@ -315,13 +313,11 @@ P_t &= FP_{t-1}F^T+BQB^T\\
 \end{align}
 $$
 
-
-
 ### Update step:
 
 $$
 \begin{align}K &= P_{t-1}H^T(HP_{t-1}H^T+R)^{-1}\\
-\mu_t &= \mu_{t-1}+K(z-h(\mu_{t-1}))
+\mu_t &= \mu_{t-1}+K(z-\mathbf h(\mu_{t-1}))
 \\P_t &= (I+KH)P_{t-1}
 \end{align}
 $$
@@ -338,7 +334,7 @@ EKF is not a perfect method to estimate and predict the state, it will always ma
 
 <span style="font-size:12px">left image taken from "Unsupervised Scale-consistent Depth and Ego-motion Learning from Monocular Video".</span>
 
-Therefore modelling the error of the state (i.e. error-state) is more likely that will be model correctly by a linear model. Therefore, we can avoid some noise coming from trying to model highly non-linear behaviour by modelling the error-state. Let's define the error-state as $$e=\mu_t-\mu_{t-1}$$. We can approximate $$f(\mu_{t-1})$$ using the Taylor series expansion only using the first derivative. Therefore $$\mathbf f(\mu_{t-1}) \approx \mu_{t-1} + Fe_{t-1}$$. Replacing this and rearranging equation we end up with the final equations for the Error state - Extended Kalman Filter (ES-EKF) is
+Therefore modelling the error of the state (i.e. error-state) is more likely that will be model correctly by a linear model. Therefore, we can avoid some noise coming from trying to model highly non-linear behaviour by modelling the error-state. Let's define the error-state as $$e=\mu_t-\mu_{t-1}$$. We can approximate $$\mathbf f(\mu_{t-1})$$ using the Taylor series expansion only using the first derivative. Therefore $$\mathbf f(\mu_{t-1}) \approx \mu_{t-1} + Fe_{t-1}$$. Replacing this and rearranging equation we end up with the final equations for the Error state - Extended Kalman Filter (ES-EKF)
 
 ### Prediction step
 
@@ -365,6 +361,6 @@ $$
 
 
 
-Keep in mind that now we are tracking the error state and the covariance of the error, therefore we need to predict the state $$s_t$$ and correct it by using the error-state during the update step, otherwise, we can estimate the state directly using $$\mathbf f(\cdot)$$.
+Keep in mind that now we are tracking the error state and the covariance of the error, therefore we need to predict the state $$s_t$$ and correct it by using the error-state during the update step, otherwise, we can estimate the state directly using $$\mathbf f(\cdot)$$ as in ithe prediction step.
 
 (if you see I have made a mistake, don't hesitate to tell me).
