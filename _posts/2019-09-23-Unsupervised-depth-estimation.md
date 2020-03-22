@@ -1,19 +1,21 @@
 ---
 layout: inner
-title: 'Unsupervised Depth Estimation Explained'
+title: 'A* path planing'
 date: 2019-09-23 14:15:00
 categories: development
 type: project
-tags: Maths Deep-learning Computer-vision
-featured_image: '/img/posts/Depth/depth.jpg'
-comments: true
-project_link: 'https://github.com/notanymike/HRL'
-button_icon: 'github'
-button_text: 'Visit Project'
-lead_text: 'Explaining how unsupervised depth estimation works and a re-implementation of the original paper'
+tags: AI Path-Planing A-start
+featured_image: '/img/posts/Depth/a_start.jpg'
+lead_text: ''
 
 
 ---
+
+# A-Start path Planing
+
+![Hierarchy](/img/posts/Depth/a_start.jpg)*<center>Figure 2: S-start Path Planing </center>*
+
+<object data="/img/posts/Depth/ME469_hw2__Copy_.pdf" width="900" height="1000" type='application/pdf'/>
 
 # Unsupervised Depth Estimation Explained [^16]
 

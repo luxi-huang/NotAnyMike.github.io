@@ -13,21 +13,22 @@
 # you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
-title: "Mike.W" #"Hello. I'm Mike Woodcock."
-email: 'MikeWoodcockC@gmail.com'
-description: "" #"I'm a software developer from Chicago creating useful things for the web."
+title: "Luxi Huang" #"Hello. I'm Luxi_Huang."
+email: 'lucy96akane@gmail.com'
+description: "Hello I am MSR student at the norhtwestern university !" #"I'm a software developer from Chicago creating useful things for the web."
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://notanymike.github.io/site" # the base hostname & protocol for your site, e.g. http://example.com
-twitter_username: 'NotAnyMike'
-github_username: 'NotAnyMike'
-medium_username: '' #'blog.jamigibbs.com'
+# twitter_username: 'NotAnyMike'
+github_username: 'luxi-huang'
+# medium_username: '' #'blog.jamigibbs.com'
 cv_url: 'https://drive.google.com/file/d/1QZWhXaDQVXVAy36f7ov2EnawCoKF_y-B/view'
-section_title: 'All projects'
+
+section_title: 'Selected projects'
 section_subtitle: "I focus on studying how to make current ML models understand their surroundings more efficiently. Here is a list of some projects I've worked on, enjoy."
-projects_title: 'Latest Work'
-projects_subtitle: "Here is a list of some of my lastest works or projects, enjoy."
-unrelated_title: 'General stuff'
-unrelated_subtitle: "Some projects resulting of having free time or different hobbies, enjoy."
+# projects_title: 'Latest Work'
+# projects_subtitle: "Here is a list of some of my lastest works or projects, enjoy."
+# unrelated_title: 'General stuff'
+# unrelated_subtitle: "Some projects resulting of having free time or different hobbies, enjoy."
 
 # Build settings
 markdown: kramdown
@@ -38,7 +39,7 @@ plugins:
 ### Phantom settings
 paginate: 100
 footer_text: ' Powered by Jekyll with Phantom template by Jami Gibbs © Copyright Mike Woodcock.'
-admin_name: 'Mike.W'
+admin_name: 'Luxi Huang'
 google_analytics: "UA-77835108-1" # Update with your own tracking ID
 enable_contact: false
 permalink: /:title/
@@ -46,8 +47,9 @@ permalink: /:title/
 #### Phantom Navigation menu
 enable_nav: true
 nav_item:
-  - { url: '/', text: 'All' }
-  - { url: '/projects', text: 'Projects' }
-  - { url: '/stuff', text: 'Other stuff' }
-  - { url: '/about', text: 'About me' }
-  - { url: '/list100', text: 'List 100' }
+  - { url: '/', text: 'Home' }
+  # - { url: '/', text: 'All' }
+  # - { url: '/projects', text: 'Projects' }
+  # - { url: '/stuff', text: 'Other stuff' }
+  # - { url: '/about', text: 'About me' }
+  # - { url: '/list100', text: 'List 100' }
