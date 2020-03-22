@@ -5,7 +5,7 @@ date: 2020-01-18 14:15:00
 categories: development
 type: project
 tags: ROS BaxterRobot Path-Planning Robot-Control
-featured_image: '/img/posts/KF/ezgif.com-gif-maker-2.gif'
+featured_image: 'portfolio/img/posts/KF/ezgif.com-gif-maker-2.gif'
 lead_text: 'This Project applied Rethink Robot Baxter to build Lego Pyrimid by ROS '
 ---
 
@@ -24,7 +24,7 @@ For this project, Baxter assembles a MEGA BLOKS pyramid from the blocks provided
 6. Baxter repeats steps 3 and 4 until the pyramid is complete
 
 
-![Hierarchy](/img/posts/KF/ezgif.com-gif-maker-2.gif)*<center>Figure 2: Senosr fuse for Depth Camera D435i</center>*
+![Hierarchy](portfolio/img/posts/KF/ezgif.com-gif-maker-2.gif)*<center>Figure 2: Senosr fuse for Depth Camera D435i</center>*
 
 
 If you want see more detailed on code for this project. please visit: [https://github.com/luxi-huang/
