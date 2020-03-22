@@ -187,9 +187,9 @@ button.btn, input.btn {
 --------------------------------------------------------------*/
 .hero-container {
   margin: 1em 0 1em 0;
-  height: 505px;
+  height: 400px;
   position: relative;
-  background-image: url(/img/mikew@2x.png);
+  background-image: url(https://github.com/luxi-huang/portfolio/blob/master/img/mikew%402x.png?raw=true);
   background-position: center center;
   background-repeat: no-repeat;
   @include bp-xsmall {
@@ -523,7 +523,7 @@ pre {
     .highlight .vg { color: #000000 } /* Name.Variable.Global */
     .highlight .vi { color: #000000 } /* Name.Variable.Instance */
     .highlight .il { color: #0000cf; font-weight: bold } /* Literal.Number.Integer.Long */
-    
+
 
 /*--------------------------------------------------------------
 	7.0 Content Styles (list of posts)

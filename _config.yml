@@ -24,7 +24,7 @@ github_username: 'luxi-huang'
 cv_url: 'https://github.com/luxi-huang/NotAnyMike.github.io/blob/master/img/Luxi_Huang_Resume_March__21_2020__Copy_.pdf'
 
 section_title: 'Selected projects'
-section_subtitle: "I focus on studying how to make current ML models understand their surroundings more efficiently. Here is a list of some projects I've worked on, enjoy."
+# section_subtitle: "I focus on studying how to make current ML models understand their surroundings more efficiently. Here is a list of some projects I've worked on, enjoy."
 # projects_title: 'Latest Work'
 # projects_subtitle: "Here is a list of some of my lastest works or projects, enjoy."
 # unrelated_title: 'General stuff'
