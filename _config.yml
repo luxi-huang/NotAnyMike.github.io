@@ -16,8 +16,8 @@
 title: "Luxi Huang" #"Hello. I'm Luxi_Huang."
 email: 'lucy96akane@gmail.com'
 description: "Hello I am MSR student at the norhtwestern university !" #"I'm a software developer from Chicago creating useful things for the web."
-baseurl: '' # the subpath of your site, e.g. /blog
-url: /portfolio # the base hostname & protocol for your site, e.g. http://example.com
+baseurl:  # the subpath of your site, e.g. /blog
+url:  # the base hostname & protocol for your site, e.g. http://example.com
 # twitter_username: 'NotAnyMike'
 github_username: 'luxi-huang'
 # medium_username: '' #'blog.jamigibbs.com'
