@@ -21,7 +21,7 @@ url: /portfolio # the base hostname & protocol for your site, e.g. http://exampl
 # twitter_username: 'NotAnyMike'
 github_username: 'luxi-huang'
 # medium_username: '' #'blog.jamigibbs.com'
-cv_url: 'https://github.com/luxi-huang/NotAnyMike.github.io/blob/master/pdf/Luxi_Huang.pdf'
+cv_url: <a href="https://github.com/luxi-huang/NotAnyMike.github.io/blob/master/pdf/Luxi_Huang.pdf" class="image fit"><img src="images/marr_pic.jpg" alt=""></a>
 
 section_title: 'Selected projects'
 # section_subtitle: "I focus on studying how to make current ML models understand their surroundings more efficiently. Here is a list of some projects I've worked on, enjoy."
@@ -38,7 +38,7 @@ plugins:
 
 ### Phantom settings
 paginate: 100
-footer_text: ' Powered by Jekyll with Phantom template by Jami Gibbs © Copyright Mike Woodcock.'
+footer_text: ' Powered by Jekyll with Phantom template by Jami Gibbs © Copyright Luxi Huang.'
 admin_name: 'Luxi Huang'
 google_analytics: "UA-77835108-1" # Update with your own tracking ID
 enable_contact: false
