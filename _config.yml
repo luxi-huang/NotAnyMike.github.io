@@ -21,7 +21,7 @@ url: /portfolio # the base hostname & protocol for your site, e.g. http://exampl
 # twitter_username: 'NotAnyMike'
 github_username: 'luxi-huang'
 # medium_username: '' #'blog.jamigibbs.com'
-cv_url: 'https://github.com/luxi-huang/NotAnyMike.github.io/blob/master/pdf/Luxi_Huang.pdf'
+cv_url: 'https://luxi-huang.github.io/portfolio/pdf/Luxi_Huang.pdf'
 
 section_title: 'Selected projects'
 # section_subtitle: "I focus on studying how to make current ML models understand their surroundings more efficiently. Here is a list of some projects I've worked on, enjoy."
