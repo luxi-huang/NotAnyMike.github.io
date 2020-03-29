@@ -13,7 +13,7 @@
 # you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
-title: "Luxi Huang" #"Hello. I'm Luxi_Huang."
+title: "Hello Luxi Huang" #"Hello. I'm Luxi_Huang."
 email: 'lucy96akane@gmail.com'
 description: "Hello! I am master of robotics student at the norhtwestern university." #"I'm a software developer from Chicago creating useful things for the web."
 baseurl:  # the subpath of your site, e.g. /blog
@@ -25,9 +25,9 @@ cv_url: 'https://luxi-huang.github.io/portfolio/pdf/Luxi_Huang.pdf'
 
 section_title: 'Selected projects'
 # section_subtitle: "I focus on studying how to make current ML models understand their surroundings more efficiently. Here is a list of some projects I've worked on, enjoy."
-# projects_title: 'Latest Work'
+projects_title: 'Latest Work'
 # projects_subtitle: "Here is a list of some of my lastest works or projects, enjoy."
-# unrelated_title: 'General stuff'
+unrelated_title: 'General stuff'
 # unrelated_subtitle: "Some projects resulting of having free time or different hobbies, enjoy."
 
 # Build settings
@@ -38,7 +38,7 @@ plugins:
 
 ### Phantom settings
 paginate: 100
-footer_text: ' Powered by Jekyll with Phantom template by Jami Gibbs © Copyright Mike Woodcock.'
+footer_text: ' Powered by Jekyll with Phantom template by Jami Gibbs © Copyright Luxi_Huang.'
 admin_name: 'Luxi Huang'
 google_analytics: "UA-77835108-1" # Update with your own tracking ID
 enable_contact: false

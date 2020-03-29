@@ -188,10 +188,10 @@ button.btn, input.btn {
 .hero-container {
   margin: 1em 0 1em 0;
   height: 400px;
-  position: relative;
-  background-image: url(https://github.com/luxi-huang/portfolio/blob/master/img/mikew%402x.png?raw=true);
-  background-position: center center;
-  background-repeat: no-repeat;
+  // position: relative;
+  // background-image: url(https://github.com/luxi-huang/portfolio/blob/master/img/mikew%402x.png?raw=true);
+  // background-position: center center;
+  // background-repeat: no-repeat;
   @include bp-xsmall {
     margin: 5em 0 5em 0;
   }
