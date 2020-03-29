@@ -13,9 +13,9 @@
 # you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
-title: "Hello Luxi Huang" #"Hello. I'm Luxi_Huang."
+title: "Hello. I'm Luxi_Huang."
 email: 'lucy96akane@gmail.com'
-description: "Hello! I am master of robotics student at the norhtwestern university." #"I'm a software developer from Chicago creating useful things for the web."
+description: "I am master of robotics student at the Norhtwestern University." #"I'm a software developer from Chicago creating useful things for the web."
 baseurl:  # the subpath of your site, e.g. /blog
 url: /portfolio # the base hostname & protocol for your site, e.g. http://example.com
 # twitter_username: 'NotAnyMike'
@@ -38,7 +38,7 @@ plugins:
 
 ### Phantom settings
 paginate: 100
-footer_text: ' Powered by Jekyll with Phantom template by Jami Gibbs © Copyright Luxi_Huang.'
+footer_text: ' Powered by Jekyll with Phantom template by Jami Gibbs © Copyright Luxi Huang.'
 admin_name: 'Luxi Huang'
 google_analytics: "UA-77835108-1" # Update with your own tracking ID
 enable_contact: false
