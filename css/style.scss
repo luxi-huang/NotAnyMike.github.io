@@ -186,33 +186,19 @@ button.btn, input.btn {
 	2.0 Home Hero
 --------------------------------------------------------------*/
 .hero-container {
-  margin: 1em 0 1em 0;
-  height: 300px;
-  // position: relative;
-  // background-image: url(https://github.com/luxi-huang/portfolio/blob/master/img/mikew%402x.png?raw=true);
-  // background-position: center center;
-  // background-repeat: no-repeat;
+  margin: 10em 0 6em 0;
   @include bp-xsmall {
     margin: 5em 0 5em 0;
   }
   @include bp-small {
     margin: 5em 0 5em 0;
   }
-  a.home_link_hero {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    left: 0;
-  }
 }
 
 .hero-content {
-  width: 100%;
+  width: 60%;
   margin: 0 auto;
   display: table;
-  position: absolute;
-  bottom: 0px;
   @include bp-medium {
     width: 100%;
   }
@@ -226,7 +212,7 @@ button.btn, input.btn {
     font-size: 48px;
   }
   p {
-    margin: 2em 0 4em 0;
+    margin: 2em 0 2em 0;
   }
   .hero-buttons {
     margin: 0 auto;
