@@ -213,6 +213,8 @@ button.btn, input.btn {
   }
   p {
     margin: 2em 0 2em 0;
+    font-size: 24px;
+    width: 100%;
   }
   .hero-buttons {
     margin: 0 auto;
@@ -296,6 +298,7 @@ button.btn, input.btn {
   position: relative;
   margin: 0 auto;
   margin-bottom: 0.5em;
+  font-size: 30px;
   &:after {
     content: '';
     position: absolute;
@@ -311,10 +314,11 @@ button.btn, input.btn {
 }
 
 .section-subtitle {
+  font-size: 22px;
   width: 40%;
   margin: 0 auto;
   @include bp-xsmall {
-    width: 100%;
+    width: 60%;
   }
   @include bp-small {
     width: 60%;;
@@ -322,17 +326,18 @@ button.btn, input.btn {
 }
 
 .content-wrap {
-  margin-bottom: 8em;
-
+  margin-top: -5em;
+  margin-bottom: 5em;
   // outline-color: #d4ac0d;
   background-color:  #f2f3f4;
   padding: 0.5em 1.5em;
   display: inline-block;
-  margin-bottom: 0.5em;
+  // margin-bottom: 0.5em;
 
 
   @include bp-xsmall {
-    margin-bottom: 2em;
+    margin-top: 0;
+    margin-bottom: 1.5em;
   }
   @include bp-small {
     margin-bottom: 2em;
@@ -352,6 +357,7 @@ button.btn, input.btn {
     margin-left: 5em;
     @include bp-xsmall {
       margin-left: 0;
+      margin-top: 1em
     }
     h3.title {
       position: relative;
