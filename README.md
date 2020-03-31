@@ -7,9 +7,13 @@
 3. `echo 'export GEM_HOME="$HOME/gems"' >> ~/.bashrc`
 4. `echo 'export PATH="$HOME/gems/bin:$PATH"' >> ~/.bashrc`
 5. `source ~/.bashrc`
-6. `sudo gem install bundler --version '1.16'` 
-7. `bundle install` (if this doesn't work try installing before this running `sudo gem install bundler`)
-8. if there is an 
+6. `sudo gem install bundler --version '1.16'`
+7. `bundle install`
+    (if this doesn't work try installing before this running `sudo gem install bundler`)
+    if you get error: This Gemfile requires a different version of Bundler.
+
+    [Try this](https://stackoverflow.com/questions/12092928/how-to-bundle-install-when-your-gemfile-requires-an-older-version-of-bundler).
+8. if there is an
 
 and run it with `bundle exec jekyll serve`
 
