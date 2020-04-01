@@ -14,13 +14,18 @@ lead_text: 'Building mapping function on Intel realsense traking camera T265 and
 
 # Mapping by Sensor Fusion with IMU and Camera (RGBD and Fisheyes)
 
+
+### Overview:
 <!-- This is my MSc Thesis / University of Edinburgh[^1][^2]. Here is a short video: -->
 In general, this project builds mapping function on Intel realsense tracking camera T265 and depth camera D435i individually, then compares their mapping qualities. To achieve the mapping function on the depth camera D435i, the depth information from its two RGBD eyes could be fused with IMU data by applying the EKF filter. For the tracking camera T265, two fisheys could perform as stereo cameras to measure the depth, then combine with its tracking properties to build a map.
 
 
-![Hierarchy](https://github.com/luxi-huang/portfolio/blob/master/img/posts/sensor_fusion/comparing_map_traking.png?raw=true)*<center>Figure 1: Trade off Traking and Depth Camera</center>*
+
+### motivation:
 
 The depth camera D435i has two RGBD eyes which can measure the depth but not odom position. In contrast, the tracking camera T254 has two fisheyes, the Intel company only enables its tracking properties but not with depth measurement function. As shown on figure 1, wider view and visible light could provide a better performance on tracking function. Perhaps that's the reason Intel Company choose fisheyes on the tracking camera,  and they choose RGBD eyes on depth camera due to its narrow view and infrared light spectrum. Although intel seperate tracking and depth function to two different cameras, each camera contains  an IMU and two eyes, which cause the possibility of combining tracking and depth function together into each camera.
+
+![Hierarchy](https://github.com/luxi-huang/portfolio/blob/master/img/posts/sensor_fusion/comparing_map_traking.png?raw=true)*<center>Figure 1: Trade off Traking and Depth Camera</center>*
 
 ---
 
@@ -50,26 +55,29 @@ The tracing camera T265 only provides its odometry, which does not  have a funct
 
 If we treat two fisheyes on T265 as a stereo camera,then it is workable to apply the Rtabmap Stereo to build the cloud points. Instead of using Madgwick filter to fuse IMU data like Depth camera D435i, tracking camera offers its odometer values,  we can fuse its odometer value and cloud point data by using RtabMap to build mapping.As shown on figure 5, the map build by implement RtabMap loop closure and ICP.
 
-![Hierarchy](https://github.com/luxi-huang/portfolio/blob/master/img/posts/sensor_fusion/T265.png?raw=true)*<center>Figure 4: Depth graph from T265</center>*
+![Hierarchy](https://github.com/luxi-huang/portfolio/blob/master/img/posts/sensor_fusion/T265.png?raw=true)*<center>Figure 5: Depth graph from T265</center>*
 
 ---
-### Comparing Mapping Quality between Tracking and Depth Camera
+### Comparing Result:
 
 As discussed earlier, fisheyes could provide wider view and more accurate odometry, but RGBD eyes offer higher quality on depth measurement. After we enable the tracking camera T265 to have depth measurement function, and empower depth camera D435i to have tracking function. Each camera can build a map by itself. Let's see which one has better performance on mapping.
 
 
 #### Compare Loop-closure:
 
-Tested in narrowed hallway (wide length smaller than 1.5 m): While tested loop closure of the tracking camera T265 and depth camera D435i in narrowed hallway, D435i is easier to lose its odometry than T265, and cause the mapping interrupted. Although the RtabmMap contains ICP (intergrated cloud points), but the view size between RGBD eyes and fisheyes in T265 are difference. The tracking function in D435i we added is still not good as T265. The narrowed hallway limited the ORB feature detection ability, and loop closture would hard to success on D435i.   
+As shown on figure 6 which compares the mapping quality and the reliability of mapping. The Mapping Quality based on the information details and inclusive of map, D435i has better mapping quality than T265 when we tested on a wide hallway.  However, when tested on narrow hallways which are  smaller than 1.5m in width, the mapping would be interrupted on the D435i camera, and only the T265 camera works.  
 
-Tested in wilder hallway(wide length greater than 1.5m): However,the performance of depth camera D435i on wide hallway is much better than on narrowed hallway. Since RtabMap using ORB method to detect feature, wider hallway enables D435i detect enough features to measure the depth and find its odomtery. As long as D435i can find its odometry, the mapping process can continue smoothly, and D435i can success on loop closure easily. If we compare both camera mapping quality after they success on loop closure, we can find D435i contains much more details than T265.
+![Hierarchy](https://github.com/luxi-huang/portfolio/blob/master/img/posts/sensor_fusion/Mapping_camperision.png?raw=true)*<center>Figure 6: Comparing Maping T265 and D435i</center>*
 
-![Hierarchy](https://github.com/luxi-huang/portfolio/blob/master/img/posts/sensor_fusion/Mapping_camperision.png?raw=true)*<center>Figure 4: Comparing Maping on T265 and D435i</center>*
+D435i is easier to lose its odometry than T265, and causes the mapping to be interrupted. Although the Rtabmap contains ICP (Integrated Cloud Points), the view size between RGBD eyes and fisheyes in T265 are different. Even we added the tracking function in the D435, but it is still not as good as the T265. The narrowed hallway limited the ORB feature detection ability, and loop closure would be hard to achieve on D435i.   
 
-Compare their odometry when two camera complete loop closure. For D435i camera we get $$  x=0.150975,y = 0.2219,z = 0.0004 $$ ; For tracking camera T265: $$x= 0.066136$$, $$y = 0.08254$$, $$z =0.00003$$, so we can find the tracking camera can get back to original position more accurately than depth camera D435i.  
+![Hierarchy](https://github.com/luxi-huang/portfolio/blob/master/img/posts/sensor_fusion/distance_compare.png?raw=true)*<center>Figure 6: Odom comparison at the end of loop closure </center>*
+
+The Figure 7 compared  odometry when two camera complete loop closure. so we can find the at the end of the loop closure, the tracking camera T265 back to its start point closer than the depth camera D435i .  
+
 
 #### Compare mapping odometry:
-Since loop closeure would fix whole map as well as its odometry, I compare odometry accuracy of trakcing campera and depth camera before they get loop closure. I hold each camera to walk 10 steps, and each step is $$ 0.3048 m (1 feet) $$, so I expect the fisrt odometry is start from zero, and the new odometry would increase $$ 0.3048 m $$ than last one.If I lable the odometry from camera as $$S_1,S_2,...,S_{10}$$, and lable the expected odometry as $$ E_1,E_2,...,E_{10}$$. We can calculate their different, and to get mean $$m$$ and standard deviation $$Std$$:
+Since loop closure would fix the whole map as well as its odometry, I compare odometers’ accuracy of tracking campera and depth camera before they get loop closure. I hold each camera to walk 10 steps, and each step is $$ 0.3048 m (1 feet) $$, so I expect the first odometry is start from zero, and the new odometry would increase $$ 0.3048 m $$ than last one.If I label the odometry from camera as $$S_1,S_2,...,S_{10}$$, and label the expected odometry as $$ E_1,E_2,...,E_{10}$$. We can calculate their different, and to get mean $$m$$ and standard deviation $$Std$$:
 
 $$
 m = \frac{(S_1-E_1)+(S_2-E_2)+...+(S_{10}-E_{10})}{10}
@@ -81,10 +89,10 @@ For T265 camera, we can find the get mean $$m = 0.001653$$, and  $$Std = 0.00054
 
 ---
 ### Conlusion:
-After sensor fused IMU and cameras, the tracking camera T265 could able to detect depth, and depth camera D435i has tracking functions. We can build map and do loop closure on each camera individually. The tracking camera T265 can find more accurate odometry than D435i, but D435i point cloud build more accurate and detailed than tracking camera du to its featured RGBD eyes.
+After sensor fusion the IMU and camera data, the tracking camera T265 is able to detect depth, and depth camera D435i would have tracking functions. We can build maps and do loop closure on each camera individually. The tracking camera T265 can find more accurate odometer than D435i, but D435i point cloud map is more accurate and detailed than the tracking camera due to its featured RGBD eyes.
 
-### Next Step:
-The next step for this project is apply each camera on robot, and assign robot some tasks, such as tracking and avoid obstables, then compare the robot performance for each camera.
+### Future Work:
+Test two camera on the real robot, try the tasks like tracking or avoiding obstables, and compare which camera performance is better.
 
 
 For more detailed on code for this project. please visit: [https://github.com/luxi-huang/Sensor-Fusion-Realsense-Camera](https://github.com/luxi-huang/Sensor-Fusion-Realsense-Camera){:target="_blank"}

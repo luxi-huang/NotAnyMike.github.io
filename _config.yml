@@ -24,7 +24,7 @@ github_username: 'luxi-huang'
 cv_url: 'https://luxi-huang.github.io/portfolio/pdf/Luxi_Huang.pdf'
 
 section_title: 'Selected projects'
-section_subtitle: "Focus on C/C++, python, ROS, Linux"
+section_subtitle: "Focus on C/C++, python, ROS, Linux, Algorithm"
 projects_title: 'Latest Work'
 # projects_subtitle: "Here is a list of some of my lastest works or projects, enjoy."
 unrelated_title: 'General stuff'
