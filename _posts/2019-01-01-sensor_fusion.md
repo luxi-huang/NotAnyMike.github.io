@@ -95,9 +95,7 @@ After sensor fusion the IMU and camera data, the tracking camera T265 is able to
 Test two camera on the real robot, try the tasks like tracking or avoiding obstables, and compare which camera performance is better.
 
 
-For more detailed on code for this project. please visit: [https://github.com/luxi-huang/Sensor-Fusion-Realsense-Camera](https://github.com/luxi-huang/Sensor-Fusion-Realsense-Camera){:target="_blank"}
-
-
+For code details of the project. please visit at my GitHub: [https://github.com/luxi-huang/Sensor-Fusion-Realsense-Camera](https://github.com/luxi-huang/Sensor-Fusion-Realsense-Camera){:target="_blank"}
 
 ---
 
