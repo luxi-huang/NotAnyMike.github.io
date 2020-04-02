@@ -5,7 +5,7 @@ date: 2020-01-18 14:15:00
 categories: development
 type: project
 tags: ROS python Rethink-Robot Path-Planning Robot-Control
-featured_image: 'https://github.com/luxi-huang/portfolio/blob/master/img/posts/KF/ezgif.com-gif-maker-2.gif?raw=true'
+featured_image: 'https://github.com/luxi-huang/portfolio/blob/master/img/posts/baxter/ezgif.com-gif-maker-2.gif?raw=true'
 lead_text: 'This Project applied Rethink Robot Baxter to build Lego Pyrimid by ROS '
 ---
 
@@ -31,7 +31,7 @@ This project is using ROS in python as the central platform, Baxter assembles a 
 6. As a double check, the gripper hand is pushed against the block to ensure that the block is pushed in, which is applied by Force control in MoveIt.
 6. Baxter repeats steps 3 and 6 until the pyramid is complete.
 
-![Hierarchy](https://github.com/luxi-huang/portfolio/blob/master/img/posts/KF/ezgif.com-gif-maker-2.gif?raw=true)*<center>Figure 2: Senosr fuse for Depth Camera D435i</center>*
+![Hierarchy](https://github.com/luxi-huang/portfolio/blob/master/img/posts/baxter/ezgif.com-gif-maker-2.gif?raw=true)*<center>Figure 2: Senosr fuse for Depth Camera D435i</center>*
 
 View [full video](https://youtu.be/mz1FwBR94og)
 

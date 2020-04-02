@@ -4,7 +4,7 @@ title: 'Mapping by Sensor Fusion with IMU and Camera (RGBD and Fisheyes)'
 date: 2020-03-03 14:15:00
 categories: development
 type: project
-tags: V-slam Sensor-fusion Computer-vision
+tags: Vision-slam Sensor-fusion Computer-vision
 featured_image: 'https://github.com/luxi-huang/Sensor-Fusion-Realsense-Camera/blob/master/img/ezgif.com-crop.gif?raw=true'
 lead_text: 'Building mapping function on Intel realsense traking camera T265 and depth camera D435i individually, then compare their mapping qualities.'
 ---
