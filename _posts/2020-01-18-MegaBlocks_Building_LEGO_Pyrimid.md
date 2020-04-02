@@ -4,7 +4,7 @@ title: 'Baxter Lego Buider'
 date: 2020-01-18 14:15:00
 categories: development
 type: project
-tags: ROS python Rethink-Robot Path-Planning Robot-Control
+tags: ROS Python Manipulation Path-Planning Robot-Control
 featured_image: 'https://github.com/luxi-huang/portfolio/blob/master/img/posts/baxter/ezgif.com-gif-maker-2.gif?raw=true'
 lead_text: 'This Project applied Rethink Robot Baxter to build Lego Pyrimid by ROS '
 ---
