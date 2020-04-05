@@ -11,10 +11,11 @@ youtubeId: DuGJYICO7VE
 ---
 
 # Mobile mini-canon with Web-based display and control
-Course project.
+- Course project
+
 ---
 
-This vehicles robot can communicate and do motion control with internet or joysticks, using Raspberry-Pi as system control to finish bullets shooting tasks.  
+This vehicle robot can communicate and do motion control with internet or joysticks, using Raspberry-Pi as system control to finish bullets shooting tasks.  
 
 ### Demo Video:
 {% include youtubePlayer.html id=page.youtubeId %}
