@@ -48,7 +48,7 @@ permalink: /:title/
 enable_nav: true
 nav_item:
   - { url: '/', text: 'Home' }
-  - { url: '/pdf/Luxi_Huang.pdf', text: 'Resume' }
+  - { url: '/pdf/Luxi_Huang_Resume.pdf', text: 'Resume' }
   # - { url: '/projects', text: 'Projects' }
   # - { url: '/stuff', text: 'Other stuff' }
   # - { url: '/about', text: 'About me' }
