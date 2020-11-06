@@ -50,12 +50,15 @@ The 2D whiskers graphs are in two kinds of background - green and black, as show
 
 The process of geometric morphometrics of seal whiskers are as shown on the figure2. There are mainly four steps: get basic information from original graph from figure 1; build mask from the original image; Generate centerline from the mask, and calculate whisker parameters. 
 
-<p align="middle"> <img src="https://github.com/luxi-huang/portfolio/blob/master/img/posts/Whisker/precess_flow_chart.png?raw=true" alt="drawing"/> </p>  
+<p align="middle"> <img src="https://github.com/luxi-huang/portfolio/blob/master/img/posts/Whisker/process_flow_chart.png?raw=true" alt="drawing"/> </p>  
 
 *<center>Figure 2: Geometric Morphometrics Process Flow Chart </center>*
 
 ### Get basic Information 
-The first step is to get basic whisker information from original graph. As shown on figure 2, the left graph is cropped 10 mm on ruler area, which would be use as a reference of whisker size in the later steps. The left graph is a single whisker which one they want to extract parameters.   
+
+The first step is to get basic whisker information from original graph. As shown on figure 2, the left graph is cropped from ruler in 10 mm, which would be used as a reference to estimate whisker's size. The right graph is a single whisker which one need be extracted its parameters. User also need to locate whisker's tip and base positions as shown on red circle part on the whisker. 
+
+
 
 
 
