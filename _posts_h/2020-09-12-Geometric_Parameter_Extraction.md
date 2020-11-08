@@ -54,11 +54,27 @@ The process of geometric morphometrics of seal whiskers are as shown on the figu
 
 *<center>Figure 2: Geometric Morphometrics Process Flow Chart </center>*
 
-### Get basic Information 
+### 1. Get basic Information 
 
-The first step is to get basic whisker information from original graph. As shown on figure 2, the left graph is cropped from ruler in 10 mm, which would be used as a reference to estimate whisker's size. The right graph is a single whisker which one need be extracted its parameters. User also need to locate whisker's tip and base positions as shown on red circle part on the whisker. 
+The first step is to get basic whisker information from original graph. As shown on figure 2, the left graph is cropped from ruler with 11 bars which is in 10 mm, which would be used as a reference to estimate whisker's size. Also user to pick which whisker they want to extracted its parameters, and locate whisker's tip and base positions as shown in red circle in the right graph. 
+
+<p align="middle"> <img src="https://github.com/luxi-huang/portfolio/blob/master/img/posts/Whisker/raw_ruler.png?raw=true" alt="drawing" height="400"/>  <img src="https://github.com/luxi-huang/portfolio/blob/master/img/posts/Whisker/whisker.png?raw=true" alt="drawing" height="400"/> 
 
 
 
+*<center>Figure 2: Basic information from original graph (Left graph is from 11 bar on ruler, right graph is a single whisker that user want to extract its parameters. and its base and tip positions) </center>*
+
+
+
+### 2. Build Mask
+
+
+#### 2a. Check Background Color
+The original graph has two different background: black and green. The programme for this project is designed to automatically distinguish those two background by checking the image shape. The black background image is belong to gray scale type, which only has one number of channel. However, the green background graph is belongs to rgb type, it has three color channels. So it is feasible to distinguish those two background by checking its number of color channels.
+
+#### 2b. Build Binary Mask 
+If the background is in green color, then we would change every pixel color value to 0 if it is in background green color range, and change its color value to 1 if it is not under background green color range. The result of initial binary mask as shown on figure 3 left side. 
+
+#### 2c. Improve mask - Remove small from binary image
 
 
