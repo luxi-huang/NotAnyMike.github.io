@@ -1,6 +1,6 @@
 ---
 layout: inner
-title: 'Geometric Morphometrics demonstrate the shape of seal whiskers'
+title: 'Geometric Morphometrics Demonstrate the Seal Whiskers Parameters from Images'
 date: 2020-10-25 14:15:00
 categories: development
 type: project
@@ -9,13 +9,13 @@ featured_image: 'https://github.com/luxi-huang/Sensor-Fusion-Realsense-Camera/bl
 lead_text: 'Using computer vision technology to extract 2D seal whiskers' parameter base on the Geometric Morphometrics method'
 ---
 
-# Geometric Parameter Extraction on 2D Seal Whiskers
+# Geometric Morphometrics Demonstrate the Seal Whiskers Parameters from Images 
 
 ## Overview 
 
-Whiskers are important sensor for seal detecting vibrotactile information from the environment. Seal whiskers are demonstrated the diversity of shapes and most of them are exhibit a beaded morphology with repeating sequence of crests and troughs along. Currently it is unclear the diversity of shape affects environmental signal modulation. In order to get some clues of it, this project implement geometric morphometrics method to demonstrate the 2D shape of whiskers.   
+Whiskers are important sensor for seal detecting vibrotactile information from the environment. Seal whiskers are demonstrated the diversity of shapes and most of them are exhibit a beaded morphology with repeating sequence of crests and troughs along. Currently it is unclear the diversity of shape affects environmental signal modulation. In order to get some clues of it, this project implement geometric morphometrics method to demonstrate the shape of whiskers.   
  
-The 2D whiskers graphs are in two kinds of background - green and black, as shown on figure 1 and figure 2. Rulers are placed next to whisker for the purpose of referencing the size of whiskers.  The goal for the project is to find out the parameters as shown on table 1. 
+The whiskers images are in two kinds of background - green and black, as shown on figure 1 and figure 2. Rulers are placed next to whisker for the purpose of referencing the size of whiskers.  The goal of the project is to extract 2D parameters from seal whiskers from as shown on table 1. 
 
 <p align="middle"> <img src="https://github.com/luxi-huang/portfolio/blob/master/img/posts/Whisker/green_bg.png?raw=true" alt="drawing" height="400"/> </> <img src="https://github.com/luxi-huang/portfolio/blob/master/img/posts/Whisker/back_bg.png?raw=true" alt="drawing" height="400"/> </p>  
 
@@ -75,6 +75,16 @@ The original graph has two different background: black and green. The programme 
 #### 2b. Build Binary Mask 
 If the background is in green color, then we would change every pixel color value to 0 if it is in background green color range, and change its color value to 1 if it is not under background green color range. The result of initial binary mask as shown on figure 3 left side. 
 
-#### 2c. Improve mask - Remove small from binary image
+<p align="middle"> <img src="https://github.com/luxi-huang/portfolio/blob/master/img/posts/Whisker/mask_only_1.png?raw=true" alt="drawing" height="400"/>  <img src="https://github.com/luxi-huang/portfolio/blob/master/img/posts/Whisker/mask_only_2.png?raw=true" alt="drawing" height="400"/> 
+
+
+*<center>Figure 3: Build initial image(right) and improve image by removing its small objects) </center>*
+
+#### 2c. Improve mask - Remove small objects from binary image
+since the background not only contains pure green color (figure 1 left side graph), it also has some noise colors. It cause the initial binary image has many noise objects beside whiskers. Base on the area of objects on the image, if the area is small than the threshold, then we would change its color to opposite value. The result as shown on figure 3 right site graph
+
+#### 2d. Improve mask - build blurry image
+
+
 
 
