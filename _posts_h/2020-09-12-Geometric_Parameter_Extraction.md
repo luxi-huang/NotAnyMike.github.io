@@ -77,11 +77,18 @@ To build an initial mask for a green background image, it would check every pixe
 
 *<center>Figure 3: Build initial image(right) and improve image by removing its small objects) </center>*
 
-#### 2c. Improve mask - Remove small objects from binary image
+#### Step2. Improve mask - Remove small objects from binary image
 Since the background does not only contain pure green color (figure 1 left side graph), and it also exists some noise colors, the initial binary image has many noise objects beside whiskers. It implements an area filter method to cancel those small objects. If the object area is small than the threshold, then we would change its color to its opposite value. Therefore, we can improve the mask by removing small objects as shown on the right site image in figure 3. 
 
-#### 2d. Improve mask - build blurry image
+#### Step3 and Step4. Improve mask - build blurry image
 
+If we look closer on the step two image (figure 4). There are some black objects inside of the whiskers and reach to the background. In Order to eliminate it. I blur whisker edges and remove small objects again to build final mask. 
 
+<p align="middle"> <img src="https://github.com/luxi-huang/portfolio/blob/master/img/posts/Whisker/mask_step3_step4.png?raw=true" alt="drawing" height="600"/> 
 
+*<center>Figure 4: improve mask from step 2 to step 4 </center>*
 
+#### Check whisker edge resolution
+To check the resolution of final mask. I extract its edge and placed on original graph. It provide the view to show the resolution of final mask is high enough to extract its parameters. 
+
+### Generate Centerline
