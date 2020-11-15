@@ -17,14 +17,14 @@ Whiskers are important sensor for seal detecting vibrotactile information from t
  
 The whiskers images are in two kinds of background - green and black, as shown on figure 1 and figure 2. Rulers are placed next to whisker for the purpose of referencing the size of whiskers.  The goal of the project is to extract from seal whiskers parameters (as shown on table 1) from original image(figure 1). 
 
-<p align="middle"> <img src="https://github.com/luxi-huang/portfolio/blob/master/img/posts/Whisker/green_bg.png?raw=true" alt="drawing" height="400"/> <img src="https://github.com/luxi-huang/portfolio/blob/master/img/posts/Whisker/back_bg.png?raw=true" alt="drawing" height="400"/> </p>  
+<p align="middle"> <img src="https://github.com/luxi-huang/portfolio/blob/master/img/posts/Whisker/original_graph.png?raw=true" alt="drawing" height="400"/> </p>  
 
 *<center>Figure 1: green and black background whisker photo</center>*
 
 
-<center>
+<!-- <center> -->
 
-| Parameters Name    | Explanation    |
+<!-- | Parameters Name    | Explanation    |
 | ------------- | ------------- |
 |Whisker Length       | Length of Seal whisker |
 |D_base | Base diameter   |
@@ -33,9 +33,14 @@ The whiskers images are in two kinds of background - green and black, as shown o
 |CenterLine |All points position along the centerline |
 |distance   |The straight line length from whisker tip to whisker base |
 |crest positions | All crests positions on whiskers|
-|through positions | All crests positions on whiskers|
+|through positions | All crests positions on whiskers| -->
 
-</center>
+<!-- </center> -->
+<p align="middle"> <img src="https://github.com/luxi-huang/portfolio/blob/master/img/posts/Whisker/table.png?raw=true" alt="drawing" height="400"/> </p>  
+
+*<center>Figure 1: green and black background whisker photo</center>*
+
+
 
 *<center>Table 1: Parameters extracted from the whiskers </center>*
 
@@ -51,7 +56,7 @@ The process of geometric morphometrics of seal whiskers are as shown on the figu
 
 The first step is to get basic whisker information from original graph. As shown on figure 2, the left graph is cropped from ruler with 11 bars which is in 10 mm, which would be used as a reference to estimate whisker's size. Also user to pick which whisker they want to extracted its parameters, and locate whisker's tip and base positions as shown in red circle in the right graph. 
 
-<p align="middle"> <img src="https://github.com/luxi-huang/portfolio/blob/master/img/posts/Whisker/raw_ruler.png?raw=true" alt="drawing" height="400"/>  <img src="https://github.com/luxi-huang/portfolio/blob/master/img/posts/Whisker/whisker.png?raw=true" alt="drawing" height="400"/>  </p>  
+<p align="middle"> <img src="https://github.com/luxi-huang/portfolio/blob/master/img/posts/Whisker/graph_ruler.png?raw=true" alt="drawing" height="400"/>  </p>  
 
 *<center>Figure 3: Basic information from original graph (Left graph is from 11 bar on ruler, right graph is a single whisker that user want to extract its parameters. and its base and tip positions) </center>*
 
@@ -63,7 +68,7 @@ The original image are in two different backgrounds: black and green. The progra
 #### Step 1: Build Initial Mask
 To build an initial mask for a green background image, it would check every pixel's color value. If it is is within the background green color range, then that pixel's color value would change to 0. Otherwise, it would change to 1.  Thereby, that's how it builds the initial mask, as shown in figure 3 left side image. 
 
-<p align="middle"> <img src="https://github.com/luxi-huang/portfolio/blob/master/img/posts/Whisker/mask_only_1.png?raw=true" alt="drawing" height="400"/>  <img src="https://github.com/luxi-huang/portfolio/blob/master/img/posts/Whisker/mask_only_2.png?raw=true" alt="drawing" height="400"/>  </p>  
+<p align="middle"> <img src="https://github.com/luxi-huang/portfolio/blob/master/img/posts/Whisker/mask.png?raw=true" alt="drawing" height="400"/> </p>  
 
 
 *<center>Figure 3: Build initial image(right) and improve image by removing its small objects) </center>*
