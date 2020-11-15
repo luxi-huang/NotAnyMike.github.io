@@ -9,6 +9,8 @@ featured_image: 'https://github.com/luxi-huang/Sensor-Fusion-Realsense-Camera/bl
 lead_text: 'Using computer vision technology to extract 2D seal whiskers' parameter base on the Geometric Morphometrics method'
 ---
 
+
+<!-- https://github.com/luxi-huang/final-project-megabloks -->
 # Geometric Morphometrics Demonstrate the Seal Whiskers Parameters from Images 
 
 ## Overview 
@@ -111,7 +113,7 @@ After the step 2 of generate centerline. We would improve the centerline by gett
 
 
 ### Calculate Parameters
-### Tip/Base Diameters 
+#### Tip/Base Diameters 
 
 The figure 7 shows the sum of white pixel numbers on the perpendicular lines on the centerline from base to tip. The blue lines are the original white pixel numbers, the black lines is smoothed from blue line. Base on the convex and concave points, we can find the crest/though numbers. The tip diameter would be end point of the blue line, the base diameter would be end point of blue lines.
 
@@ -119,7 +121,7 @@ The figure 7 shows the sum of white pixel numbers on the perpendicular lines on 
 
 *<center>Figure 7: Sum of white pixel numbers along the centerline </center>*
 
-### Crest/Though Positions 
+#### Crest/Though Positions 
 
 As shown on figure 8, it calculate the white pixel number on left and right side of centerline, we can find the left and right side white pixel numbers are not same. It is a interesting results that some whiskers' crest/though positions are not symmetric.    
 
@@ -133,6 +135,26 @@ Base on the concave and convex point on the figure 8, we can get crest/though po
 https://github.com/luxi-huang/portfolio/blob/master/img/posts/Whisker/whisker_with_peaks.png?raw=true" alt="drawing" height="600"/> 
 
 *<center>Figure 9: crest/though positions on original whiskers</center>*
+
+#### convert pixels number to millimeter 
+
+We would use ruler image which we cropped on figure 2, and place it on two dimensional image with pixel numbers. The start points are the middle position of every bar. Since every two nearby start points are in 1 mm distance. So we can convert pixel numbers to millimeters.
+
+<p align="middle"> <img src="
+https://github.com/luxi-huang/portfolio/blob/master/img/posts/Whisker/rulur_2d.png?raw=true" alt="drawing" height="600"/> 
+
+*<center>Figure 10: place ruler in 2D pixel graph</center>*
+
+#### whisker length 
+
+After we calculate the pixel size in millimeter. Then we can place whisker's centerline on 2 dimensional cartier coordinate, and calculate the length of centerline, also the straight line length from base to tip. We rotate whiskers to make it start from original position and 10 percent of of its overall length is aline with x axis.    
+
+<p align="middle"> <img src="
+https://github.com/luxi-huang/portfolio/blob/master/img/posts/Whisker/Rotated_whiskers.png?raw=true" alt="drawing" height="600"/> 
+
+*<center>Figure 11: place and rotate whiskers in cartier coordinate</center>*
+
+
 
 
 
