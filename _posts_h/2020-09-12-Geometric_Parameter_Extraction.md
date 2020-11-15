@@ -103,7 +103,11 @@ Next step is building initial center line from final mask, as shown on figure 5.
 
 #### Step3: improve the centerline 
 
+After the step 2 of generate centerline. We would improve the centerline by getting every two nearby points on centerline, and find its linear equation. Then build a perpendicular line to that linear lines. Two white pixel edge points could be found on every perpendicular line. The new centerline points would be the middle points of two edge white pixel positions for every perpendicular lines. As shown on 6, the middle point in green color is more center than original center lines. Therefore, we could use this method to build a new centerline as shown on figure 6 right side.   
+
 <p align="middle"> <img src="https://github.com/luxi-huang/portfolio/blob/master/img/posts/Whisker/center_line_step3.png?raw=true" alt="drawing" height="600"/> 
 
-*<center>Figure 5: Initial Steps of building Centerline </center>*
+*<center>Figure 6: Improve the centerline from step 2 to step 3 Centerline </center>*
+
+
 
