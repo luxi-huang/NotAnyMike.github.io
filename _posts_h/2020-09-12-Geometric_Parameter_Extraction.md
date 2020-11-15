@@ -101,4 +101,9 @@ Next step is building initial center line from final mask, as shown on figure 5.
 *<center>Figure 5: Initial Steps of building Centerline </center>*
 
 
-#### Step3 - improve the centerline 
+#### Step3: improve the centerline 
+
+<p align="middle"> <img src="https://github.com/luxi-huang/portfolio/blob/master/img/posts/Whisker/center_line_step3.png?raw=true" alt="drawing" height="600"/> 
+
+*<center>Figure 5: Initial Steps of building Centerline </center>*
+
