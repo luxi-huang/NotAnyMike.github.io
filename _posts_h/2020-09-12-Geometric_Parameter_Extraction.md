@@ -15,7 +15,7 @@ lead_text: 'Using computer vision technology to extract 2D seal whiskers' parame
 
 Whiskers are important sensor for seal detecting vibrotactile information from the environment. Seal whiskers are demonstrated the diversity of shapes and most of them are exhibit a beaded morphology with repeating sequence of crests and troughs along. Currently it is unclear the diversity of shape affects environmental signal modulation. In order to get some clues of it, this project implement geometric morphometrics method to demonstrate the shape of whiskers.   
  
-The whiskers images are in two kinds of background - green and black, as shown on figure 1 and figure 2. Rulers are placed next to whisker for the purpose of referencing the size of whiskers.  The goal of the project is to extract 2D parameters from seal whiskers from as shown on table 1. 
+The whiskers images are in two kinds of background - green and black, as shown on figure 1 and figure 2. Rulers are placed next to whisker for the purpose of referencing the size of whiskers.  The goal of the project is to extract from seal whiskers parameters (as shown on table 1) from original image(figure 1). 
 
 <p align="middle"> <img src="https://github.com/luxi-huang/portfolio/blob/master/img/posts/Whisker/green_bg.png?raw=true" alt="drawing" height="400"/> </> <img src="https://github.com/luxi-huang/portfolio/blob/master/img/posts/Whisker/back_bg.png?raw=true" alt="drawing" height="400"/> </p>  
 
@@ -64,16 +64,13 @@ The first step is to get basic whisker information from original graph. As shown
 
 *<center>Figure 2: Basic information from original graph (Left graph is from 11 bar on ruler, right graph is a single whisker that user want to extract its parameters. and its base and tip positions) </center>*
 
+The original image are in two different backgrounds: black and green. The programme on this project is designed to automatically distinguish those two background by checking the image shape. The black background image is belongs to gray scale type, which only has a single color channel， but the green background graph is belongs to rgb type, which has three color channels. So it is feasible to distinguish those two background by checking its number of color channels, then match mask building algorithm based on its background. 
 
 
 ### 2. Build Mask
 
-
-#### 2a. Check Background Color
-The original graph has two different background: black and green. The programme for this project is designed to automatically distinguish those two background by checking the image shape. The black background image is belong to gray scale type, which only has one number of channel. However, the green background graph is belongs to rgb type, it has three color channels. So it is feasible to distinguish those two background by checking its number of color channels.
-
-#### 2b. Build Binary Mask 
-If the background is in green color, then we would change every pixel color value to 0 if it is in background green color range, and change its color value to 1 if it is not under background green color range. The result of initial binary mask as shown on figure 3 left side. 
+#### Step 1: Build Initial Mask
+To build an initial mask for a green background image, it would check every pixel's color value. If it is is within the background green color range, then that pixel's color value would change to 0. Otherwise, it would change to 1.  Thereby, that's how it builds the initial mask, as shown in figure 3 left side image. 
 
 <p align="middle"> <img src="https://github.com/luxi-huang/portfolio/blob/master/img/posts/Whisker/mask_only_1.png?raw=true" alt="drawing" height="400"/>  <img src="https://github.com/luxi-huang/portfolio/blob/master/img/posts/Whisker/mask_only_2.png?raw=true" alt="drawing" height="400"/> 
 
@@ -81,7 +78,7 @@ If the background is in green color, then we would change every pixel color valu
 *<center>Figure 3: Build initial image(right) and improve image by removing its small objects) </center>*
 
 #### 2c. Improve mask - Remove small objects from binary image
-since the background not only contains pure green color (figure 1 left side graph), it also has some noise colors. It cause the initial binary image has many noise objects beside whiskers. Base on the area of objects on the image, if the area is small than the threshold, then we would change its color to opposite value. The result as shown on figure 3 right site graph
+Since the background does not only contain pure green color (figure 1 left side graph), and it also exists some noise colors, the initial binary image has many noise objects beside whiskers. It implements an area filter method to cancel those small objects. If the object area is small than the threshold, then we would change its color to its opposite value. Therefore, we can improve the mask by removing small objects as shown on the right site image in figure 3. 
 
 #### 2d. Improve mask - build blurry image
 
