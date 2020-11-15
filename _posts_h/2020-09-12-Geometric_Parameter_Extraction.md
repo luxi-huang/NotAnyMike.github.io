@@ -119,5 +119,20 @@ The figure 7 shows the sum of white pixel numbers on the perpendicular lines on 
 
 *<center>Figure 7: Sum of white pixel numbers along the centerline </center>*
 
-### 
+### Crest/Though Positions 
+
+As shown on figure 8, it calculate the white pixel number on left and right side of centerline, we can find the left and right side white pixel numbers are not same. It is a interesting results that some whiskers' crest/though positions are not symmetric.    
+
+<p align="middle"> <img src="https://github.com/luxi-huang/portfolio/blob/master/img/posts/Whisker/all_three_lines.png?raw=true" alt="drawing" height="600"/> 
+
+*<center>Figure 8: the white pixel numbers on right/left and whole centerline</center>*
+
+Base on the concave and convex point on the figure 8, we can get crest/though positions on the left and right side of centerline. We draw them back to the original graph of whiskers as shown on figure 9. The crest are in blue starts, and though on the right side is in green starts, the though on the left side is on blue starts.
+
+<p align="middle"> <img src="
+https://github.com/luxi-huang/portfolio/blob/master/img/posts/Whisker/whisker_with_peaks.png?raw=true" alt="drawing" height="600"/> 
+
+*<center>Figure 9: crest/though positions on original whiskers</center>*
+
+
 
