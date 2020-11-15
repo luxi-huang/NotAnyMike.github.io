@@ -50,7 +50,7 @@ The whiskers images are in two kinds of background - green and black, as shown o
 
 The process of geometric morphometrics of seal whiskers are as shown on the figure2. There are mainly four steps: get basic information from original graph from figure 1; build mask from the original image; Generate centerline from the mask, and calculate whisker parameters. 
 
-<p align="middle"> <img src="https://github.com/luxi-huang/portfolio/blob/master/img/posts/Whisker/process_flow_chart.png?raw=true" alt="drawing"/> </p>  
+<p align="middle"> <img src="https://github.com/luxi-huang/portfolio/blob/master/img/posts/Whisker/process_flow_chart.png?raw=true" alt="drawing" height="600"/> </p>  
 
 *<center>Figure 2: Geometric Morphometrics Process Flow Chart </center>*
 
@@ -92,3 +92,13 @@ If we look closer on the step two image (figure 4). There are some black objects
 To check the resolution of final mask. I extract its edge and placed on original graph. It provide the view to show the resolution of final mask is high enough to extract its parameters. 
 
 ### Generate Centerline
+#### Step1 & 2 : Build initial Centerline and smooth the centerline 
+
+Next step is building initial center line from final mask, as shown on figure 5. It would start from base to tip along y axis, and it would find the most concentration point of white pixels on the line (the orange line on figure 5) which is parallel to x axis for all y values. The equation of finding the most concentration point as shown on left side on figure 5. Then it smooth the initial centerline to improve the centerline. 
+
+<p align="middle"> <img src="https://github.com/luxi-huang/portfolio/blob/master/img/posts/Whisker/Initial_Center_Liner.png?raw=true" alt="drawing" height="600"/> 
+
+*<center>Figure 5: Initial Steps of building Centerline </center>*
+
+
+#### Step3 - improve the centerline 
