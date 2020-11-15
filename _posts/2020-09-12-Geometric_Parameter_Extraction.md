@@ -1,6 +1,6 @@
 ---
 layout: inner
-title: 'Geometric Morphometrics Demonstrate the Seal Whiskers Parameters from Images'
+title: 'Geometric Morphometrics demonstrate on Seal whisker'
 date: 2020-10-25 14:15:00
 categories: development
 type: project
@@ -9,7 +9,11 @@ featured_image: 'https://github.com/luxi-huang/portfolio/blob/master/img/posts/W
 lead_text: 'Extract whisker parameters from image '
 ---
 
-# Geometric Morphometrics Demonstrate the Seal Whiskers Parameters from Images 
+# Geometric Morphometrics demonstrate on Seal whiskers
+
+- Skills:  Computer-Vision, Image-feature-extraction, Matlab 
+
+---
 
 ## Overview 
 
@@ -36,10 +40,11 @@ The whiskers images are in two kinds of background - green and black, as shown o
 |through positions | All crests positions on whiskers| -->
 
 <!-- </center> -->
-<p align="middle"> <img src="https://github.com/luxi-huang/portfolio/blob/master/img/posts/Whisker/table.png?raw=true" alt="drawing" height="400"/> </p>  
+<p align="middle"> <img src="https://github.com/luxi-huang/portfolio/blob/master/img/posts/Whisker/table.png?raw=true" alt="drawing" height="600"/> </p>  
 
 *<center>Table 1: Parameters extracted from the whiskers </center>*
 
+---
 ## Process
 
 The process of geometric morphometrics of seal whiskers are as shown on the figure2. There are mainly four steps: get basic information from original graph from figure 1; build mask from the original image; Generate centerline from the mask, and calculate whisker parameters. 
@@ -48,23 +53,25 @@ The process of geometric morphometrics of seal whiskers are as shown on the figu
 
 *<center>Figure 2: Geometric Morphometrics Process Flow Chart </center>*
 
+---
+
 ### 1. Get basic Information 
 
 The first step is to get basic whisker information from original graph. As shown on figure 2, the left graph is cropped from ruler with 11 bars which is in 10 mm, which would be used as a reference to estimate whisker's size. Also user to pick which whisker they want to extracted its parameters, and locate whisker's tip and base positions as shown in red circle in the right graph. 
 
-<p align="middle"> <img src="https://github.com/luxi-huang/portfolio/blob/master/img/posts/Whisker/graph_ruler.png?raw=true" alt="drawing" height="400"/>  </p>  
+<p align="middle"> <img src="https://github.com/luxi-huang/portfolio/blob/master/img/posts/Whisker/graph_ruler.png?raw=true" alt="drawing" height="600"/>  </p>  
 
 *<center>Figure 3: Basic information from original graph (Left graph is from 11 bar on ruler, right graph is a single whisker that user want to extract its parameters. and its base and tip positions) </center>*
 
 The original image are in two different backgrounds: black and green. The programme on this project is designed to automatically distinguish those two background by checking the image shape. The black background image is belongs to gray scale type, which only has a single color channel， but the green background graph is belongs to rgb type, which has three color channels. So it is feasible to distinguish those two background by checking its number of color channels, then match mask building algorithm based on its background. 
 
-
+---
 ### 2. Build Mask
 
 #### Step 1: Build Initial Mask
 To build an initial mask for a green background image, it would check every pixel's color value. If it is is within the background green color range, then that pixel's color value would change to 0. Otherwise, it would change to 1.  Thereby, that's how it builds the initial mask, as shown in figure 3 left side image. 
 
-<p align="middle"> <img src="https://github.com/luxi-huang/portfolio/blob/master/img/posts/Whisker/mask.png?raw=true" alt="drawing" height="400"/> </p>  
+<p align="middle"> <img src="https://github.com/luxi-huang/portfolio/blob/master/img/posts/Whisker/mask.png?raw=true" alt="drawing" height="600"/> </p>  
 
 
 *<center>Figure 3: Build initial image(right) and improve image by removing its small objects) </center>*
@@ -82,6 +89,8 @@ If we look closer on the step two image (figure 4). There are some black objects
 
 #### Check whisker edge resolution
 To check the resolution of final mask. I extract its edge and placed on original graph. It provide the view to show the resolution of final mask is high enough to extract its parameters. 
+
+---
 
 ### 3. Generate Centerline
 #### Step1 & 2 : Build initial Centerline and smooth the centerline 
@@ -101,7 +110,7 @@ After the step 2 of generate centerline. We would improve the centerline by gett
 
 *<center>Figure 6: Improve the centerline from step 2 to step 3 Centerline </center>*
 
-
+---
 ### 4. Calculate Parameters
 #### Tip/Base Diameters 
 
@@ -126,7 +135,7 @@ https://github.com/luxi-huang/portfolio/blob/master/img/posts/Whisker/whisker_wi
 
 *<center>Figure 9: crest/though positions on original whiskers</center>*  
 
-#### convert pixels number to millimeter 
+#### Convert pixels number to millimeter 
 
 We would use ruler image which we cropped on figure 2, and place it on two dimensional image with pixel numbers. The start points are the middle position of every bar. Since every two nearby start points are in 1 mm distance. So we can convert pixel numbers to millimeters.
 
@@ -135,7 +144,7 @@ https://github.com/luxi-huang/portfolio/blob/master/img/posts/Whisker/rulur_2d.p
 
 *<center>Figure 10: place ruler in 2D pixel graph</center>*
 
-#### whisker length 
+#### Whisker length 
 
 After we calculate the pixel size in millimeter. Then we can place whisker's centerline on 2 dimensional cartier coordinate, and calculate the length of centerline, also the straight line length from base to tip. We rotate whiskers to make it start from original position and 10 percent of of its overall length is aline with x axis.    
 
@@ -145,6 +154,9 @@ https://github.com/luxi-huang/portfolio/blob/master/img/posts/Whisker/Rotated_wh
 *<center>Figure 11: place and rotate whiskers in cartier coordinate</center>*
 
 
+---
 
-
+### code: 
+The code are published on github: 
+- https://github.com/luxi-huang/Geometric-Whisker-Parameter-Extraction
 
