@@ -91,7 +91,7 @@ If we look closer on the step two image (figure 4). There are some black objects
 #### Check whisker edge resolution
 To check the resolution of final mask. I extract its edge and placed on original graph. It provide the view to show the resolution of final mask is high enough to extract its parameters. 
 
-### Generate Centerline
+### 3.Generate Centerline
 #### Step1 & 2 : Build initial Centerline and smooth the centerline 
 
 Next step is building initial center line from final mask, as shown on figure 5. It would start from base to tip along y axis, and it would find the most concentration point of white pixels on the line (the orange line on figure 5) which is parallel to x axis for all y values. The equation of finding the most concentration point as shown on left side on figure 5. Then it smooth the initial centerline to improve the centerline. 
@@ -110,4 +110,14 @@ After the step 2 of generate centerline. We would improve the centerline by gett
 *<center>Figure 6: Improve the centerline from step 2 to step 3 Centerline </center>*
 
 
+### Calculate Parameters
+### Tip/Base Diameters 
+
+The figure 7 shows the sum of white pixel numbers on the perpendicular lines on the centerline from base to tip. The blue lines are the original white pixel numbers, the black lines is smoothed from blue line. Base on the convex and concave points, we can find the crest/though numbers. The tip diameter would be end point of the blue line, the base diameter would be end point of blue lines.
+
+<p align="middle"> <img src="https://github.com/luxi-huang/portfolio/blob/master/img/posts/Whisker/Screenshot%20from%202020-11-14%2023-43-54.png?raw=true" alt="drawing" height="600"/> 
+
+*<center>Figure 7: Sum of white pixel numbers along the centerline </center>*
+
+### 
 
