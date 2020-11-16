@@ -81,12 +81,14 @@ After left and right camera pass the voxel_grid, it would combine the viewpoints
 
 Doorway_assistance of RANSAC and MLESAC are tested on simulations at three wheel chair positions: facing to wall, offset angle to door gap, and facing to door gap are shown on table 1. The world shown on the right picture is the general world we are using. The total segment plane means the number of plane extracting iterations for every subscribed point cloud. The results of MLESAC and RANSAC are the same based on the values on the table. 
 
+<p align="middle"> <img src="https://github.com/luxi-huang/portfolio/blob/master/img/posts/doorway_detection/RANSAC_MLESAC_TABLE.png?raw=true" alt="drawing"/> </p>  
+
+*<center>Table 1: Comparing RANSAC and MLESAC in Simulation (Gazebo)</center>*
+
+However, if we check the segmented inlier plane after first extracting iterations (as shown in figure 1), we find some interesting results.  The MLESAC is missing a corner but RANSAC is getting a full point cloud plane.  Those missing points on the MLESAC would accumulate to the following extracting iterations, which would potentially increase the overall extracting iterations running time. 
 
 
-
-
-
-
+RG_RANSAC_IMAGE.png
 
 ---
 ## Reference
