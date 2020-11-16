@@ -5,7 +5,7 @@ date: 2020-6-22 14:15:00
 categories: development
 type: project
 tags: ROS Gazebo Computer-Vision  Perception RGBD-Camera-Sensor C++ 
-featured_image: 'https://github.com/luxi-huang/portfolio/blob/master/img/posts/Whisker/whisker.gif?raw=true'
+featured_image: 'https://github.com/luxi-huang/portfolio/blob/master/img/posts/doorway_detection/title_image.png?raw=true'
 lead_text: 'Extract whisker parameters from image '
 ---
 
