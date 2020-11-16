@@ -174,8 +174,83 @@ However, when the distance between camera and doorway is greater than 2m, the po
 #### Tests Pt.7 and Pt.8: Door detection with RG algorithm on real-world
 In order to compare the accuracy of doorway detection between RG and RANSAC algorithm, we did distance test and angle test. For the distance test, a wheelchair is placed in front of the door gap, where the distance is from 1.2 m to 4.8 m, and interval range is 0.2m (test 7) or 0.1 m(test 8); For the Angle test, a wheelchair is placed at 2.4 m distance away from the door gap but with different angles, the angle range is from 30 - 150 degrees and the interval range is 10 degrees (test 7) or 5 degrees(test 8) .  
 
+<p align="middle"> <img src="https://github.com/luxi-huang/portfolio/blob/master/img/posts/doorway_detection/test_set_up.png?raw=true" alt="drawing"/> </p>  
+
+*<center>Figure 9: test pt.7 and test pt.8 setup.</center>*
+
+
+
+
 #### Time improvement:
 The running time of Normalized_Estimation function is about half of the overall running time of the new doorway assistance region growing algorithm. To improve the running efficiency of Normalized_Estimation function, we increased the value of leaf_size parameter in the voxel grid filter functions, and decreased the setKsearch parameter on the Normal_Estimation function. Both ways can efficiently reduce the Normal_Estimation function’s running time (as shown on Table 3).   
+
+<p align="middle"> <img src="https://github.com/luxi-huang/portfolio/blob/master/img/posts/doorway_detection/table3.png?raw=true" alt="drawing"/> </p>  
+
+*<center>Figure 9: test pt.7 and test pt.8 setup.</center>*
+
+#### Tests Pt.7 Angle and distance test of door detection with RG algorithm on real- world (leaf_size = 0.01)
+
+- On the Distance_Test - Door_Position results (Figure 8), the door position error is increased along the linear displacement on the RG algorithm. One interesting thing we found is there are some extra columns (one or two) of point clouds on the upper height of two sides of walls. Those columns only have a small amount of height from instead of all the way lengthened into the ground. Each wall has different performance of those column points (the amount can be different).  Since the doorway detection with RG algorithm is highly dependent on the extreme endpoints of the whole wall, some extreme edge points might not be able to be detected until the wheelchair is moving far away from the wall gap so the camera can see a greater view scope. 
+- However,  the camera detection properties may not change perfectly linearly along the distance displacement, at some certain positions where the camera might miss some points, which might be the extreme points of the wall even if the camera is moved far away. So this sensor property could cause fluctuations, but it doesn't affect the overall increasing path of RG along the distance displacement. All above properties can also explain the door gap width error path on RG which is an increased but fluctuated (Figure 10).
+- The collecting points on the RANSAC segment parallel wall plane would change while the wheelchair is moving away from the door gap and the camera has a greater view scope (based on the RANSAC segmentation properties). The edge points on the stripe might be collected differently, so the door gap width error would have a fluctuate path (Figure 9). 
+- The fluctuation range of the door position error on the 3D graph of RANSAC (figure 8)  is close to the door gap width error’s change range (figure 10) . The 2D graph the door position error on the RANSAC algorithm is placed on a large scope (figure 8), so it would look more constant than the path shows on figure 9. 
+- Comparing the RANSAC and RG’s  door position error on the distance test, the RG’s  has greater slope and is more fluctuate than RANSAC’s . They have a crossover point at 2.0 m.  Before 2.0 m, the RG’s error value is smaller than RANSAC’s, but after 2.0 meter, the RANSAC’s error is greater.
+- On the door gap width error of distance test (figure 9). RG’s error is increasing along the distance, and RANSAC’s error path is more fluctuated than RG’s .  
+
+<p align="middle"> <img src="https://github.com/luxi-huang/portfolio/blob/master/img/posts/doorway_detection/1.png?raw=true" alt="drawing"/> </p>  
+
+*<center>Figure 10: distance_test results of door position error (leaf_size = 0.01)</center>*
+
+<p align="middle"> <img src="https://github.com/luxi-huang/portfolio/blob/master/img/posts/doorway_detection/2.png?raw=true" alt="drawing"/> </p>  
+
+*<center>Figure 11: distance_test result of door gap width error  (leaf_size = 0.01)</center>*
+
+- On the Angle_Test -- Door_Gap_Width result (figure 12), the door gap width error is fluctuated greatly on the RANSAC algorithm. When the wheelchair moves to the edge angle, the segmented parallel plane from RANSAC would be affected by the thickness of the wall. It would be inclined instead of keeping exactly parallel as the real wall plane surface (We did another test on two non-parallel walls, the RANSAC algorithm can segment out a parallel plane).  So the collected points on the strips would be different and might miss some important edge points, which would cause the fluctuating error path of door gap width on RANSAC (figure 12) when the wheelchair is placed at the offset angle, and the  small error value at 90 degrees where wheelchair is facing in front of the door. However, the door position error path on the RANSAC is pretty constant (figure 13), since the stripe is symmetric to the center axis of the door gap even if  the wheelchair moves to an offset angle to the door gap.  
+- The RG’s door_gap_width error is smaller at center, and larger at side angles (figure 12). Since when the wheelchair moves to the offset angle, the normal and curvature values around the edge would change and cooperate with the points on the side surface of the wall, it would cause the more points around edge points not included into the wall plane. However, since not all points' normal values are exactly the same along the whole column line, sometimes there are few points included in the wall plane but not all most other points. Those special points might become the door start/end points on the doorway algorithm, which would cause the error of door gap width and door position fluctuated. 
+- The distance between wheelchair and door gap setup on the angle_Test is 2.4 m, the error value of door position on the angle test at 90 degrees (figure 13) is similar to the distance test’s error at 2.4 meters (figure 10). On the distance test, the smallest error value of door position on RG is at 1.2 m, so may be a good idea to do the angle test with a radius of 1.2 meters in the future. 
+
+<p align="middle"> <img src="https://github.com/luxi-huang/portfolio/blob/master/img/posts/doorway_detection/3.png?raw=true" alt="drawing"/> </p>  
+
+*<center>Figure 12: angle_test results of door gap width error (leaf_size = 0.01)</center>*
+
+<p align="middle"> <img src="https://github.com/luxi-huang/portfolio/blob/master/img/posts/doorway_detection/4.png?raw=true" alt="drawing"/> </p>  
+
+*<center>Figure 13:  angle_test results of door position error (leaf_size = 0.01)</center>*
+
+#### Tests Pt.8: Angle and distance test of door detection with RG algorithm on real- world (leaf_size = 0.05) 
+
+While increasing the leaf_size from 0.01 to 0.05 to downsample the point cloud size, the door gap error on angle and displacement tests are fluctuating greater on both RG and RANSAC algorithms (figure 15 and 16). The distance between each point and the total amount of points would be increased when the leaf_size is changed from 0.01 to 0.05. So on RANSAC segmentation, the amount of points numbers are smaller on the stripe and each point would count more weight on the stripe after we increased the leaf_size, and the point's position on the stripe edge would greatly affect the door gap width error. The RG has a smaller fluctuation effect than RANSAC’s, because the RG gets the door start/end point from the whole plane instead of a small point cloud size of the stripe. Changing the leaf size doesn’t affect the error path shape of door position on RG and RANSAC on both angle and displacement tests. 
+
+
+<p align="middle"> <img src="https://github.com/luxi-huang/portfolio/blob/master/img/posts/doorway_detection/5.png?raw=true" alt="drawing"/> </p>  
+
+*<center>Figure 15: distance_test result for door position (leaf_size = 0.05)</center>*
+
+<p align="middle"> <img src="https://github.com/luxi-huang/portfolio/blob/master/img/posts/doorway_detection/6.png?raw=true" alt="drawing"/> </p>  
+
+*<center>Figure 16:distance_test results for door gap width(leaf_size = 0.05)</center>*
+
+
+<p align="middle"> <img src="https://github.com/luxi-huang/portfolio/blob/master/img/posts/doorway_detection/7.png?raw=true" alt="drawing"/> </p>  
+
+*<center>Figure 17: angel_test results for door gap width (leaf_size = 0.05)</center>*
+
+<p align="middle"> <img src="https://github.com/luxi-huang/portfolio/blob/master/img/posts/doorway_detection/8.png?raw=true" alt="drawing"/> </p>  
+
+*<center>Figure 18: angle_test results for door position(leaf_size = 0.05)</center>*
+
+---
+## Conclusion 
+The door thickness could cause the fluctuation error path of the door position on the RG and RANSAC while wheelchair placed at offset angle. The RG’s error (door position and door gap width) have an increasing pattern along the distance test. The segment plane from the RANSAC would be changed on when the wheelchair moving away from the door gap or turning at offset angle, but the center of door position is not changed much as door gaps. Increasing the leaf_size would cause a greater fluctuation path of the door gap width error on displacement and angle tests for both algorithms (RANSAC and RG), and it would affect greatly on RANSAC than RG. However, increasing leaf_size slows down the running time dramatically on RG but not much on the RANSAC, therefore RG is more suitable to use greater leaf_size value than RANSAC.  
+
+---
+## Future Scope
+- Next step for the doorway assistance project can test different angles on two collinear walls, and find the relationship between the angle size and segmentation plane shape of RG and RANSAC algorithms. 
+- Do the Angle test with radius at 1.2 meters instead of 2.4 meters of RANSAC and RG algorithm, since RG has best door position error performance at 1.2 m.  
+Also we can do the angle and distance test for RG and RANSAC  in the real-world, and  determine - crossover conditions for combined algorithms. 
+- Misc. book-keeping/ease of use for the code that we didn’t have time to get to; e.g. including additional flags for testing different parameters or switch algorithms without rebuilding the code.
+
+
 
 ---
 ## Reference
@@ -190,5 +265,8 @@ The running time of Normalized_Estimation function is about half of the overall 
 
 [5]https://pcl.readthedocs.io/projects/tutorials/en/latest/region_growing_segmentation.html#region-growing-segmentation
 
-
 [6] https://pcl.readthedocs.io/projects/tutorials/en/latest/voxel_grid.html#voxelgrid
+
+---
+### NOTE: 
+- The code is authorize to Shirley Ryan AbilityLab, whish hasn't publish yet. So it can not link to github at the moment.  
