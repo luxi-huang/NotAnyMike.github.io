@@ -119,6 +119,18 @@ The next algorithm is implemented with Region-Growing (RG) segmentation. “RG a
 
 The Region-Growing segmentation is tested on the simulation world by placing the wheelchair at two positions: facing to door gap and offset angle to door gap. The region growing can successfully segment planes successfully (figure 3). 
 
+
+<p align="middle"> <img src="https://github.com/luxi-huang/portfolio/blob/master/img/posts/doorway_detection/RG.png?raw=true" alt="drawing"/> </p>  
+
+*<center>Figure 3: Region_Growing segmentation on simulation world. </center>*
+
+#### Tests Pt.4: Region_growing segmentation on real - world
+
+Region-Growing is tested in the real world where the distance between camera and door is smaller than 2.0 m (based on the intel camera property, point cloud would become wavy if the distance is greater than 2.0 m), and all planes are detected successfully (figure 4). Those red points do not belong to any clusters, since the number of those points are smaller than the threshold of the minimum number of points clusters. However, because of the high number of clusters, the original doorway detection algorithm is not working anymore. Since region-growing is finding each plane separately instead of finding the door gap from two parallel planes as doorway detections’s original algorithm. 
+
+
+
+
 ---
 ## Reference
 
