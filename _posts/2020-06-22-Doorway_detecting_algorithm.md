@@ -87,12 +87,27 @@ Doorway_assistance of RANSAC and MLESAC are tested on simulations at three wheel
 
 However, if we check the segmented inlier plane after first extracting iterations (as shown in figure 1), we find some interesting results.  The MLESAC is missing a corner but RANSAC is getting a full point cloud plane.  Those missing points on the MLESAC would accumulate to the following extracting iterations, which would potentially increase the overall extracting iterations running time. 
 
-<p align="middle"> <img src="https://github.com/luxi-huang/portfolio/blob/master/img/posts/doorway_detection/RG_RANSAC_IMAGE.png?raw=true" alt="drawing"/> </p>  
+<p align="middle"> <img src="https://github.com/luxi-huang/portfolio/blob/master/img/posts/doorway_detection/RANSAC_MLESAC_IMAGE.png?raw=true" alt="drawing"/> </p>  
 
 *<center>Figure 3: MLESAC and RG segmentation after first extracting plane iterations; the white point clouds are the segmented plane after the algorithm’s first iteration, while the green marker is the detected door.
 )</center>*
 
 
+#### Tests Pt.2: comparison of RANSAC and MLESAC segmentation methods on the doorway assistance algorithm in the real world 
+- It also compared the RANSAC and MLESAC in the real-world (as shown on table 2). At each position, we tested two different leaf_size values. 
+    - Leaf_size is a parameter used on the voxel grid filter; larger leaf_size means a smaller point cloud size and a coarser point cloud resolution[4].  
+- At the least noisy position (based on the camera property, intel is about 2.0 m), RANSAC and MLESAC have the same number of total segmented planes and detected doorway(s). 
+- After increasing the leaf_size from 0.01 to 0.05, the segmented planes of MLESAC are larger than those of RANSAC. 
+- When the camera’s view contains a large amount of visual noise/clutter,, more total segmented planes are found by MLESAC than by RANSAC, and sometimesMLESAC is unable to detect the doors. 
+When we increase the leaf_size from 0.01 to 0.05 (akin to downsampling the point cloud’s size), neither algorithms can find the plane. 
+  - NOTE: the total number of planes found by MLESAC is greater than those found by RANSAC. 
+  - A greater total number of segmented planes means a greater number of iterations (wherein plane extraction takes place), which will result in greater overall running time.
+  - In the real world, if the user can not detect the door immediately, it might cause some potential safety problems.  The data collected in these tests suggests that MLESAC has  found the most informative planes in the presence of a noisy real-world scene than RANSAC does (in the context of the doorway detection algorithm on which these methods were implemented). 
+
+<p align="middle"> <img src="https://github.com/luxi-huang/portfolio/blob/master/img/posts/doorway_detection/table2.png?raw=true" alt="drawing"/> </p>  
+
+*<center>Figure 3: MLESAC and RG segmentation after first extracting plane iterations; the white point clouds are the segmented plane after the algorithm’s first iteration, while the green marker is the detected door.
+)</center>*
 
 
 ---
