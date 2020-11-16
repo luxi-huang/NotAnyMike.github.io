@@ -145,6 +145,13 @@ Therefore, we need to design new algorithms for doorway detection which implemen
 - Step 5: The next step sort (IntroSort) [9] the Endpoint_list based on T1.x values. 
 - Step 6:  The last step would be check the gap distance for every two planes, and a doorway would be detected if the gap distance is within the ADA standardized door width (36 inches to 48 inches).  
 
+<p align="middle"> <img src="https://github.com/luxi-huang/portfolio/blob/master/img/posts/doorway_detection/RG_algorithm.png?raw=true" alt="drawing" height="500"/> </p>  
+
+*<center>Figure 5: New Doorway assistance algorithm implement with RG</center>*
+
+#### Tests Pt.5: New doorway detection algorithm with RG algorithm are tested on simulation 
+The new doorway detection algorithms with RG segmentation are tested on simulation (as shown on figure 6). Wheelchair is placed at two positions: facing to the door gap, and offset angle to wall gap. Both positions can detect the door successfully.   
+
 
 
 ---
