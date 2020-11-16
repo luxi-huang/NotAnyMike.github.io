@@ -21,7 +21,7 @@ Whiskers are important sensor for seal detecting vibrotactile information from t
  
 The whiskers images are in two kinds of background - green and black, as shown on figure 1 and figure 2. Rulers are placed next to whisker for the purpose of referencing the size of whiskers.  The goal of the project is to extract from seal whiskers parameters (as shown on table 1) from original image(figure 1). 
 
-<p align="middle"> <img src="https://github.com/luxi-huang/portfolio/blob/master/img/posts/Whisker/original_graph.png?raw=true" alt="drawing" height="400"/> </p>  
+<p align="middle"> <img src="https://github.com/luxi-huang/portfolio/blob/master/img/posts/Whisker/original_graph.png?raw=true" alt="drawing" height="600"/> </p>  
 
 *<center>Figure 1: green and black background whisker photo</center>*
 

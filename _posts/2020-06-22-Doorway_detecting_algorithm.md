@@ -30,6 +30,11 @@ This projects demonstrate the two new algorithms which were implemented on the o
 
 <!-- <strong>bold text</strong>. -->
 
+<p align="middle"> <img src="https://github.com/luxi-huang/portfolio/blob/master/img/posts/doorway_detection/original_algorithm.png?raw=true" alt="drawing"/> </p>  
+
+*<center>Figure 1: green and black background whisker photo</center>*
+
+
  - Doorway detection’s original algorithm implements RANSAC (RANdom SAmpling Consensus) segmentation to fit a point cloud to a parallel plane model.On that plane all points which are at ADA standardized height(1m) stripe_height will be collected and be treated as a stripe.
    - The stripe (and plane) is a subset of the larger point cloud  
 
@@ -39,7 +44,7 @@ This projects demonstrate the two new algorithms which were implemented on the o
     - If the search finds neighbor points, they will be marked as the door_end point. 
 
 - Once the door_start and door_end points are found, the door gap width can be calculated (door gap width is defined as the distance between the door_start and door_end points). 
-    - If the door gap width is within ADA standards (the range from 32 inches to 48 inches), then this gap would be a door gap[1]   
+    - If the door gap width is within ADA standards (the range from 32 inches to 48 inches), then this gap would be a door gap[2].   
 
 
 
