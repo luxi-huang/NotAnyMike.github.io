@@ -11,7 +11,7 @@ lead_text: 'Automated Doorway Detection for Assistive Shared-Control Wheelchairs
 
 # Automated Doorway Detection for Assistive Wheelchairs
 
-- Skills: Perception, ROS, C++, RGBD-Camera Sensor
+- Skills: Perception, ROS, C++, RGBD-Camera Sensor, point-cloud 
 
 ---
 
@@ -22,8 +22,7 @@ lead_text: 'Automated Doorway Detection for Assistive Shared-Control Wheelchairs
 Powered wheelchairs provide a mobility solution for people who unable  to  operate  a  manual  wheelchair,  for  reasons  of strength  or  impairment.  However,  operation  of  a  powered wheelchair can still be a difficult, tedious or challenging task. It not only because of limitations in  their  own  motor  control,  but  also  because  of  limitations  in the control interfaces available to them. [1] So it would be helpful if the operator can accurately sense their environment and locate goals. 
 
 ### Overview
-This projects demonstrate the two new algorithms which were implemented on the original doorway detection algorithms[2], which are MLESAC (Maximum Likelihood Estimation Sample Consensus) segmentation and Region-Growing (RG) in the context of doorway assistance, including results from the tests of those both algorithms in the simulation and real-world. 
-
+This project build an automatic doorway (open door positions) detection system for wheelchairs with camera sensor.  This projects demonstrate the two new algorithms which were implemented on the original doorway detection algorithms[2], which are MLESAC (Maximum Likelihood Estimation Sample Consensus) segmentation and Region-Growing (RG) in the context of doorway assistance, including results from the tests of those both algorithms in the simulation and real-world. 
 ---
 
 ## Original algorithm introduction (RANSAC)
@@ -32,7 +31,7 @@ This projects demonstrate the two new algorithms which were implemented on the o
 
 <p align="middle"> <img src="https://github.com/luxi-huang/portfolio/blob/master/img/posts/doorway_detection/original_algorithm.png?raw=true" alt="drawing"/> </p>  
 
-*<center>Figure 1: green and black background whisker photo</center>*
+*<center>Figure 1: Original door detection algorithm</center>*
 
 
  - Doorway detection’s original algorithm implements RANSAC (RANdom SAmpling Consensus) segmentation to fit a point cloud to a parallel plane model.On that plane all points which are at ADA standardized height(1m) stripe_height will be collected and be treated as a stripe.
@@ -46,7 +45,11 @@ This projects demonstrate the two new algorithms which were implemented on the o
 - Once the door_start and door_end points are found, the door gap width can be calculated (door gap width is defined as the distance between the door_start and door_end points). 
     - If the door gap width is within ADA standards (the range from 32 inches to 48 inches), then this gap would be a door gap[2].   
 
+---
+## Camera Filters -- Point Cloud Library Nodelets  
 
+
+## New Algorithm - MLESAC:
 
 
 ---
