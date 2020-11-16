@@ -23,15 +23,33 @@ Powered wheelchairs provide a mobility solution for people who unable  to  opera
 
 ### Overview
 This project build an automatic doorway (open door positions) detection system for wheelchairs with camera sensor.  This projects demonstrate the two new algorithms which were implemented on the original doorway detection algorithms[2], which are MLESAC (Maximum Likelihood Estimation Sample Consensus) segmentation and Region-Growing (RG) in the context of doorway assistance, including results from the tests of those both algorithms in the simulation and real-world. 
+
+---
+## Camera Filters -- Point Cloud Library Nodelets  
+<p align="middle"> <img src="https://github.com/luxi-huang/portfolio/blob/master/img/posts/doorway_detection/camera_filter.png?raw=true" alt="drawing"/> </p>  
+
+
+*<center>Figure 1: Camera Filters - Point Cloud Library Nodelets</center>*
+
+Two RGBD cameras sensors are placed on two side arm of wheelchairs. each camera would pass through point clouds library library nodelets as shown on figure 1. 
+
+- Pass through filter: this filter would convert camera axis and pass through distance within threshold 
+- Cloud_throttle:  update the camera input frequency
+- Voxel_grid: reduce the point cloud size but not change the point cloud shape
+
+After left and right camera pass the voxel_grid, it would combine the viewpoints by using Combine point_cloud filter. Then the camera point clouds would be ready to pass into Doorway Assistance. 
+
 ---
 
-## Original algorithm introduction (RANSAC)
+## Algorithms 
+
+### Original algorithm introduction (RANSAC)
 
 <!-- <strong>bold text</strong>. -->
 
 <p align="middle"> <img src="https://github.com/luxi-huang/portfolio/blob/master/img/posts/doorway_detection/original_algorithm.png?raw=true" alt="drawing"/> </p>  
 
-*<center>Figure 1: Original door detection algorithm</center>*
+*<center>Figure 2: Original door detection algorithm</center>*
 
 
  - Doorway detection’s original algorithm implements RANSAC (RANdom SAmpling Consensus) segmentation to fit a point cloud to a parallel plane model.On that plane all points which are at ADA standardized height(1m) stripe_height will be collected and be treated as a stripe.
@@ -46,10 +64,28 @@ This project build an automatic doorway (open door positions) detection system f
     - If the door gap width is within ADA standards (the range from 32 inches to 48 inches), then this gap would be a door gap[2].   
 
 ---
-## Camera Filters -- Point Cloud Library Nodelets  
+
+### New Algorithm - MLESAC:
+
+- After the doorway detection pipeline subscribes to point cloud data, in both RANSAC and MLESAC segmentation methods it will go through the collection of inlier points.
+    - Inlier points are defined as points which are considered within the error bounds while fitting the chosen model (in the case of Doorway Detection, the chosen model is a parallel plane)
+- Next, those points are  extracted from the original point cloud and stored as a subset ‘inlier plane’.
+    - The rest of the original point cloud part is considered the subsect of the outliers subset. 
+- On the next iterations, the  respective segmentation method is applied to this subset of outlier points to segment out  new subsets of inlier and outlier points. 
+    - Such iteration continues until the subsequent subset of outlier points contains fewer points than a predefined threshold on segmentation size [5]. 
+
+#### Introduction to MLESAC:
+ MLESAC is a later generation version of the RANSAC algorithm, it adopts the same sampling strategy as RANSAC to generate putative solutions, but chooses the solution to maximize the likelihood function rather than just the number of inliers. [3]
+
+#### Tests Pt.1: comparing RANSAC and MLESAC on Simulation
+
+Doorway_assistance of RANSAC and MLESAC are tested on simulations at three wheel chair positions: facing to wall, offset angle to door gap, and facing to door gap are shown on table 1. The world shown on the right picture is the general world we are using. The total segment plane means the number of plane extracting iterations for every subscribed point cloud. The results of MLESAC and RANSAC are the same based on the values on the table. 
 
 
-## New Algorithm - MLESAC:
+
+
+
+
 
 
 ---
@@ -58,3 +94,5 @@ This project build an automatic doorway (open door positions) detection system f
 [1] https://cpb-us-e1.wpmucdn.com/sites.northwestern.edu/dist/5/1812/files/2016/05/14iros_jain.pdf
 
 [2] https://cpb-us-e1.wpmucdn.com/sites.northwestern.edu/dist/5/1812/files/2016/05/13icra_derry.pdf
+
+[3]http://www.robots.ox.ac.uk/~vgg/publications/papers/torr00.pdf
