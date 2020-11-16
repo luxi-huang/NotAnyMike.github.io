@@ -162,15 +162,20 @@ Doorway detection with RG algorithm is tested on real-world (as shown on figure 
 
 However, when the distance between camera and doorway is greater than 2m, the point clouds become very wavy. Since the camera has better performance when it's distance to the object is under 2m based on the intel datasets[6]. When camera is about 3.5 m away from the doorway  (as shown on figure 8), the points clouds are wavy and segmented out 27 clusters from the Region-Growing, we tried to solve it by turning the parameter of normal threshold to a larger value (form 3 degree to 4 degrees), but it cause the part of ceiling and the ground on the same plane as the left wall. By solving this problem in the future, we can try to use different cameras or applied filters to get rid of wavy noise. 
 
-<p align="middle"> <img src="https://github.com/luxi-huang/portfolio/blob/master/img/posts/doorway_detection/doorway_RG.png?raw=true" alt="drawing" height="400"/> </p>  
+<p align="middle"> <img src="https://github.com/luxi-huang/portfolio/blob/master/img/posts/doorway_detection/Doorway_RG.png?raw=true" alt="drawing" height="400"/> </p>  
 
 *<center>Figure 7: Doorway detection algorithm with RG algorithm tested on simulation; The white part is the subscribed point clouds, the green marker is detected doorway, and the yellow plane is one of the segment clusters after the Region-Growing segmentation.</center>*
 
 
-<p align="middle"> <img src="https://github.com/luxi-huang/portfolio/blob/master/img/posts/doorway_detection/RG_REAL_world.png?raw=true" alt="drawing" height="400"/> </p>  
+<p align="middle"> <img src="https://github.com/luxi-huang/portfolio/blob/master/img/posts/doorway_detection/RG_REAL_WORLD.png?raw=true" alt="drawing" height="400"/> </p>  
 
 *<center>Figure 8: Doorway detection algorithm with RG algorithm tested on simulation; The white part is the subscribed point clouds, the green marker is detected doorway, and the yellow plane is one of the segment clusters after the Region-Growing segmentation.</center>*
 
+#### Tests Pt.7 and Pt.8: Door detection with RG algorithm on real-world
+In order to compare the accuracy of doorway detection between RG and RANSAC algorithm, we did distance test and angle test. For the distance test, a wheelchair is placed in front of the door gap, where the distance is from 1.2 m to 4.8 m, and interval range is 0.2m (test 7) or 0.1 m(test 8); For the Angle test, a wheelchair is placed at 2.4 m distance away from the door gap but with different angles, the angle range is from 30 - 150 degrees and the interval range is 10 degrees (test 7) or 5 degrees(test 8) .  
+
+#### Time improvement:
+The running time of Normalized_Estimation function is about half of the overall running time of the new doorway assistance region growing algorithm. To improve the running efficiency of Normalized_Estimation function, we increased the value of leaf_size parameter in the voxel grid filter functions, and decreased the setKsearch parameter on the Normal_Estimation function. Both ways can efficiently reduce the Normal_Estimation function’s running time (as shown on Table 3).   
 
 ---
 ## Reference
