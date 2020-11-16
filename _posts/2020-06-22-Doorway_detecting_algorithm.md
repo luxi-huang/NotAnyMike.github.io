@@ -85,7 +85,7 @@ Doorway_assistance of RANSAC and MLESAC are tested on simulations at three wheel
 
 *<center>Table 1: Comparing RANSAC and MLESAC in Simulation (Gazebo)</center>*
 
-However, if we check the segmented inlier plane after first extracting iterations (as shown in figure 1), we find some interesting results.  The MLESAC is missing a corner but RANSAC is getting a full point cloud plane.  Those missing points on the MLESAC would accumulate to the following extracting iterations, which would potentially increase the overall extracting iterations running time. 
+However, if we check the segmented inlier plane after first extracting iterations (as shown in figure 3), we find some interesting results.  The MLESAC is missing a corner but RANSAC is getting a full point cloud plane.  Those missing points on the MLESAC would accumulate to the following extracting iterations, which would potentially increase the overall extracting iterations running time. 
 
 <p align="middle"> <img src="https://github.com/luxi-huang/portfolio/blob/master/img/posts/doorway_detection/RANSAC_MLESAC_IMAGE.png?raw=true" alt="drawing"/> </p>  
 
@@ -106,9 +106,18 @@ When we increase the leaf_size from 0.01 to 0.05 (akin to downsampling the point
 
 <p align="middle"> <img src="https://github.com/luxi-huang/portfolio/blob/master/img/posts/doorway_detection/table2.png?raw=true" alt="drawing"/> </p>  
 
-*<center>Figure 3: MLESAC and RG segmentation after first extracting plane iterations; the white point clouds are the segmented plane after the algorithm’s first iteration, while the green marker is the detected door.
+*<center>Table 2: Comparing RANSAC and MLESAC in real-world (in Narrow-field of view without visual clutter and wider-field of view with visual clutter based on different leaf_size)
 )</center>*
 
+--- 
+
+### New Algorithm - RG:
+Algorithm Introduction: 
+The next algorithm is implemented with Region-Growing (RG) segmentation. “RG algorithm is to merge points which are close enough in terms of the smoothness constraint (curvature and normal). Thereby, the output of this algorithm is the set of clusters, where each cluster is a set of points that are considered to be a part of the same smooth surface.” [5]
+
+#### Tests Pt.3: Region_growing segmentation on simulation world
+
+The Region-Growing segmentation is tested on the simulation world by placing the wheelchair at two positions: facing to door gap and offset angle to door gap. The region growing can successfully segment planes successfully (figure 3). 
 
 ---
 ## Reference
@@ -118,3 +127,8 @@ When we increase the leaf_size from 0.01 to 0.05 (akin to downsampling the point
 [2] https://cpb-us-e1.wpmucdn.com/sites.northwestern.edu/dist/5/1812/files/2016/05/13icra_derry.pdf
 
 [3]http://www.robots.ox.ac.uk/~vgg/publications/papers/torr00.pdf
+
+[4] http://www.robots.ox.ac.uk/~vgg/publications/papers/torr00.pdf
+
+[5]https://pcl.readthedocs.io/projects/tutorials/en/latest/region_growing_segmentation.html#region-growing-segmentation
+
