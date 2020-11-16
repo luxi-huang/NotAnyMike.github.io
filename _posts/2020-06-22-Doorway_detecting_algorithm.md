@@ -128,6 +128,22 @@ The Region-Growing segmentation is tested on the simulation world by placing the
 
 Region-Growing is tested in the real world where the distance between camera and door is smaller than 2.0 m (based on the intel camera property, point cloud would become wavy if the distance is greater than 2.0 m), and all planes are detected successfully (figure 4). Those red points do not belong to any clusters, since the number of those points are smaller than the threshold of the minimum number of points clusters. However, because of the high number of clusters, the original doorway detection algorithm is not working anymore. Since region-growing is finding each plane separately instead of finding the door gap from two parallel planes as doorway detections’s original algorithm. 
 
+<p align="middle"> <img src="https://github.com/luxi-huang/portfolio/blob/master/img/posts/doorway_detection/RG_Real_world.png?raw=true" alt="drawing" height="400"/> </p>  
+
+*<center>Figure 4: Region_Growing segmentation test on the real - world (distance < 2m)</center>*
+
+#### Algorithm Steps:  
+Therefore, we need to design new algorithms for doorway detection which implements Region-Growing  (the brief outline of the algorithms as shown on figure 5). 
+
+- Step1: After point clouds are subscribed, it would be passed to a passthrough filter to remove the ground plane by getting rid of points whose z values are smaller than 0.05 of the max_z of overall point cloud. It is safe to remove the ground plane since we only care about wall planes on the doorway detection algorithm. Also this step can sampling down the point cloud size, and increase the running efficiency for the following steps. 
+- Step 2: The next step is using Region - Growing to cluster planes. Some parameters need to be tuned in order to segment planes correctly.
+  - If the object surface are not smooth,  the parameter of SetSmoothnessThreshold and setCurvatureThreshold need to be set as larger number
+  - If the size of the object plane is large, then the setMinClusterSize needs to be tuned to a larger value.
+  - To use more accurate normal values in the Region-Growing function, the setKsearch parameter on the normal_Estimation function needs to be tuned to larger. However, it might run into time efficiency problems if the setKsearch value is too large.
+- Step 3:  Each clustered plane needs to be checked if the plane's height is greater than 1m (ADA standardized height), if so the plane would be added into potential_wall_list. 
+- Step 4: Then for each plane in the potential wall list, we will get two endpoints points (T1,T2) from each cluster (projected into the x-y plane) which corresponds to the min_x, max_x values, and add two endpoints’ x and y value (T1.x, T1.y, T2.x, T2.y) into the Endpoint_list. 
+- Step 5: The next step sort (IntroSort) [9] the Endpoint_list based on T1.x values. 
+- Step 6:  The last step would be check the gap distance for every two planes, and a doorway would be detected if the gap distance is within the ADA standardized door width (36 inches to 48 inches).  
 
 
 
