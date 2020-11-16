@@ -87,8 +87,13 @@ Doorway_assistance of RANSAC and MLESAC are tested on simulations at three wheel
 
 However, if we check the segmented inlier plane after first extracting iterations (as shown in figure 1), we find some interesting results.  The MLESAC is missing a corner but RANSAC is getting a full point cloud plane.  Those missing points on the MLESAC would accumulate to the following extracting iterations, which would potentially increase the overall extracting iterations running time. 
 
+<p align="middle"> <img src="https://github.com/luxi-huang/portfolio/blob/master/img/posts/doorway_detection/RG_RANSAC_IMAGE.png?raw=true" alt="drawing"/> </p>  
 
-RG_RANSAC_IMAGE.png
+*<center>Figure 3: MLESAC and RG segmentation after first extracting plane iterations; the white point clouds are the segmented plane after the algorithm’s first iteration, while the green marker is the detected door.
+)</center>*
+
+
+
 
 ---
 ## Reference
