@@ -152,6 +152,24 @@ Therefore, we need to design new algorithms for doorway detection which implemen
 #### Tests Pt.5: New doorway detection algorithm with RG algorithm are tested on simulation 
 The new doorway detection algorithms with RG segmentation are tested on simulation (as shown on figure 6). Wheelchair is placed at two positions: facing to the door gap, and offset angle to wall gap. Both positions can detect the door successfully.   
 
+<p align="middle"> <img src="https://github.com/luxi-huang/portfolio/blob/master/img/posts/doorway_detection/RG_simulation.png?raw=true" alt="drawing" height="400"/> </p>  
+
+*<center>Figure 6: Doorway detection algorithm with RG algorithm tested on simulation; The white part is the subscribed point clouds, the green marker is detected doorway, and the yellow plane is one of the segment clusters after the Region-Growing segmentation.</center>*
+
+#### Tests Pt.6: New doorway detection algorithm with RG algorithm tested on the real - world
+
+Doorway detection with RG algorithm is tested on real-world (as shown on figure 7), where the distance between camera and doorway is smaller than 2 m. The algorithm can detect the doorway successfully. The yellow points is one of the endpoints of a segment plane from RG. 
+
+However, when the distance between camera and doorway is greater than 2m, the point clouds become very wavy. Since the camera has better performance when it's distance to the object is under 2m based on the intel datasets[6]. When camera is about 3.5 m away from the doorway  (as shown on figure 8), the points clouds are wavy and segmented out 27 clusters from the Region-Growing, we tried to solve it by turning the parameter of normal threshold to a larger value (form 3 degree to 4 degrees), but it cause the part of ceiling and the ground on the same plane as the left wall. By solving this problem in the future, we can try to use different cameras or applied filters to get rid of wavy noise. 
+
+<p align="middle"> <img src="https://github.com/luxi-huang/portfolio/blob/master/img/posts/doorway_detection/doorway_RG.png?raw=true" alt="drawing" height="400"/> </p>  
+
+*<center>Figure 7: Doorway detection algorithm with RG algorithm tested on simulation; The white part is the subscribed point clouds, the green marker is detected doorway, and the yellow plane is one of the segment clusters after the Region-Growing segmentation.</center>*
+
+
+<p align="middle"> <img src="https://github.com/luxi-huang/portfolio/blob/master/img/posts/doorway_detection/RG_REAL_world.png?raw=true" alt="drawing" height="400"/> </p>  
+
+*<center>Figure 8: Doorway detection algorithm with RG algorithm tested on simulation; The white part is the subscribed point clouds, the green marker is detected doorway, and the yellow plane is one of the segment clusters after the Region-Growing segmentation.</center>*
 
 
 ---
@@ -167,3 +185,5 @@ The new doorway detection algorithms with RG segmentation are tested on simulati
 
 [5]https://pcl.readthedocs.io/projects/tutorials/en/latest/region_growing_segmentation.html#region-growing-segmentation
 
+
+[6] https://pcl.readthedocs.io/projects/tutorials/en/latest/voxel_grid.html#voxelgrid
