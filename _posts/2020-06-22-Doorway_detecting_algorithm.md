@@ -268,5 +268,3 @@ Also we can do the angle and distance test for RG and RANSAC  in the real-world,
 [6] https://pcl.readthedocs.io/projects/tutorials/en/latest/voxel_grid.html#voxelgrid
 
 ---
-### NOTE: 
-- The code is authorize to Shirley Ryan AbilityLab, whish hasn't publish yet. So it cannot link to github at the moment.  
