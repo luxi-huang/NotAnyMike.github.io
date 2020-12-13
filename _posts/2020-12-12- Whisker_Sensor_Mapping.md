@@ -37,21 +37,25 @@ This projects is building a map by using whisker sensors to detects environment.
    *<center>Figure 1: Whisker environment detection </center>*
 
 ---
-## Whisker simulation world: 
+
+## Whisker simulation world 
 As shown on Figure 2, the simulation world contains 5 cylinders. I controlled rat by sending it linear and angular velocities, and triggers the whisker moving back and forth. So the rat whisker can scan the world, and output the sensor data.  
 
 
-## Whisker Sensor Data;
+## Whisker Sensor Data
 Whisker is simulated to moving back and forth. Each whisker contains 20 segments, which can sense the dynamics value in force and moment when they touch objects, and give feedback of which segment has collision with objects. Then they calculate the next whisker motion path based on the force and moment. Also calculate current kinematics value in x, y and theta. 
 
 After I get each segments kinematics data, I need to match each segments collision data with kinematics data, base based on that, we can estimate objects position.   
 
-## Transfer whisker data to 2D scan data. 
+## Transfer whisker data to 2D scan data 
 Whisker data are in 3D points. I need to transfer it to 2D laser-scan data, and use that data build a map. It order to do it, I transfer 3D points to 2D points by eliminate z axis value. Next I transfer 2D data to 2D laser-scan data by setting up ```scan_angle```, ```angle_increasement```, ```scan_time```, ```range_distance```.
 
-## Map building:
+## Map building
 After I convert 3D whisker data to 2D scan data, I implement with slam toolbox to locate all obstacles in 2D map. 
 
+### Future scope
+-  Implement whisker mapping method into real whisker robot.
+-  Implement other object detection algorithm like circular detection.
 
 [Github_pages](https://github.com/luxi-huang/Whisker_Robot)
 
