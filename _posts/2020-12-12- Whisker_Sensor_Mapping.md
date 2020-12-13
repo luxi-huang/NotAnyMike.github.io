@@ -15,10 +15,10 @@ lead_text: 'Using Whisker sensor touching the objects and build map'
 
 ---
 
-## Motivation:  
+## Motivation  
 Whisker robot could be play an important role in dark or other extreme environment, where other sensors like cameras might hardly works normal. Whisker robot can detect environments by using whisker to touch environments and help people finish some hard mission.  
 
-## Introduction: 
+## Introduction 
 This projects is building a map by using whisker sensors to detects environment. It using [Whisker Physics Simulator](https://github.com/SeNSE-lab/whiskitphysics)to build environment with obstacles and simulate whisker to detect environment. Then, those whisker sensor data need to normal 2D scan data. After that using those data to implement with slam_toolbox.
 
 
