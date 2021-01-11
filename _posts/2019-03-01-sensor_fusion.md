@@ -1,6 +1,6 @@
 ---
 layout: inner
-title: 'Mapping by Sensor Fusion with IMU and Camera (RGBD and Fisheyes)'
+title: 'Mapping by Sensor Fusion with IMU and Camera (RGBD and Fisheye Lenses)'
 date: 2020-03-03 14:15:00
 categories: development
 type: project

@@ -1,6 +1,6 @@
 ---
 layout: inner
-title: 'Geometric Morphometrics demonstrate on Seal whisker'
+title: 'Geometric Morphometrics (Using Computer Vision to Help Biologists Measure and Classify Seal Whiskers)'
 date: 2020-10-25 14:15:00
 categories: development
 type: project

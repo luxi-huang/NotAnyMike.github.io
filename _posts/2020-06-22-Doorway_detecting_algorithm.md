@@ -6,7 +6,7 @@ categories: development
 type: project
 tags: ROS Perception Camera-Sensor C++ 
 featured_image: 'https://github.com/luxi-huang/portfolio/blob/master/img/posts/doorway_detection/title.png?raw=true'
-lead_text: 'Automated Doorway Detection for Assistive Shared-Control Wheelchairs'
+lead_text: 'Using Computer vision to automated detection doorway for assistive shared-control Wheelchairs'
 ---
 
 # Automated Doorway Detection for Assistive Wheelchairs

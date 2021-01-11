@@ -196,7 +196,7 @@ button.btn, input.btn {
 }
 
 .hero-content {
-  width: 60%;
+  width: 100%;
   margin: 0 auto;
   display: table;
   @include bp-medium {
@@ -373,7 +373,7 @@ button.btn, input.btn {
       }
     }
     .excerpt {
-      width: 80%;
+      width: 90%;
       @include bp-xsmall {
         width: 100%;
       }
