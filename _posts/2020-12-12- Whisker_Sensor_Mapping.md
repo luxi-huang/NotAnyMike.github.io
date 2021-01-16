@@ -15,11 +15,12 @@ lead_text: 'Applied SLAM algorithms to build a map with a new sensor based off o
 
 ---
 
-## Motivation  
-Whisker robot could be play an important role in dark or other extreme environment, where other sensors like cameras might hardly contain its normal performance. Whisker robot can detect environments by using whiskers to touch with environments and help people finish some hard tasks.  
+## Motivation
+A robot with a whisker sensor could one day play an important role in dark or other extreme environments where other sensors like cameras might not work.  The whisker robot can measure environments using direct physical contact, completing difficult tasks even in the dark.
+  
 
 ## Introduction 
-This projects is building a map by using whisker sensors to detects the environment. It is using [Whisker Physics Simulator](https://github.com/SeNSE-lab/whiskitphysics) to build environment with obstacles and simulate whisker to detect the environment. Then, I transfer whisker sensor data to 2D scan data. After that, I use those data to implement with slam_toolbox.
+This projects builds a map by using whisker sensors to detects the environment. It is using [Whisker Physics Simulator](https://github.com/SeNSE-lab/whiskitphysics) to build environment with obstacles and simulate whisker to detect the environment. Then, I transfer whisker sensor data to 2D scan data. After that, I use those data to implement slam with slam_toolbox.
  
  <p align="middle"> <img src="https://github.com/luxi-huang/Whisker_Robot/blob/master/img/Whisker_simulator.gif?raw=true" alt="drawing" /> </p>  
 
@@ -49,7 +50,7 @@ After I get each segments kinematics data, I need to match each segments collisi
 Whisker data are in 3D points. I need to transfer it to 2D laser-scan data, and use that data build a map. It order to do it, I transfer 3D points to 2D points by eliminate z axis value. Next I transfer 2D data to 2D laser-scan data by setting up ```scan_angle```, ```angle_increasement```, ```scan_time```, ```range_distance```.
 
 ## Map building
-After I convert 3D whisker data to 2D scan data, I implement with slam toolbox to locate all obstacles in 2D map. 
+After I convert 3D whisker data to 2D scan data, I implement slam with slam_toolbox to locate all obstacles in 2D map. 
 
 ### Future scope
 -  Implement whisker mapping method into whisker robot in real world.

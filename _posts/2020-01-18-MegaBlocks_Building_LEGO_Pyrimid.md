@@ -6,14 +6,14 @@ categories: development
 type: project
 tags: ROS Python Manipulation Path-Planning Robot-Control
 featured_image: 'https://github.com/luxi-huang/portfolio/blob/master/img/posts/baxter/ezgif.com-gif-maker-2.gif?raw=true'
-lead_text: 'This Project applied Rethink Robot Baxter to build Lego Pyrimid by ROS '
+lead_text: 'This Project applied Rethink Robot Baxter to build Lego Pyramid by ROS '
 ---
 
 
 <!-- https://github.com/luxi-huang/final-project-megabloks -->
 
 
-# MegaBlocks Building LEGO Pyrimid
+# MegaBlocks Building LEGO Pyramid
 
 - Skills:  ROS, Python, Path-planing, Inverse-kinematics, Robot-Arm-Control  
 

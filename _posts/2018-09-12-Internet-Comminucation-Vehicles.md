@@ -6,7 +6,7 @@ categories: development
 type: project
 tags: Python Raspberry-pi Control Mechatronics  
 featured_image: 'https://github.com/luxi-huang/portfolio/blob/master/img/posts/Internet_Vehicles/vechicle.jpg?raw=true'
-lead_text: 'Designed a vehicles robot to communicate and motion control with internet or joystick'
+lead_text: 'Designed a mobile robot that can be controlled with a joystick or over the internet'
 youtubeId: DuGJYICO7VE
 ---
 
