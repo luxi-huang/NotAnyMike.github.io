@@ -20,7 +20,7 @@ A robot with a whisker sensor could one day play an important role in dark or ot
   
 
 ## Introduction 
-This projects builds a map by using whisker sensors to detects the environment. It is using [Whisker Physics Simulator](https://github.com/SeNSE-lab/whiskitphysics) to build environment with obstacles and simulate whisker to detect the environment. Then, I transfer whisker sensor data to 2D scan data. After that, I use those data to implement slam with slam_toolbox.
+This projects builds a map by using whisker sensors to detect the environment. It is using [Whisker Physics Simulator](https://github.com/SeNSE-lab/whiskitphysics) to build an environment and simulate whiskers detecting objects in that environment. Then, I transfer whisker sensor data to 2D scan data. After that, I use those data to implement slam with slam_toolbox.
  
  <p align="middle"> <img src="https://github.com/luxi-huang/Whisker_Robot/blob/master/img/Whisker_simulator.gif?raw=true" alt="drawing" /> </p>  
 
@@ -38,11 +38,10 @@ This projects builds a map by using whisker sensors to detects the environment. 
 ---
 
 ## Whisker simulation world 
-As shown on Figure 2, the simulation world contains 5 cylinders. I controlled rat by sending it linear and angular velocities, and triggers the whisker moving back and forth. So the rat whisker can scan the environment, and output the whisker sensor data.  
-
+As shown on Figure 2, the simulation world contains 5 cylinders. I controlled the rat by sending it linear and angular velocities, and trigerring the whisker to move back and forth So the rat whisker can scan the environment, and output the whisker sensor data.  
 
 ## Whisker Sensor Data
-Whisker is simulated to moving back and forth. Each whisker contains 20 segments, which can sense the whisker dynamics in force and moment when they touch with objects. Also whiskers can give feedback of which segment has collision with objects. Then they calculate the next whisker's motion path based on its force and moment. Also calculate current kinematics value in x, y and theta. 
+The whisker is simulated by moving it back and forth. Each whisker contains 20 segments, which can sense the whisker dynamics in force and moment when they touch with objects. Also whiskers can give feedback of which segment has collision with objects. Then they calculate the next whisker's motion path based on its force and moment. Also calculate current kinematics value in x, y and theta. 
 
 After I get each segments kinematics data, I need to match each segments collision data with its kinematics data. After that, I am ready to estimate objects position.   
 

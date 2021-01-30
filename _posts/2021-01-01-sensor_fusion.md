@@ -1,7 +1,7 @@
 ---
 layout: inner
 title: 'Mapping by Sensor Fusion with IMU and Camera (RGBD and Fisheye Lenses)'
-date: 2020-03-03 14:15:00
+date: 2020-11-03 14:15:00
 categories: development
 type: project
 tags: Vision-slam Sensor-fusion Computer-vision
@@ -20,6 +20,7 @@ lead_text: 'Map a building using an Intel Realsense Tracking Camera T265 and RGB
 
 In general, this project builds mapping functions on Intel realsense tracking camera T265 and depth camera D435i individually, then compares their mapping qualities. To achieve the mapping function on the depth camera D435i, the depth information from its two RGBD eyes could be fused with IMU data by applying the EKF filter. For the tracking camera T265, two fisheyes could perform as stereo cameras to measure the depth, then combine with its tracking properties to build a map.
 
+![Hierarchy](https://github.com/luxi-huang/portfolio/blob/master/img/posts/sensor_fusion/ezgif.com-gif-maker-1.gif?raw=true)*<center>Figure 3: Loop closeure for Depth Camera D435i</center>*
 
 
 ## Motivation:

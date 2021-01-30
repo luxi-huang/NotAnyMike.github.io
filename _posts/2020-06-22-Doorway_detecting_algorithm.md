@@ -23,6 +23,10 @@ Powered wheelchairs provide a mobility solution for people who unable  to  opera
 
 ### Overview
 This project build an automatic doorway (open door positions) detection system for wheelchairs with camera sensor.  This projects demonstrate the two new algorithms which were implemented on the original doorway detection algorithms[2], which are MLESAC (Maximum Likelihood Estimation Sample Consensus) segmentation and Region-Growing (RG) in the context of doorway assistance, including results from the tests of those both algorithms in the simulation and real-world. 
+<p align="middle"> <img src="https://github.com/luxi-huang/portfolio/blob/master/img/posts/doorway_detection/title.png?raw=true" alt="drawing"  height="320"/> </p>  
+
+<p align="middle"> <img src="https://github.com/luxi-huang/portfolio/blob/master/img/posts/doorway_detection/Doorway_RG.png?raw=true" alt="drawing" height="400"/> </p>
+
 
 ---
 ## Camera Filters -- Point Cloud Library Nodelets  
