@@ -19,17 +19,17 @@ lead_text: 'This Project applied Rethink Robot Baxter to build Lego Pyramid by R
 
 ---
 
-## Overall
+## Overview
 
-This project is using ROS in python as the central platform, Baxter assembles a LEGO mega blocks pyramid from the blocks provided by the user. The flow is:
+This project uses ROS in python as the central platform. the Baxter robot assembles a LEGO mega blocks pyramid from the blocks provided by the human. The flow is as follow:
 
-1. Human places blocks on the plate.
-2. Blocks are detected on Baxter's camera image using OpenCV.
-3. Among all detected blocks, a block is chosen at random and locate in its 3D position.
-4. Goal block is displayed to users on the screen.
-5. Baxter picked the blocks up and places them in the drop location using position control in Moveit.
-6. As a double check, the gripper hand is pushed against the block to ensure that the block is pushed in, which is applied by Force control in MoveIt.
-7. Baxter repeats steps 3 and 6 until the pyramid is complete.
+1. Human places LEGO blocks on the plate.
+2. The LEGO blocks are detected on Baxter's camera image using OpenCV.
+3. Among all detected blocks, one block is chosen at random and located in its 3D position.
+4. The chosen block is displayed to users on the screen.
+5. Baxter picks the blocks up and places them in the drop location using position control in MoveIt.
+6. To double check, Baxter gripper hand push against the block to ensure that the block is pushed in. The gripper used force control in MoveIt.
+7. Baxter repeats steps 3 to 6 until the pyramid is complete.
 
 ![Hierarchy](https://github.com/luxi-huang/portfolio/blob/master/img/posts/baxter/ezgif.com-gif-maker-2.gif?raw=true)*<center>Figure 2: Senosr fuse for Depth Camera D435i</center>*
 
@@ -38,48 +38,48 @@ View [full video](https://youtu.be/mz1FwBR94og)
 ---
 
 ## Human-Robot interaction
-Before Baxter start assembles the pyramid, a human would place all Lego blocks on the table. The last block human placed on would be the color of the pyramid that Baxter going to assemble. 
+Before Baxter starts to assembles the pyramid, a human would place all Lego blocks on the plate. The last block the human places would be the color of the pyramid that Baxter will assemble. 
 
 ---
 
 ## Object Detection in computer vision
-The Baxter is using the camera on its right hand to detect all block locations, and target one of the blocks that color match the user desired color. The process is about the following: 
+Baxter uses the camera on its right hand to detect all block locations, and targets one of the blocks that matches the human's desired color. The details includes following: 
 
 #### Setup: 
-Before Baxter detects the lego pyramid, we need to locate the base plate. To do that, we placed several AR frames around the based around, and the AR frame needs to be under the camera's field of view.   
+Before Baxter detects the LEGO pyramid, Baxter need to locate the base plate. To do that, we placed several AR frames around the plate, and ensured AR frame needs to be under the camera's field of view.   
 
 #### Process: 
-we are using a pre-calibrated intrinsic camera parameter to find an inverse projection ray corresponding to a pixel on the camera's sensor. The 3D location corresponding to a pixel is calculated by finding the intersection of the inverse projected ray and ground plane which is defined by one of the AR tags. The 3D point corresponding to the pixel is determined in multiple AR frames and then these points are converted to the Baxter world frame representation.
+we used a pre-calibrated intrinsic camera parameter to find an inverse projection ray corresponding to a pixel on Baxter's camera sensor. The 3D location corresponding to a pixel is calculated by finding the intersection of the inverse projected ray and ground plane, which is defined by one of the AR tags. The 3D point corresponding to the pixel is determined in multiple AR frames and then these points are converted to Baxter's world frame representation.
 
 #### Results: 
-  As a result, we get multiple points in the world frame that correspond to the same pixel in Baxter's camera image but obtained using different AR frames as reference. The median of all those points is found out and that point is taken to be the true 3D location corresponding to the pixel in the image. 
+  Consequently, we obtain multiple points in the world frame that correspond to the same pixel in Baxter's camera image but obtained using different AR frames as reference. The median of all these points is found and that median point is taken to be the true 3D location corresponding to the pixel in the image. 
 
 #### Challenge: 
-  Sometimes AR tags are affected by lighting and their 3D pose concerning the camera oscillates. Even worse sometimes, they are not detected. To solve this issue Using multiple AR tags this way increases both the robustness and the precision of the system. We were able to locate points within +/- 1 cm accuracy through this process. 
+  Sometimes AR tags are affected by the lighting and the blocks 3D pose are skewed by the camera's oscillates. Even worst-case scenario, the blocks are not detected. To solve this issue, we use multiple AR tags to increases both the robustness and the precision of the system. We were able to locate points within +/- 1 cm accuracy through this process. 
 
 ---
 
 ## PickUp and Placing
-After Baxter locate the lego block position, we then use MoveIt to control Baxter arm to do pickUp and placing task on lego block. 
+After Baxter locates the LEGO block position, we then use MoveIt to control Baxter's arm to do pickUp on LEGO block and place it into the goal position. 
 
 #### Path planning trajectory
-The Baxter arm would pick up the lego block and placed it to the goal position with a designed path planning trajectory, which implements with inverse kinematics from MoveIt.  The trajectory is composed 7 steps:
-1. Arm move to the position where above the pickUp position. 
-2. Arm move done in z-axis direction at pickup position.  
-3. Close the gripper to hold the lego block.
-4. Arm move up in z-axis direction. 
-5. Arm move in a straight line on XY plane and stop to the position above the goal position. 
-6. Arm move done in z-axis to match at goal position.
-7. Open the gripper. 
+The Baxter arm executes would pick up the LEGO block and placed it to the goal position with a designed path planning trajectory, which implements inverse kinematics from MoveIt.  The trajectory is composed of 7 steps:
+1. Arm moves above the pickUp position. 
+2. Arm moves down in the z-axis direction at the pickUp position.  
+3. Gripper closes to hold the lego block.
+4. Arm moves up in the z-axis direction. 
+5. Arm moves in a straight line on the XY plane and stops at the position above the goal position. 
+6. Arm move done in the z-axis to match at the goal position.
+7. The gripper opens. 
 
 #### Gripper open and close: 
 - In this project, the gripper open and close are controlled by the MoveIt. 
 
 #### Gripper force control:
 
-All lego blocks are inserted into the lego board before the arm pickup them. Baxter grippers need to add some force to pull the block from the board. Similarly, the grippers should have some force to push the lego into the goal position when the arm assembly it. 
+All lego blocks are inserted into the lego board before the Baxter arm picks them up. Baxter's gripper need to add some force to pull the block from the board. Similarly, the grippers should have some force to push the lego into the goal position when the arm assembles it. 
 
-To achieve the above task, I am using MoveIt to add force on step 4 and step 7 on the path planning trajectory. 
+To achieve the above task, I use MoveIt to add force on step 4 and step 7 on the path planning trajectory. 
 
 #### Challenge：
 
