@@ -1,7 +1,7 @@
 ---
 layout: inner
 title: 'Automated Perception of Doorway Locations for Assistive Wheelchairs'
-date: 2020-6-22 14:15:00
+date: 2021-2-1 14:15:00
 categories: development
 type: project
 tags: ROS Perception Camera-Sensor C++ 
